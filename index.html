@@ -162,6 +162,77 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-CUTMCTF" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2020/10/12/CUTMCTF/" class="article-date">
+  	<time datetime="2020-10-12T04:29:03.000Z" itemprop="datePublished">2020-10-12</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/12/CUTMCTF/">
+        CUTMCTF
+        
+      </a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="web签到"><a href="#web签到" class="headerlink" title="web签到"></a>web签到</h3><p>步骤</p>
+<p><img src="https://i.loli.net/2020/09/25/Kq6CBSTMkHXfs3o.png" alt="image-20200925165820245"></p>
+<p>打开发现需要GET传参但并未指明参数，多次尝试发现只需要传入?1即可；</p>
+<p><img src="https://i.loli.net/2020/09/25/QqloIgrzCchRbd3.png" alt="image-20200925170036066"></p>
+<ol start="3">
+<li>传入发现需要post一个2，多次尝试发现并没有反应，于是使用burpsuite</li>
+</ol>
+<p><img src="https://i.loli.net/2020/09/25/lskFRmVnJd5C2zj.png" alt="image-20200925171007578"></p>
+<p>在params里填好参数后发现2后面多了一个等号，然后就传参成功，并且发现php代码；</p>
+<p><img src="https://i.loli.net/2020/09/25/6VsZgIjQrnFXPvo.png" alt="image-20200925171241179"></p>
+<p>明显是使用PHP伪协议查看源文件即可获得flag</p>
+<p><img src="https://i.loli.net/2020/09/25/JcMNArDHa834Rpq.png" alt="image-20200925171533778"></p>
+<p>base64解码即可</p>
+<p><img src="https://i.loli.net/2020/09/25/FIXL79H1Gn5SoVf.png" alt="image-20200925171628695"></p>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+      
+        <p class="article-more-link">
+          <a  href="/2020/10/12/CUTMCTF/#more">more >></a>
+        </p>
+      
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
     <article id="post-CUMTCTF1-web" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
