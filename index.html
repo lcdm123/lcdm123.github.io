@@ -310,27 +310,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="虚拟机：Ubuntu18-服务器版"><a href="#虚拟机：Ubuntu18-服务器版" class="headerlink" title="虚拟机：Ubuntu18 服务器版"></a>虚拟机：Ubuntu18 服务器版</h3><h3 id="开始搭建"><a href="#开始搭建" class="headerlink" title="开始搭建"></a>开始搭建</h3><ol>
-<li>在虚拟机上安装docker；</li>
-<li><code>$ sudo docker search webgoat</code> 查找webgoat镜像；</li>
-<li><code>$ sudo docker pull webgoat/webgoat-8.0</code> 拉取镜像；</li>
-<li><code>$ sudo docker run -dt --name webgoat -p 8080:8080 --rm webgoat/webgoat-8.0</code> 开启镜像服务；</li>
-<li>使用浏览器访问：ip:8080/WebGoat 即可；</li>
-<li>自己创建账户登录，即可使用，全英文界面可能对和我一样的英语白痴来说不太友好；</li>
-</ol>
-<blockquote>
-<p>网上看到一些其他的开启镜像的方法，我使用的时候一直卡着启动不了。</p>
-</blockquote>
-<h3 id="联合搭建webgoat与webwolf"><a href="#联合搭建webgoat与webwolf" class="headerlink" title="联合搭建webgoat与webwolf"></a>联合搭建webgoat与webwolf</h3><ol>
-<li><p>使用docker拉取镜像：<code>sudo docker pull webgoat/goatandwolf</code></p>
-</li>
-<li><p>启动镜像：<code>sudo docker run -d -p 8081:8080 -p 9090:9090 -e TZ=Europe/Amsterdam webgoat/goatandwolf </code></p>
-<blockquote>
-<p>可能会出现浏览器兼容问题</p>
-</blockquote>
-</li>
-</ol>
-
+        <h3 id="虚拟机：Ubuntu18-服务器版"><a href="#虚拟机：Ubuntu18-服务器版" class="headerlink" title="虚拟机：Ubuntu18 服务器版"></a>虚拟机：Ubuntu18 服务器版</h3>
       
     </div>
     
@@ -342,6 +322,10 @@
       
       <div class="clearfix"></div>
     </div>
+      
+        <p class="article-more-link">
+          <a  href="/2020/10/12/Docker%E6%90%AD%E5%BB%BAwebgoat/#more">more >></a>
+        </p>
       
     
   </div>
@@ -442,20 +426,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="web签到"><a href="#web签到" class="headerlink" title="web签到"></a>web签到</h3><p>步骤</p>
-<p><img src="https://i.loli.net/2020/09/25/Kq6CBSTMkHXfs3o.png" alt="image-20200925165820245"></p>
-<p>打开发现需要GET传参但并未指明参数，多次尝试发现只需要传入?1即可；</p>
-<p><img src="https://i.loli.net/2020/09/25/QqloIgrzCchRbd3.png" alt="image-20200925170036066"></p>
-<ol start="3">
-<li>传入发现需要post一个2，多次尝试发现并没有反应，于是使用burpsuite</li>
-</ol>
-<p><img src="https://i.loli.net/2020/09/25/lskFRmVnJd5C2zj.png" alt="image-20200925171007578"></p>
-<p>在params里填好参数后发现2后面多了一个等号，然后就传参成功，并且发现php代码；</p>
-<p><img src="https://i.loli.net/2020/09/25/6VsZgIjQrnFXPvo.png" alt="image-20200925171241179"></p>
-<p>明显是使用PHP伪协议查看源文件即可获得flag</p>
-<p><img src="https://i.loli.net/2020/09/25/JcMNArDHa834Rpq.png" alt="image-20200925171533778"></p>
-<p>base64解码即可</p>
-<p><img src="https://i.loli.net/2020/09/25/FIXL79H1Gn5SoVf.png" alt="image-20200925171628695"></p>
+        <h3 id="web签到"><a href="#web签到" class="headerlink" title="web签到"></a>web签到</h3>
       
     </div>
     

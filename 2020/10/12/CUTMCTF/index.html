@@ -9,12 +9,12 @@
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="web签到步骤  打开发现需要GET传参但并未指明参数，多次尝试发现只需要传入?1即可；   传入发现需要post一个2，多次尝试发现并没有反应，于是使用burpsuite   在params里填好参数后发现2后面多了一个等号，然后就传参成功，并且发现php代码；  明显是使用PHP伪协议查看源文件即可获得flag  base64解码即可">
+  <meta name="description" content="web签到">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CUTMCTF">
 <meta property="og:url" content="http://example.com/2020/10/12/CUTMCTF/index.html">
 <meta property="og:site_name" content="Lcdm123">
-<meta property="og:description" content="web签到步骤  打开发现需要GET传参但并未指明参数，多次尝试发现只需要传入?1即可；   传入发现需要post一个2，多次尝试发现并没有反应，于是使用burpsuite   在params里填好参数后发现2后面多了一个等号，然后就传参成功，并且发现php代码；  明显是使用PHP伪协议查看源文件即可获得flag  base64解码即可">
+<meta property="og:description" content="web签到">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://i.loli.net/2020/09/25/Kq6CBSTMkHXfs3o.png">
 <meta property="og:image" content="https://i.loli.net/2020/09/25/QqloIgrzCchRbd3.png">
@@ -33,7 +33,7 @@
 <meta property="og:image" content="https://i.loli.net/2020/09/25/mYhFJAaHixUqONd.png">
 <meta property="og:image" content="https://i.loli.net/2020/09/25/W32tCOrTM5U9uRh.png">
 <meta property="article:published_time" content="2020-10-12T04:29:03.000Z">
-<meta property="article:modified_time" content="2020-10-12T04:29:57.609Z">
+<meta property="article:modified_time" content="2020-10-12T04:42:22.392Z">
 <meta property="article:author" content="海马少年">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.loli.net/2020/09/25/Kq6CBSTMkHXfs3o.png">
@@ -216,7 +216,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="web签到"><a href="#web签到" class="headerlink" title="web签到"></a>web签到</h3><p>步骤</p>
+        <h3 id="web签到"><a href="#web签到" class="headerlink" title="web签到"></a>web签到</h3><a id="more"></a>
+
+<p>步骤</p>
 <p><img src="https://i.loli.net/2020/09/25/Kq6CBSTMkHXfs3o.png" alt="image-20200925165820245"></p>
 <p>打开发现需要GET传参但并未指明参数，多次尝试发现只需要传入?1即可；</p>
 <p><img src="https://i.loli.net/2020/09/25/QqloIgrzCchRbd3.png" alt="image-20200925170036066"></p>
@@ -230,8 +232,6 @@
 <p><img src="https://i.loli.net/2020/09/25/JcMNArDHa834Rpq.png" alt="image-20200925171533778"></p>
 <p>base64解码即可</p>
 <p><img src="https://i.loli.net/2020/09/25/FIXL79H1Gn5SoVf.png" alt="image-20200925171628695"></p>
-<a id="more"></a>
-
 <h3 id="Babysqli"><a href="#Babysqli" class="headerlink" title="Babysqli"></a>Babysqli</h3><p>使用burpsuite进行注入后发现空格被过滤了，使用/**/ 替代空格；</p>
 <p><img src="https://i.loli.net/2020/09/25/lwERh63IeMtduHF.png" alt="image-20200925182450014"></p>
 <p>并且发现下方注释，猜测flag可能在password里面，使用SQL语句查询</p>
