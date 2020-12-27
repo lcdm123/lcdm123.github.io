@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2020-12-22T11:39:05.877Z</updated>
+  <updated>2020-12-27T15:09:41.093Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>文件上传基础</title>
+    <link href="http://example.com/2020/12/27/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%9F%BA%E7%A1%80/"/>
+    <id>http://example.com/2020/12/27/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%9F%BA%E7%A1%80/</id>
+    <published>2020-12-27T15:08:24.000Z</published>
+    <updated>2020-12-27T15:09:41.093Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="解析漏洞"><a href="#解析漏洞" class="headerlink" title="解析漏洞"></a>解析漏洞</h2><blockquote><p>不是涉及的版本不是最新版……</p></blockquote><a id="more"></a><h3 id="IIS"><a href="#IIS" class="headerlink" title="IIS"></a>IIS</h3><blockquote><p>IIS 6.0</p></blockquote><ol><li><p>IIS中的*.asa *.asp 文件夹中的文件都会被当成asp文件解析</p></li><li><p>文件为*.asp;1.jpg时会被当成ASP脚本执行</p></li><li><p>WebDav</p><blockquote><p>它是基于HTTP 1.1 协议的通信协议，它扩展了HTTP协议，添加了新的方法</p><p>打开WebDav后支持PUT Move Copy Delete </p><p>IIS Write 是一款探测WebDav漏洞的软件 </p></blockquote><ul><li><p>使用 OPTIONS 查看支持的所有方法</p></li><li><p>通过PUT上传文件</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">PUT &#x2F;1.txt HTTP&#x2F;1.1</span><br><span class="line">Host:www.example.com</span><br><span class="line">Content-Length: 30</span><br><span class="line"></span><br><span class="line">&lt;% …………%&gt;</span><br></pre></td></tr></table></figure></li><li><p>使用Move 或 Copy 方法改名</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">COPY &#x2F;1.txt HTTP&#x2F;1.1</span><br><span class="line">Host:www.example.com</span><br><span class="line">Destination: http:&#x2F;&#x2F;www.example.com&#x2F;cmd.adp</span><br></pre></td></tr></table></figure></li><li><p>这样就能getshell</p></li><li><p>还可以使用Delete方法删除任意文件</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DELETE &#x2F;1.txt HTTP&#x2F;1.1</span><br><span class="line">Host:www.example.com</span><br></pre></td></tr></table></figure></li></ul></li></ol><h3 id="Apache"><a href="#Apache" class="headerlink" title="Apache"></a>Apache</h3><blockquote><p>1.x  2.x</p></blockquote><p>Apache在解析文件时有一个原则：碰到不认识的扩展名时，会从后向前解析，知道碰到认识的扩展名为止</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">example:</span><br><span class="line">1.php.rar.xs.aa 这时就会从后往前解析，直到遇到.php</span><br></pre></td></tr></table></figure><h3 id="PHP-CGI"><a href="#PHP-CGI" class="headerlink" title="PHP CGI"></a>PHP CGI</h3><blockquote><p>在php的配置文件中：cgi.fi: x_pathinfo 这个选项在某些版本中，默认是开启的，在访问URL时，如<code>www.example.com/1.txt/1.php</code></p><p>这时如果1.php不存在，则.php将会向前递归解析</p><p>该漏洞在Nginx IIS7.0  IIS7.5  Lighttpd 等web容器中容易出现</p></blockquote><p>主要利用方法就是上传合法文件名，然后进行非法解析</p><h2 id="绕过上传漏洞"><a href="#绕过上传漏洞" class="headerlink" title="绕过上传漏洞"></a>绕过上传漏洞</h2><ol><li><p>绕过前端javascript 过滤</p></li><li><p>绕过黑名单</p><blockquote><p>asp php  jsp  php5  asa  aspx </p></blockquote></li><li><p>修改MIME</p></li><li><p>截断上传</p><blockquote><p>将 1.asp空格xx.jpg 进入十六进制编辑器将空格的16进制数20修改为00，最后会发现上传到服务的文件变成了1.asp</p></blockquote></li><li><p>使用.htaccess   .user.ini  配置文件的绕过</p></li></ol>]]></content>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;解析漏洞&quot;&gt;&lt;a href=&quot;#解析漏洞&quot; class=&quot;headerlink&quot; title=&quot;解析漏洞&quot;&gt;&lt;/a&gt;解析漏洞&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;不是涉及的版本不是最新版……&lt;/p&gt;
+&lt;/blockquote&gt;</summary>
+    
+    
+    
+    
+    <category term="Web" scheme="http://example.com/tags/Web/"/>
+    
+  </entry>
   
   <entry>
     <title>GYCTF2020-Easyphp</title>
