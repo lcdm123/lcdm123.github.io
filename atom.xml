@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-01-17T14:46:11.722Z</updated>
+  <updated>2021-01-18T13:59:45.974Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>HTTP特殊请求头</title>
+    <link href="http://example.com/2021/01/18/HTTP%E7%89%B9%E6%AE%8A%E8%AF%B7%E6%B1%82%E5%A4%B4/"/>
+    <id>http://example.com/2021/01/18/HTTP%E7%89%B9%E6%AE%8A%E8%AF%B7%E6%B1%82%E5%A4%B4/</id>
+    <published>2021-01-18T13:57:40.000Z</published>
+    <updated>2021-01-18T13:59:45.974Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>最近做了一道CTF的题，里面应用了http的各种头，记录下来学习学习</p></blockquote><h1 id="BJDCTF-2nd-假猪套天下第一"><a href="#BJDCTF-2nd-假猪套天下第一" class="headerlink" title="[BJDCTF 2nd]假猪套天下第一"></a>[BJDCTF 2nd]假猪套天下第一</h1><h3 id="打开题目"><a href="#打开题目" class="headerlink" title="打开题目"></a>打开题目</h3><p><img src="https://i.loli.net/2020/12/20/NqxatShcbRrQwyj.png" alt="image-20201220223807400"></p><blockquote><p>尝试弱口令登录与SQL注入</p></blockquote><p>抓包</p><p><img src="https://i.loli.net/2020/12/20/Kwq5lz42gfh9oCA.png" alt="image-20201220224157732"></p><p>修改时间，然后发现新线索</p><p><img src="https://i.loli.net/2020/12/20/OWMv6lu5HycxE7g.png" alt="image-20201220224129130"></p><p>使用**<em>Client-ip: 127.0.0.1**</em> ,又出现新的线索</p><p><img src="https://i.loli.net/2020/12/20/8W1zlVCqOQEtvN6.png" alt="image-20201220224438421"></p><p>使用*** Referer: gem-love.com *** 又有新提示</p><p><img src="https://i.loli.net/2020/12/20/ZbgB52qGpS6n8Xl.png" alt="image-20201220224558708"></p><p>这里有个坑，需要使用Commodo 64的全称，Commodore 64；</p><p><strong>* User-Agent： Commodore 64*</strong> </p><p><img src="https://i.loli.net/2020/12/20/rVhP4yswMF38g1k.png" alt="image-20201220225317596"></p><p>指定邮箱*** From: <a href="mailto:&#x72;&#111;&#111;&#x74;&#64;&#x67;&#x65;&#x6d;&#x2d;&#108;&#x6f;&#x76;&#x65;&#46;&#x63;&#x6f;&#x6d;">&#x72;&#111;&#111;&#x74;&#64;&#x67;&#x65;&#x6d;&#x2d;&#108;&#x6f;&#x76;&#x65;&#46;&#x63;&#x6f;&#x6d;</a>***</p><p><img src="https://i.loli.net/2020/12/20/eWg5bEnzAyQfTkY.png" alt="image-20201220225553050"></p><p>指定服务器**<em>Via: y1ng.vip**</em></p><p><img src="https://i.loli.net/2020/12/20/AxtY9Kzbp2UhNiZ.png" alt="image-20201220225711978"></p><p>base64解码即可</p><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这个题目本身不难，主要考的就是**<em>请求首部字段**</em>的熟练使用</p><table><thead><tr><th>Header</th><th>作用</th></tr></thead><tbody><tr><td>Accept</td><td>指定客户端能够接收的内容类型</td></tr><tr><td>Via</td><td>通知中间网关或代理服务器地址，通信协议</td></tr><tr><td>Referer</td><td>先前的网址，当前请求的网页紧随其后，即来路</td></tr><tr><td>Range</td><td>只请求实体的一部分，指定范围</td></tr><tr><td>From</td><td>发出请求的用户的Email</td></tr><tr><td>Cookie</td><td>存储cookie信息</td></tr><tr><td>User-Agent</td><td>包含发出请求的用户信息</td></tr><tr><td>TE</td><td>客户端接受的传输编码，通知服务器接受尾加头信息</td></tr><tr><td>Host</td><td>指定请求的服务器的域名和端口号</td></tr></tbody></table>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;最近做了一道CTF的题，里面应用了http的各种头，记录下来学习学习&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;BJDCTF-2nd-假猪套天下第一&quot;&gt;&lt;a href=&quot;#BJDCTF-2nd-假猪套天下第一&quot; class=&quot;header</summary>
+      
+    
+    
+    
+    
+    <category term="Web" scheme="http://example.com/tags/Web/"/>
+    
+    <category term="WriteUp" scheme="http://example.com/tags/WriteUp/"/>
+    
+  </entry>
   
   <entry>
     <title>XXE漏洞</title>
