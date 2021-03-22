@@ -87,26 +87,6 @@
   </entry>
   
   <entry>
-    <title>Hello World</title>
-    <link href="http://example.com/2021/03/22/hello-world/"/>
-    <id>http://example.com/2021/03/22/hello-world/</id>
-    <published>2021-03-22T13:55:05.766Z</published>
-    <updated>2021-03-22T13:55:05.766Z</updated>
-    
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt; for</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
     <title>二分法盲注</title>
     <link href="http://example.com/2021/01/18/%E4%BA%8C%E5%88%86%E6%B3%95%E7%9B%B2%E6%B3%A8/"/>
     <id>http://example.com/2021/01/18/%E4%BA%8C%E5%88%86%E6%B3%95%E7%9B%B2%E6%B3%A8/</id>
@@ -137,7 +117,7 @@
     <published>2021-01-18T13:57:40.000Z</published>
     <updated>2021-01-18T13:59:46.000Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>最近做了一道CTF的题，里面应用了http的各种头，记录下来学习学习</p></blockquote><h1 id="BJDCTF-2nd-假猪套天下第一"><a href="#BJDCTF-2nd-假猪套天下第一" class="headerlink" title="[BJDCTF 2nd]假猪套天下第一"></a>[BJDCTF 2nd]假猪套天下第一</h1><h3 id="打开题目"><a href="#打开题目" class="headerlink" title="打开题目"></a>打开题目</h3><p><img src="https://i.loli.net/2020/12/20/NqxatShcbRrQwyj.png" alt="image-20201220223807400"></p><blockquote><p>尝试弱口令登录与SQL注入</p></blockquote><p>抓包</p><p><img src="https://i.loli.net/2020/12/20/Kwq5lz42gfh9oCA.png" alt="image-20201220224157732"></p><p>修改时间，然后发现新线索</p><p><img src="https://i.loli.net/2020/12/20/OWMv6lu5HycxE7g.png" alt="image-20201220224129130"></p><p>使用<em><strong>Client-ip: 127.0.0.1</strong></em> ,又出现新的线索</p><p><img src="https://i.loli.net/2020/12/20/8W1zlVCqOQEtvN6.png" alt="image-20201220224438421"></p><p>使用*** Referer: gem-love.com *** 又有新提示</p><p><img src="https://i.loli.net/2020/12/20/ZbgB52qGpS6n8Xl.png" alt="image-20201220224558708"></p><p>这里有个坑，需要使用Commodo 64的全称，Commodore 64；</p><p>*** User-Agent： Commodore 64*** </p><p><img src="https://i.loli.net/2020/12/20/rVhP4yswMF38g1k.png" alt="image-20201220225317596"></p><p>指定邮箱*** From: <a href="mailto:&#114;&#111;&#111;&#x74;&#x40;&#103;&#101;&#x6d;&#45;&#108;&#111;&#118;&#x65;&#x2e;&#x63;&#111;&#x6d;">&#114;&#111;&#111;&#x74;&#x40;&#103;&#101;&#x6d;&#45;&#108;&#111;&#118;&#x65;&#x2e;&#x63;&#111;&#x6d;</a>***</p><p><img src="https://i.loli.net/2020/12/20/eWg5bEnzAyQfTkY.png" alt="image-20201220225553050"></p><p>指定服务器<em><strong>Via: y1ng.vip</strong></em></p><p><img src="https://i.loli.net/2020/12/20/AxtY9Kzbp2UhNiZ.png" alt="image-20201220225711978"></p><p>base64解码即可</p><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这个题目本身不难，主要考的就是<em><strong>请求首部字段</strong></em>的熟练使用</p><table><thead><tr><th>Header</th><th>作用</th></tr></thead><tbody><tr><td>Accept</td><td>指定客户端能够接收的内容类型</td></tr><tr><td>Via</td><td>通知中间网关或代理服务器地址，通信协议</td></tr><tr><td>Referer</td><td>先前的网址，当前请求的网页紧随其后，即来路</td></tr><tr><td>Range</td><td>只请求实体的一部分，指定范围</td></tr><tr><td>From</td><td>发出请求的用户的Email</td></tr><tr><td>Cookie</td><td>存储cookie信息</td></tr><tr><td>User-Agent</td><td>包含发出请求的用户信息</td></tr><tr><td>TE</td><td>客户端接受的传输编码，通知服务器接受尾加头信息</td></tr><tr><td>Host</td><td>指定请求的服务器的域名和端口号</td></tr></tbody></table>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>最近做了一道CTF的题，里面应用了http的各种头，记录下来学习学习</p></blockquote><h1 id="BJDCTF-2nd-假猪套天下第一"><a href="#BJDCTF-2nd-假猪套天下第一" class="headerlink" title="[BJDCTF 2nd]假猪套天下第一"></a>[BJDCTF 2nd]假猪套天下第一</h1><h3 id="打开题目"><a href="#打开题目" class="headerlink" title="打开题目"></a>打开题目</h3><p><img src="https://i.loli.net/2020/12/20/NqxatShcbRrQwyj.png" alt="image-20201220223807400"></p><blockquote><p>尝试弱口令登录与SQL注入</p></blockquote><p>抓包</p><p><img src="https://i.loli.net/2020/12/20/Kwq5lz42gfh9oCA.png" alt="image-20201220224157732"></p><p>修改时间，然后发现新线索</p><p><img src="https://i.loli.net/2020/12/20/OWMv6lu5HycxE7g.png" alt="image-20201220224129130"></p><p>使用<em><strong>Client-ip: 127.0.0.1</strong></em> ,又出现新的线索</p><p><img src="https://i.loli.net/2020/12/20/8W1zlVCqOQEtvN6.png" alt="image-20201220224438421"></p><p>使用*** Referer: gem-love.com *** 又有新提示</p><p><img src="https://i.loli.net/2020/12/20/ZbgB52qGpS6n8Xl.png" alt="image-20201220224558708"></p><p>这里有个坑，需要使用Commodo 64的全称，Commodore 64；</p><p>*** User-Agent： Commodore 64*** </p><p><img src="https://i.loli.net/2020/12/20/rVhP4yswMF38g1k.png" alt="image-20201220225317596"></p><p>指定邮箱*** From: <a href="mailto:&#x72;&#111;&#111;&#x74;&#x40;&#x67;&#x65;&#x6d;&#45;&#x6c;&#x6f;&#118;&#101;&#x2e;&#99;&#x6f;&#x6d;">&#x72;&#111;&#111;&#x74;&#x40;&#x67;&#x65;&#x6d;&#45;&#x6c;&#x6f;&#118;&#101;&#x2e;&#99;&#x6f;&#x6d;</a>***</p><p><img src="https://i.loli.net/2020/12/20/eWg5bEnzAyQfTkY.png" alt="image-20201220225553050"></p><p>指定服务器<em><strong>Via: y1ng.vip</strong></em></p><p><img src="https://i.loli.net/2020/12/20/AxtY9Kzbp2UhNiZ.png" alt="image-20201220225711978"></p><p>base64解码即可</p><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这个题目本身不难，主要考的就是<em><strong>请求首部字段</strong></em>的熟练使用</p><table><thead><tr><th>Header</th><th>作用</th></tr></thead><tbody><tr><td>Accept</td><td>指定客户端能够接收的内容类型</td></tr><tr><td>Via</td><td>通知中间网关或代理服务器地址，通信协议</td></tr><tr><td>Referer</td><td>先前的网址，当前请求的网页紧随其后，即来路</td></tr><tr><td>Range</td><td>只请求实体的一部分，指定范围</td></tr><tr><td>From</td><td>发出请求的用户的Email</td></tr><tr><td>Cookie</td><td>存储cookie信息</td></tr><tr><td>User-Agent</td><td>包含发出请求的用户信息</td></tr><tr><td>TE</td><td>客户端接受的传输编码，通知服务器接受尾加头信息</td></tr><tr><td>Host</td><td>指定请求的服务器的域名和端口号</td></tr></tbody></table>]]></content>
     
     
       
@@ -472,6 +452,25 @@
     <category term="Docker" scheme="http://example.com/tags/Docker/"/>
     
     <category term="Linux" scheme="http://example.com/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Docker搭建webgoat</title>
+    <link href="http://example.com/2020/10/12/Docker%E6%90%AD%E5%BB%BAwebgoat/"/>
+    <id>http://example.com/2020/10/12/Docker%E6%90%AD%E5%BB%BAwebgoat/</id>
+    <published>2020-10-12T04:35:16.000Z</published>
+    <updated>2020-12-22T11:45:26.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="虚拟机：Ubuntu18-服务器版"><a href="#虚拟机：Ubuntu18-服务器版" class="headerlink" title="虚拟机：Ubuntu18 服务器版"></a>虚拟机：Ubuntu18 服务器版</h3><span id="more"></span><h3 id="开始搭建"><a href="#开始搭建" class="headerlink" title="开始搭建"></a>开始搭建</h3><ol><li>在虚拟机上安装docker；</li><li><code>$ sudo docker search webgoat</code> 查找webgoat镜像；</li><li><code>$ sudo docker pull webgoat/webgoat-8.0</code> 拉取镜像；</li><li><code>$ sudo docker run -dt --name webgoat -p 8080:8080 --rm webgoat/webgoat-8.0</code> 开启镜像服务；</li><li>使用浏览器访问：ip:8080/WebGoat 即可；</li><li>自己创建账户登录，即可使用，全英文界面可能对和我一样的英语白痴来说不太友好；</li></ol><blockquote><p>网上看到一些其他的开启镜像的方法，我使用的时候一直卡着启动不了。</p></blockquote><h3 id="联合搭建webgoat与webwolf"><a href="#联合搭建webgoat与webwolf" class="headerlink" title="联合搭建webgoat与webwolf"></a>联合搭建webgoat与webwolf</h3><ol><li><p>使用docker拉取镜像：<code>sudo docker pull webgoat/goatandwolf</code></p></li><li><p>启动镜像：<code>sudo docker run -d -p 8081:8080 -p 9090:9090 -e TZ=Europe/Amsterdam webgoat/goatandwolf </code></p><blockquote><p>可能会出现浏览器兼容问题</p></blockquote></li></ol>]]></content>
+    
+    
+    <summary type="html">&lt;h3 id=&quot;虚拟机：Ubuntu18-服务器版&quot;&gt;&lt;a href=&quot;#虚拟机：Ubuntu18-服务器版&quot; class=&quot;headerlink&quot; title=&quot;虚拟机：Ubuntu18 服务器版&quot;&gt;&lt;/a&gt;虚拟机：Ubuntu18 服务器版&lt;/h3&gt;</summary>
+    
+    
+    
+    
+    <category term="Docker" scheme="http://example.com/tags/Docker/"/>
     
   </entry>
   
