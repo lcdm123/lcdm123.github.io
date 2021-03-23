@@ -368,6 +368,62 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2021/03/24/Linux%E9%87%8D%E5%AE%9A%E5%90%91%E7%AC%A6%E5%AD%A6%E4%B9%A0/" >
+            
+                <span>Linux重定向符学习</span>
+        </a>
+        <div class="abstract-content">
+            Linux 重定向学习
+自己太菜了，基础不够扎实，需要放缓心态认真学习一下基础
+
+基本了解标准输入重定向（STDIN，文件描述符为0）：默认从键盘上输入，也可以从其他文件或命令输入
+标准输出重定向（STDOUT，文件描述符为1）：默认输出到屏幕
+错误输出重定向（STDERR，文件描述符为2）：默认输出到屏幕
+重定向符
+
+
+符号
+作用
+
+
+
+命令 &lt; 文件
+将文件作为命令的标准输入
+
+
+命令 &lt;&lt; 分节符
+从标准输入中读入，知道遇到分界符才停止
+
+
+命令 &lt; 文件1 &gt; 文件2
+将文件1作为命令的标准输入并将标准输出到文件2
+
+
+命令 &gt; 文件
+将标准输...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/03/24</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Linux">Linux</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2021/03/22/easy-serialize-php/" >
             
                 <span>easy_serialize_php</span>
@@ -534,7 +590,7 @@ python 类型题目做太少了 所以看见这个题目时一脸懵逼
 这里有个坑，需要使用Commodo 64的全称，Commodore 64；
 * User-Agent： Commodore 64* 
 
-指定邮箱*** From: &#x72;&#111;&#x6f;&#x74;&#x40;&#103;&#x65;&#...
+指定邮箱*** From: &#114;&#111;&#111;&#116;&#x40;&#x67;&#101;&#...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -704,56 +760,6 @@ XML基本了解12345678910111213141516171819202122232425262728293031323334353637
             <div class= abstract-tags >
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "Web">Web</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/12/21/GYCTF2020-Easyphp/" >
-            
-                <span>GYCTF2020-Easyphp</span>
-        </a>
-        <div class="abstract-content">
-            考点：php序列化pop链   序列化字符串逃逸
-
-打开题目按照管理先扫描目录
-
-
-使用dirsearch 扫描出来了  flag.php  login.php
-使用御剑什么都没有扫出来
-使用dirbuster什么都没有
-这个貌似是BUU平台问题……
-
-打开题目
-
-发现登录框，尝试弱口令登录，并且爆破用户名与密码，查看图片
-
-失败
-查看大佬的wp，存在www.zip（没扫出来…………）
-
-查看www.zip，解压后查看代码
-关键代码
-123456789101112131415161718192021222324252627282930313233343536373839404142434...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/12/21</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Web">Web</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "WriteUp">WriteUp</a>
     
 </div>
             
@@ -1220,9 +1226,24 @@ XML基本了解12345678910111213141516171819202122232425262728293031323334353637
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 22
+        Total : 23
         </div>
         <!-- search  -->
         
@@ -1235,6 +1256,11 @@ XML基本了解12345678910111213141516171819202122232425262728293031323334353637
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/24</span><a class="archive-post-title" href= "/2021/03/24/Linux%E9%87%8D%E5%AE%9A%E5%90%91%E7%AC%A6%E5%AD%A6%E4%B9%A0/" >Linux重定向符学习</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1366,9 +1392,9 @@ XML基本了解12345678910111213141516171819202122232425262728293031323334353637
     
         <span class="sidebar-tag-name" data-tags="Docker"><span class="iconfont-archer">&#xe606;</span>Docker</span>
     
-        <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
-    
         <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
+    
+        <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-03-22T14:34:22.135Z</updated>
+  <updated>2021-03-23T17:12:22.516Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux重定向符学习</title>
+    <link href="http://example.com/2021/03/24/Linux%E9%87%8D%E5%AE%9A%E5%90%91%E7%AC%A6%E5%AD%A6%E4%B9%A0/"/>
+    <id>http://example.com/2021/03/24/Linux%E9%87%8D%E5%AE%9A%E5%90%91%E7%AC%A6%E5%AD%A6%E4%B9%A0/</id>
+    <published>2021-03-23T17:10:42.000Z</published>
+    <updated>2021-03-23T17:12:22.516Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Linux-重定向学习"><a href="#Linux-重定向学习" class="headerlink" title="Linux 重定向学习"></a>Linux 重定向学习</h1><blockquote><p>自己太菜了，基础不够扎实，需要放缓心态认真学习一下基础</p></blockquote><h2 id="基本了解"><a href="#基本了解" class="headerlink" title="基本了解"></a>基本了解</h2><p>标准输入重定向（STDIN，文件描述符为0）：默认从键盘上输入，也可以从其他文件或命令输入</p><p>标准输出重定向（STDOUT，文件描述符为1）：默认输出到屏幕</p><p>错误输出重定向（STDERR，文件描述符为2）：默认输出到屏幕</p><h2 id="重定向符"><a href="#重定向符" class="headerlink" title="重定向符"></a>重定向符</h2><table><thead><tr><th>符号</th><th>作用</th></tr></thead><tbody><tr><td>命令 &lt; 文件</td><td>将文件作为命令的标准输入</td></tr><tr><td>命令 &lt;&lt; 分节符</td><td>从标准输入中读入，知道遇到分界符才停止</td></tr><tr><td>命令 &lt; 文件1 &gt; 文件2</td><td>将文件1作为命令的标准输入并将标准输出到文件2</td></tr><tr><td>命令 &gt; 文件</td><td>将标准输出重定向到文件中（清空原来内容）</td></tr><tr><td>命令 2&gt; 文件</td><td>将错误输出重定向到文件中（清空原来内容）</td></tr><tr><td>命令 &gt;&gt; 文件</td><td>将标准输出重定向到文件中（原来内容后添加）</td></tr><tr><td>命令 2&gt;&gt; 文件</td><td>将错误输出重定向到文件中（原来内容后添加）</td></tr><tr><td>命令 &gt;&gt; 文件 2&gt;&amp;1</td><td>将标准输出与错误输出共同写入文件（原来内容后添加）</td></tr><tr><td>命令 &amp;&gt;&gt; 文件</td><td>将标准输出与错误输出共同写入文件（原来内容后添加）</td></tr></tbody></table><p>重定向中的标准输出模式，可以省略文件描述符1，但是错误输出模式的文件描述符2不能省略</p><h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p><img src="https://i.loli.net/2021/03/24/rmqv98CEeUTHMGw.png" alt="image-20210324010708008"></p><p><img src="https://i.loli.net/2021/03/24/MSDPlVLTp6f18zN.png" alt="image-20210324010830849"></p><p>将执行的命令写入文件</p><p><img src="https://i.loli.net/2021/03/24/4VYWwgGOpzhDItM.png" alt="image-20210324005822485"></p><p><code>&gt;</code> 清除原来内容重新写入，<code>&gt;&gt;</code>追加写入</p><p><img src="https://i.loli.net/2021/03/24/9tZvAXUI3ryESxn.png" alt="image-20210324010020515"></p><p>将错误内容重定向到文件</p><p><img src="https://i.loli.net/2021/03/24/3csnWa1lo4yXjtQ.png" alt="image-20210324010135777"></p><blockquote><p>灵活运用重定向符可以获得意想不到的效果</p></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;Linux-重定向学习&quot;&gt;&lt;a href=&quot;#Linux-重定向学习&quot; class=&quot;headerlink&quot; title=&quot;Linux 重定向学习&quot;&gt;&lt;/a&gt;Linux 重定向学习&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;自己太菜了，基础不够扎实，需要放缓心态认真</summary>
+      
+    
+    
+    
+    
+    <category term="Linux" scheme="http://example.com/tags/Linux/"/>
+    
+  </entry>
   
   <entry>
     <title>easy_serialize_php</title>
@@ -117,7 +140,7 @@
     <published>2021-01-18T13:57:40.000Z</published>
     <updated>2021-01-18T13:59:46.000Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>最近做了一道CTF的题，里面应用了http的各种头，记录下来学习学习</p></blockquote><h1 id="BJDCTF-2nd-假猪套天下第一"><a href="#BJDCTF-2nd-假猪套天下第一" class="headerlink" title="[BJDCTF 2nd]假猪套天下第一"></a>[BJDCTF 2nd]假猪套天下第一</h1><h3 id="打开题目"><a href="#打开题目" class="headerlink" title="打开题目"></a>打开题目</h3><p><img src="https://i.loli.net/2020/12/20/NqxatShcbRrQwyj.png" alt="image-20201220223807400"></p><blockquote><p>尝试弱口令登录与SQL注入</p></blockquote><p>抓包</p><p><img src="https://i.loli.net/2020/12/20/Kwq5lz42gfh9oCA.png" alt="image-20201220224157732"></p><p>修改时间，然后发现新线索</p><p><img src="https://i.loli.net/2020/12/20/OWMv6lu5HycxE7g.png" alt="image-20201220224129130"></p><p>使用**<em>Client-ip: 127.0.0.1**</em> ,又出现新的线索</p><p><img src="https://i.loli.net/2020/12/20/8W1zlVCqOQEtvN6.png" alt="image-20201220224438421"></p><p>使用*** Referer: gem-love.com *** 又有新提示</p><p><img src="https://i.loli.net/2020/12/20/ZbgB52qGpS6n8Xl.png" alt="image-20201220224558708"></p><p>这里有个坑，需要使用Commodo 64的全称，Commodore 64；</p><p><strong>* User-Agent： Commodore 64*</strong> </p><p><img src="https://i.loli.net/2020/12/20/rVhP4yswMF38g1k.png" alt="image-20201220225317596"></p><p>指定邮箱*** From: <a href="mailto:&#x72;&#111;&#x6f;&#x74;&#x40;&#103;&#x65;&#x6d;&#x2d;&#x6c;&#x6f;&#118;&#x65;&#x2e;&#99;&#111;&#x6d;">&#x72;&#111;&#x6f;&#x74;&#x40;&#103;&#x65;&#x6d;&#x2d;&#x6c;&#x6f;&#118;&#x65;&#x2e;&#99;&#111;&#x6d;</a>***</p><p><img src="https://i.loli.net/2020/12/20/eWg5bEnzAyQfTkY.png" alt="image-20201220225553050"></p><p>指定服务器**<em>Via: y1ng.vip**</em></p><p><img src="https://i.loli.net/2020/12/20/AxtY9Kzbp2UhNiZ.png" alt="image-20201220225711978"></p><p>base64解码即可</p><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这个题目本身不难，主要考的就是**<em>请求首部字段**</em>的熟练使用</p><table><thead><tr><th>Header</th><th>作用</th></tr></thead><tbody><tr><td>Accept</td><td>指定客户端能够接收的内容类型</td></tr><tr><td>Via</td><td>通知中间网关或代理服务器地址，通信协议</td></tr><tr><td>Referer</td><td>先前的网址，当前请求的网页紧随其后，即来路</td></tr><tr><td>Range</td><td>只请求实体的一部分，指定范围</td></tr><tr><td>From</td><td>发出请求的用户的Email</td></tr><tr><td>Cookie</td><td>存储cookie信息</td></tr><tr><td>User-Agent</td><td>包含发出请求的用户信息</td></tr><tr><td>TE</td><td>客户端接受的传输编码，通知服务器接受尾加头信息</td></tr><tr><td>Host</td><td>指定请求的服务器的域名和端口号</td></tr></tbody></table>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>最近做了一道CTF的题，里面应用了http的各种头，记录下来学习学习</p></blockquote><h1 id="BJDCTF-2nd-假猪套天下第一"><a href="#BJDCTF-2nd-假猪套天下第一" class="headerlink" title="[BJDCTF 2nd]假猪套天下第一"></a>[BJDCTF 2nd]假猪套天下第一</h1><h3 id="打开题目"><a href="#打开题目" class="headerlink" title="打开题目"></a>打开题目</h3><p><img src="https://i.loli.net/2020/12/20/NqxatShcbRrQwyj.png" alt="image-20201220223807400"></p><blockquote><p>尝试弱口令登录与SQL注入</p></blockquote><p>抓包</p><p><img src="https://i.loli.net/2020/12/20/Kwq5lz42gfh9oCA.png" alt="image-20201220224157732"></p><p>修改时间，然后发现新线索</p><p><img src="https://i.loli.net/2020/12/20/OWMv6lu5HycxE7g.png" alt="image-20201220224129130"></p><p>使用**<em>Client-ip: 127.0.0.1**</em> ,又出现新的线索</p><p><img src="https://i.loli.net/2020/12/20/8W1zlVCqOQEtvN6.png" alt="image-20201220224438421"></p><p>使用*** Referer: gem-love.com *** 又有新提示</p><p><img src="https://i.loli.net/2020/12/20/ZbgB52qGpS6n8Xl.png" alt="image-20201220224558708"></p><p>这里有个坑，需要使用Commodo 64的全称，Commodore 64；</p><p><strong>* User-Agent： Commodore 64*</strong> </p><p><img src="https://i.loli.net/2020/12/20/rVhP4yswMF38g1k.png" alt="image-20201220225317596"></p><p>指定邮箱*** From: <a href="mailto:&#114;&#111;&#111;&#116;&#x40;&#x67;&#101;&#109;&#x2d;&#x6c;&#x6f;&#x76;&#x65;&#46;&#99;&#x6f;&#109;">&#114;&#111;&#111;&#116;&#x40;&#x67;&#101;&#109;&#x2d;&#x6c;&#x6f;&#x76;&#x65;&#46;&#99;&#x6f;&#109;</a>***</p><p><img src="https://i.loli.net/2020/12/20/eWg5bEnzAyQfTkY.png" alt="image-20201220225553050"></p><p>指定服务器**<em>Via: y1ng.vip**</em></p><p><img src="https://i.loli.net/2020/12/20/AxtY9Kzbp2UhNiZ.png" alt="image-20201220225711978"></p><p>base64解码即可</p><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这个题目本身不难，主要考的就是**<em>请求首部字段**</em>的熟练使用</p><table><thead><tr><th>Header</th><th>作用</th></tr></thead><tbody><tr><td>Accept</td><td>指定客户端能够接收的内容类型</td></tr><tr><td>Via</td><td>通知中间网关或代理服务器地址，通信协议</td></tr><tr><td>Referer</td><td>先前的网址，当前请求的网页紧随其后，即来路</td></tr><tr><td>Range</td><td>只请求实体的一部分，指定范围</td></tr><tr><td>From</td><td>发出请求的用户的Email</td></tr><tr><td>Cookie</td><td>存储cookie信息</td></tr><tr><td>User-Agent</td><td>包含发出请求的用户信息</td></tr><tr><td>TE</td><td>客户端接受的传输编码，通知服务器接受尾加头信息</td></tr><tr><td>Host</td><td>指定请求的服务器的域名和端口号</td></tr></tbody></table>]]></content>
     
     
       
@@ -452,25 +475,6 @@
     <category term="Docker" scheme="http://example.com/tags/Docker/"/>
     
     <category term="Linux" scheme="http://example.com/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Docker搭建webgoat</title>
-    <link href="http://example.com/2020/10/12/Docker%E6%90%AD%E5%BB%BAwebgoat/"/>
-    <id>http://example.com/2020/10/12/Docker%E6%90%AD%E5%BB%BAwebgoat/</id>
-    <published>2020-10-12T04:35:16.000Z</published>
-    <updated>2020-12-22T11:45:26.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="虚拟机：Ubuntu18-服务器版"><a href="#虚拟机：Ubuntu18-服务器版" class="headerlink" title="虚拟机：Ubuntu18 服务器版"></a>虚拟机：Ubuntu18 服务器版</h3><span id="more"></span><h3 id="开始搭建"><a href="#开始搭建" class="headerlink" title="开始搭建"></a>开始搭建</h3><ol><li>在虚拟机上安装docker；</li><li><code>$ sudo docker search webgoat</code> 查找webgoat镜像；</li><li><code>$ sudo docker pull webgoat/webgoat-8.0</code> 拉取镜像；</li><li><code>$ sudo docker run -dt --name webgoat -p 8080:8080 --rm webgoat/webgoat-8.0</code> 开启镜像服务；</li><li>使用浏览器访问：ip:8080/WebGoat 即可；</li><li>自己创建账户登录，即可使用，全英文界面可能对和我一样的英语白痴来说不太友好；</li></ol><blockquote><p>网上看到一些其他的开启镜像的方法，我使用的时候一直卡着启动不了。</p></blockquote><h3 id="联合搭建webgoat与webwolf"><a href="#联合搭建webgoat与webwolf" class="headerlink" title="联合搭建webgoat与webwolf"></a>联合搭建webgoat与webwolf</h3><ol><li><p>使用docker拉取镜像：<code>sudo docker pull webgoat/goatandwolf</code></p></li><li><p>启动镜像：<code>sudo docker run -d -p 8081:8080 -p 9090:9090 -e TZ=Europe/Amsterdam webgoat/goatandwolf </code></p><blockquote><p>可能会出现浏览器兼容问题</p></blockquote></li></ol>]]></content>
-    
-    
-    <summary type="html">&lt;h3 id=&quot;虚拟机：Ubuntu18-服务器版&quot;&gt;&lt;a href=&quot;#虚拟机：Ubuntu18-服务器版&quot; class=&quot;headerlink&quot; title=&quot;虚拟机：Ubuntu18 服务器版&quot;&gt;&lt;/a&gt;虚拟机：Ubuntu18 服务器版&lt;/h3&gt;</summary>
-    
-    
-    
-    
-    <category term="Docker" scheme="http://example.com/tags/Docker/"/>
     
   </entry>
   
