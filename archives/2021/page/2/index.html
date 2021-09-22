@@ -22,7 +22,7 @@
     <meta name="description" content="">
     <meta property="og:type" content="website">
 <meta property="og:title" content="Lcdm123">
-<meta property="og:url" content="http://example.com/tags/C/index.html">
+<meta property="og:url" content="http://example.com/archives/2021/page/2/index.html">
 <meta property="og:site_name" content="Lcdm123">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="海马少年">
@@ -355,23 +355,28 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2021/09/21/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" >
+        <a class="abstract-title" href = "/2021/01/17/XXE%E6%BC%8F%E6%B4%9E/" >
             
-                <span>存储类别 链接和内存管理</span>
+                <span>XXE漏洞</span>
         </a>
         <div class="abstract-content">
-            Here's something encrypted, password is required to continue reading.
+            [NCTF2019]Fake XML cookbook基础知识XXE漏洞
+1234567XXE(XML External Injection)全称为XML外部实体注入XML：设计用来传输与显示数据，其焦点是数据的内容HTML：设计用来显示数据，其焦点是数据的外观XML文档类型定义，即DTD。XXE漏洞所在的地方XXE漏洞的触发点一般发生在可以上传XML文件的位置，没有对上传的XML文件进行过滤，导致恶意的xml文件被上传。
+
+XML基本了解123456789101112131415161718192021222324252627282930313233343536373839404142...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/09/21</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/01/17</span>
             </div>
             <!-- tags  -->
             
             <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "C">C</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Web">Web</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "WriteUp">WriteUp</a>
     
 </div>
             
@@ -384,52 +389,52 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2021/09/21/%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/" >
+        <a class="abstract-title" href = "/2021/01/17/%E6%97%A0%E5%88%97%E5%90%8D%E6%B3%A8%E5%85%A5/" >
             
-                <span>文件操作</span>
+                <span>无列名注入</span>
         </a>
         <div class="abstract-content">
-            Here's something encrypted, password is required to continue reading.
+            [SWPU2019]Web1
+2021.1.16
+
+这题确实不会，查看大佬的wp
+
+需要利用MariaDB的一些特性
+
+知识点学习12MariaDB数据库可以利用 mysql.innodb_table_stats 查表名select group_concat(table_name) from mysql.innodb_table_stats
+
+无列名注入
+
+正常查询时列名正常显示
+
+
+
+使用联合查询，这时列名发生了变化
+
+这里可以利用这个方式在不知道列名的情况下查询内容
+
+
+使用反引号和别名，直接获取到了单列的值
+
+反引号禁用时
+
+
+这里直接利用了取别名的方式，没有使用反引号
+
+相关学习...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/09/21</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/01/17</span>
             </div>
             <!-- tags  -->
             
             <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "C">C</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Web">Web</a>
     
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/09/20/C%E5%AD%A6%E4%B9%A0/" >
-            
-                <span>C</span>
-        </a>
-        <div class="abstract-content">
-            Here's something encrypted, password is required to continue reading.
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/09/20</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "C">C</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "WriteUp">WriteUp</a>
     
 </div>
             
@@ -437,6 +442,10 @@
     </article>
     
     <!-- paginator  -->
+    
+    <nav class="page-nav">
+        <a class="extend prev" rel="prev" href="/archives/2021/">&lt; PREV</a><a class="page-number" href="/archives/2021/">1</a><span class="page-number current">2</span>
+    </nav>
     
 </main>
             <!-- profile -->
