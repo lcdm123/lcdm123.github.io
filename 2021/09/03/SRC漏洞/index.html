@@ -13,21 +13,29 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="Here&#39;s something encrypted, password is required to continue reading.">
+  <meta name="description" content="">
   <meta name="author" content="海马少年">
   <meta name="keywords" content="">
-  <meta name="description" content="Here&#39;s something encrypted, password is required to continue reading.">
+  <meta name="description" content="逻辑漏洞简述 这里选择的SRC平台是教育SRC，因为这个对于初期的挖洞比较友好，是个不错的练习平台。  在某个学校的漏洞挖掘过程中，发现一个严重的逻辑漏洞，通过这个漏洞可以重置管理员的密码，从而获取到全校学生的敏感信息（姓名，学号，电话，身份证号码等） 漏洞复现查找到该学校网站的统一认证登录页面（目前基本所有的学校都采用了这样的统一登陆认证的方式，一个账户登录所有校园网站，这样虽然方便了学生但是也">
 <meta property="og:type" content="article">
 <meta property="og:title" content="某学院的统一认证登录网站渗透">
 <meta property="og:url" content="http://example.com/2021/09/03/SRC%E6%BC%8F%E6%B4%9E/index.html">
 <meta property="og:site_name" content="Lcdm123">
-<meta property="og:description" content="Here&#39;s something encrypted, password is required to continue reading.">
+<meta property="og:description" content="逻辑漏洞简述 这里选择的SRC平台是教育SRC，因为这个对于初期的挖洞比较友好，是个不错的练习平台。  在某个学校的漏洞挖掘过程中，发现一个严重的逻辑漏洞，通过这个漏洞可以重置管理员的密码，从而获取到全校学生的敏感信息（姓名，学号，电话，身份证号码等） 漏洞复现查找到该学校网站的统一认证登录页面（目前基本所有的学校都采用了这样的统一登陆认证的方式，一个账户登录所有校园网站，这样虽然方便了学生但是也">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image/image-20210922102027284.png">
+<meta property="og:image" content="d:/markdown/image-20210908102812208.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image/image-20210908102912925.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image/image-20210908102957124.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image/image-20210908103030467.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image/image-20210908103226873.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image/image-20210908103246459.png">
 <meta property="article:published_time" content="2021-09-03T06:14:14.000Z">
 <meta property="article:modified_time" content="2021-09-26T16:38:16.239Z">
 <meta property="article:author" content="海马少年">
 <meta property="article:tag" content="SRC">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gitee.com/lcdm123/image/raw/master/image/image-20210922102027284.png">
   
   <title>某学院的统一认证登录网站渗透 - Lcdm123</title>
 
@@ -238,18 +246,28 @@
             <h1 style="display: none">某学院的统一认证登录网站渗透</h1>
             
             <div class="markdown-body">
-              <div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="c0c3c7a41ab458f5e4db6b997bd924503f6c2b9c1af0ae9cd2655b0bc2673371">b87832dbfe75eca9592e6be88bae0195b86c822a8701b4e50abc01385b2c4cff8b6a08d47bddeff2e91fa39a1666a4183828d85a7e01a87add3ef2431cce5fa4ce69603b45f2722017a1c70c56175702d6f386479ee405bb59d1afde1cd802ce359859812d9d87fa637da3b2c0e4fe93a09d04b5c4546838121d7a6ba1c5554b246281687333784e93170b3283aaa482f6411495c1a4d4da33f9f4ce4385dc3434839fa3dbe028c3196aeba42ca4f46097cf65c6868485e5265b464169c2dce62c0e7f8b3557b39781478c40a82fbad05ca648cf781a173c58dfb6391d076c089ae5237917fd117dd7affea4822fb0cd14427412e539c5dc4699dc7f6aca12e105a856dee0d789fc1822828370520e30e8c7c03c1b5f17f4f8ff2757e7ecc63481753eae59d3819fb823ac02a83b8a97e687029fa73afa3af506a1e7c398d560f52a77525ac961210f16b28d347a72ca57d8e64de1351a874571109dd88fcf9b798a0d458cb836a5612c89ae44d5759125a1760f466ed23112f9fc025a18c37adc927bc4d84991f28a9c71fc853880a02956186e0faa75ea416d1526add7dfd2a63249ef6af0fa3f60ca12028ea00dce4ea5aa3be0a6b6daae81bccba875c9e9d4c35ce3d950a6d79056c9195c46edc8b39476bacde64309421ce9a53b9e05db3753229b59974515660068d4368e6aad615ca1586670389ec6340dcb724724ff18d7db8a3c39c2933ebcd4c7eed5224234a7ddab2b5b2169bacc9c95fae3986b34e7c652da583b96c248e6e80b0f38fd3bc2ec7cc20adfa585ca565f10a7534470bde3691eb60833014cf25bc544da8eb4af840159deedf0320943b1ab5766f3a784f11039d32593be2c33f7d3253ac65dfa2b9ee2626262eebdb46d01c96779e9bb4441d18e91a394e15b239d5efd247c0c980b598780ba874eb1db33c556c0dd30ea45c6d93168440a47414ee85e27e379a6991cf92dcd67f5a238175f6c32ec326d676965c6bf7cbb9452669d51119041a6e935f5f47077aedcd0eca3eeac2c6e7b38a519074a72fe998715f255d805d5e625c5781f26b952a367d15db20342214d70ddb04f01a1d054530d57f1b73d35815531c42db46e15bdb4e172f2be1e52b882b06bc9f4f01104c05c67d44e9e0a745c68f3b0bb98c9b6f7c6f46bf44e291ba35f31d5f6bbf3b5835fc360d6d35b629f9f759e0e94a9d25ba96cfe709d0e11945b410b23dce810f68b8348000994d414da64e1e1df39272a426bf5b9f51a6a42555d6ca7078b1425da051019d96559e656ccdb2ce00ea77cd56154908ca8bb55b4dafad17cbee219d4c08683f39a2949f8144203fce5793bed86cc137d7d227a11d5e6b8739c453964dd114ec7fbd06d39328916e89828a234569e5a6d743547458bf0f2202cd7a8955cdee2f67b3e7a7be8a9b344d4b39acc4334e0acd0d1a08a0e5d42880fd064802823eeb8d6136268291a3e29a86d8fba75df88d8b62cafe8c0729a69c92cb5456830607bf4332ef934dcc92b6a60fa202dd2b5431f592699011128c15f263b6aa5bd8edb63f59a56a24e524e515e789182dd42c289946b93f3f28b0689d869054242f688428006df809ecdcda81cdd1c947efbd865ab2535090e6439757d6203ae1ccdb84eff8f01315a85fdf1aee4d822b5e643b7e95009f173b6436598c934c79f079ea6f403c4275581171858726016399fa9e61cc230650944326ed47c2c2e8b0f8831083d4e4ae5fcced32b7872f9450579ce946e6dc5d4699bc6a0ea59139f29b45c5de55033413239880c09ba8182b739fe3cb84fbfd0f3f30198556fb57882d674cac99500944a266db0ef741cb38d5b5b5ee7134c1be861a1484def9e8a65facebf7838f540375cb4492a94364769c823d78eedbbc349faf0cc3309be7e2ac68677a3ac173feecabd7d040fcccbd0071e954847dbb1d45eaa37f8ffbd97dda1b42ca34af4307a0daa4b3b76c1ffd7c9bcebe5b286189df7106ce582f0726a77410f4c30df88c78729cca432d3e250ed2a3be91b4bda9d1e3b34b40d9a4c010a242116b21f656cf6dadee1f52bdf4f01122f7448467796fb42dfb0e209d3d213fe4124ab2ba78c1749ed3840e3ee03ad945a05ecfd262566572bd607be0b7f6d7ca0efa498a63213527d55109b8f54be49163477fd97d798def5b62341ca2d4a9bfcd66245e2ca85a644354368df71c957f8386449d330d0fe035fc46ec1b5e4557a103042d9e95f0a74bf58abd9228f78f139782f2c2b8edafb5c3343cd4fbdbf81297882d6651244416dcafbe6be9425469f457321ee0700289d05fa7160dced5c070c5fa9dde3a5c980c37adc16ca29161afb24c2d8ce11714de3029cd5058ca6282a10b1fd4e0bed65efe977498b5b6d161eb7cdca5698c9583f92861a258e732cfdff30d5e94f84c11ad5f0ea5ebe862e5bc23c31b1a95bbd3e0e0cee62afad989d5ab9aee8e6107fe2f327c63561c6232bbf484c762b85be41b6d6415f68c88ab639f0643955ed920e1db95a64a86592214dad4ede19353da741c3ee9466230ac0e4032b47b328a3c652391f9c2914e94822d5218f76614c9cd0d6357e1414b44b4f39b48031e208cf1706a731e30b37f0f27f008eb4483a513eccd39275accaf50fa15a9a5e41508be2b37b51071f7e41dad0667f91a302d5931d8c51532b1db5434e3a30495f713ef61e41625633e8ce5ca653a4cfcd20f687adb3675385b3c7f239371df18a3c089f31a8ff12ec3bc307e8bca1f7f023edf50168f27005c8ef332164c13cca767be1f09dcfa5360a4f4a4cdac1455f3c03db697fae3a78ea8ce81145b4d7b67256e12015a858f3b024deaa95e6f9208bc01e4cfcafe274acfff38498979bacf019f7113e1ac73c8e4298f2e2b89e71a7e5a0bc4dcde287397fa6bbac2afee8f24fbb638a793c365b2aa658d20a270b06c478f4f55799e2603f994a5f344197d9ec86e666b101d0ad10a6968ab628a29416722103075edcf85f86fda8a64cadb26e76a3a8764806514a4c64017b50d00f56d42d44db91069c9e9c8e2eb1202f967cc3b3f4e82d104a9474aaf3ad55786e3382265a53d84b4bdeed12226c86090e6fd5fb798943c08f75a1a20bcf8a56524980d148af2ac10bfcd2aa7ce0bb5cb770d3e705f915574e417a6ef8d270535687aae321c1aa4a1508055b30a57e5f9d658438bc40cc6599c3bdf29181bc83399591e158c14ae6452bb9cae4bd557b9af9fe11757cefd4036a5df414d8385f0d0e0a7b304431f1b724f4d216a69e319f3e5202b136bf154d17fb1c3f41f14659a669986a6a8c3cfc94b2268b4935ee0ec5d7a16b96334d34417756e521b1350f90c500733db96f86c2c435a5a645e2500bb8f6a90dcec8f1957eeab3bbf2a46815c8580d565b64eb767c6c93181f7888928efcf514b18961dcace6fc5e32fa792976595351f0b592a95fd87219549dfb59713624f87bb9d8eb2916e3f51fae135fd04373ebcd3e8c8100eb06d22c0e3d1c7f17eefd8917827cd0fe89d2ea4eef274e109e9c05d535b7484483fd1feb34eefa6ec38a939d25cb88b8b93f3d1493acde2675d7aa82acb3aed4ee8d1ae4eb7b26d4b431be26d3e43b4d3c27d3741544784e8277fa656dc5273f0639b77f19348d45560be8af3e19aabfee6e17f5ae9a6e56db9f6875f8dd4ec60a0381c0f9a2fcd0d5c2e7adc16a6b18b5d4fe35bee28edca8</script>
-  <div class="hbe hbe-content">
-    <div class="hbe hbe-input hbe-input-default">
-      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
-      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
-        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
-      </label>
-    </div>
-  </div>
-</div>
-<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
+              <h1 id="逻辑漏洞"><a href="#逻辑漏洞" class="headerlink" title="逻辑漏洞"></a>逻辑漏洞</h1><h3 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h3><blockquote>
+<p>这里选择的SRC平台是教育SRC，因为这个对于初期的挖洞比较友好，是个不错的练习平台。</p>
+</blockquote>
+<p>在某个学校的漏洞挖掘过程中，发现一个严重的逻辑漏洞，通过这个漏洞可以重置管理员的密码，从而获取到全校学生的敏感信息（姓名，学号，电话，身份证号码等）</p>
+<h3 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h3><p>查找到该学校网站的统一认证登录页面（目前基本所有的学校都采用了这样的统一登陆认证的方式，一个账户登录所有校园网站，这样虽然方便了学生但是也会造成一些安全隐患）</p>
+<p>忘记登录密码</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image/image-20210922102027284.png" srcset="/img/loading.gif" lazyload alt="image-20210922102027284"></p>
+<p>之后直接选择修改 admin 账户密码，然后邮箱直接填写自己的邮箱地址，发包抓返回包并且修改返回包内容</p>
+<p><img src="D:\markdown\image-20210908102812208.png" srcset="/img/loading.gif" lazyload alt="image-20210908102812208"></p>
+<blockquote>
+<p>这里报错的时候 code 的值为 1，所以我尝试将 1 修改为 0，绕过报错</p>
+</blockquote>
+<p>成功绕过，并且在自己邮箱获得了重置密码的邮件</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image/image-20210908102912925.png" srcset="/img/loading.gif" lazyload alt="image-20210908102912925"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image/image-20210908102957124.png" srcset="/img/loading.gif" lazyload alt="image-20210908102957124"></p>
+<p>然后直接修改密码就可以了</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image/image-20210908103030467.png" srcset="/img/loading.gif" lazyload alt="image-20210908103030467"></p>
+<p>登录后就是超级管理员权限了，并且可以在里面的某个系统中获取到学生敏感信息，而且还可以直接下载（下载是违法的，所以这里没有下载信息）</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image/image-20210908103226873.png" srcset="/img/loading.gif" lazyload alt="image-20210908103226873"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image/image-20210908103246459.png" srcset="/img/loading.gif" lazyload alt="image-20210908103246459"></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这种漏洞虽然简单，但是却十分常见，可见现在的厂商产品安全保护做得有多差，漏洞厂商已经修复了。</p>
+
             </div>
             <hr>
             <div>
