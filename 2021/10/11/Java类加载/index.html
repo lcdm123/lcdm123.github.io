@@ -16,30 +16,26 @@
   <meta name="description" content="">
   <meta name="author" content="海马少年">
   <meta name="keywords" content="">
-  <meta name="description" content="最近做了一道CTF的题，里面应用了http的各种头，记录下来学习学习  [BJDCTF 2nd]假猪套天下第一打开题目  尝试弱口令登录与SQL注入  抓包  修改时间，然后发现新线索  使用**Client-ip: 127.0.0.1** ,又出现新的线索  使用*** Referer: gem-love.com *** 又有新提示  这里有个坑，需要使用Commodo 64的全称，Commo">
+  <meta name="description" content="Java类加载机制前言Java 程序是由 class 文件组成的一个完整的应用程序，再运行程序时，并不会一次性加载所有的 class 文件进入内存，而是通过 java 的类加载机制进行动态加载，从而转换为 java.lang.Class 的一个实例 Java 代码需要先编译为 Class 字节码，然后被虚拟机解释执行，把字节码从 Class 文件（或者其他外部来源）加载到内存，并形成可能被 JVM">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HTTP特殊请求头">
-<meta property="og:url" content="http://example.com/2021/01/18/HTTP%E7%89%B9%E6%AE%8A%E8%AF%B7%E6%B1%82%E5%A4%B4/index.html">
+<meta property="og:title" content="Java类加载">
+<meta property="og:url" content="http://example.com/2021/10/11/Java%E7%B1%BB%E5%8A%A0%E8%BD%BD/index.html">
 <meta property="og:site_name" content="Lcdm123">
-<meta property="og:description" content="最近做了一道CTF的题，里面应用了http的各种头，记录下来学习学习  [BJDCTF 2nd]假猪套天下第一打开题目  尝试弱口令登录与SQL注入  抓包  修改时间，然后发现新线索  使用**Client-ip: 127.0.0.1** ,又出现新的线索  使用*** Referer: gem-love.com *** 又有新提示  这里有个坑，需要使用Commodo 64的全称，Commo">
+<meta property="og:description" content="Java类加载机制前言Java 程序是由 class 文件组成的一个完整的应用程序，再运行程序时，并不会一次性加载所有的 class 文件进入内存，而是通过 java 的类加载机制进行动态加载，从而转换为 java.lang.Class 的一个实例 Java 代码需要先编译为 Class 字节码，然后被虚拟机解释执行，把字节码从 Class 文件（或者其他外部来源）加载到内存，并形成可能被 JVM">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://i.loli.net/2020/12/20/NqxatShcbRrQwyj.png">
-<meta property="og:image" content="https://i.loli.net/2020/12/20/Kwq5lz42gfh9oCA.png">
-<meta property="og:image" content="https://i.loli.net/2020/12/20/OWMv6lu5HycxE7g.png">
-<meta property="og:image" content="https://i.loli.net/2020/12/20/8W1zlVCqOQEtvN6.png">
-<meta property="og:image" content="https://i.loli.net/2020/12/20/ZbgB52qGpS6n8Xl.png">
-<meta property="og:image" content="https://i.loli.net/2020/12/20/rVhP4yswMF38g1k.png">
-<meta property="og:image" content="https://i.loli.net/2020/12/20/eWg5bEnzAyQfTkY.png">
-<meta property="og:image" content="https://i.loli.net/2020/12/20/AxtY9Kzbp2UhNiZ.png">
-<meta property="article:published_time" content="2021-01-18T13:57:40.000Z">
-<meta property="article:modified_time" content="2021-01-18T13:59:45.974Z">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211007203744816.png">
+<meta property="og:image" content="d:/markdown/image-20211008011053894.png">
+<meta property="og:image" content="d:/markdown/image-20211007235659052.png">
+<meta property="article:published_time" content="2021-10-11T11:15:55.000Z">
+<meta property="article:modified_time" content="2021-10-11T11:17:07.790Z">
 <meta property="article:author" content="海马少年">
+<meta property="article:tag" content="代码审计">
 <meta property="article:tag" content="Web">
-<meta property="article:tag" content="WriteUp">
+<meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://i.loli.net/2020/12/20/NqxatShcbRrQwyj.png">
+<meta name="twitter:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211007203744816.png">
   
-  <title>HTTP特殊请求头 - Lcdm123</title>
+  <title>Java类加载 - Lcdm123</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -186,7 +182,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="HTTP特殊请求头">
+            <span class="h2" id="subtitle" title="Java类加载">
               
             </span>
 
@@ -196,8 +192,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-01-18 21:57" pubdate>
-        2021年1月18日 晚上
+      <time datetime="2021-10-11 19:15" pubdate>
+        2021年10月11日 晚上
       </time>
     </span>
   
@@ -207,7 +203,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      582 字
+      2.6k 字
     </span>
   
 
@@ -216,7 +212,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      2 分钟
+      8 分钟
     </span>
   
 
@@ -245,90 +241,106 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">HTTP特殊请求头</h1>
+            <h1 style="display: none">Java类加载</h1>
             
             <div class="markdown-body">
-              <blockquote>
-<p>最近做了一道CTF的题，里面应用了http的各种头，记录下来学习学习</p>
-</blockquote>
-<h1 id="BJDCTF-2nd-假猪套天下第一"><a href="#BJDCTF-2nd-假猪套天下第一" class="headerlink" title="[BJDCTF 2nd]假猪套天下第一"></a>[BJDCTF 2nd]假猪套天下第一</h1><h3 id="打开题目"><a href="#打开题目" class="headerlink" title="打开题目"></a>打开题目</h3><p><img src="https://i.loli.net/2020/12/20/NqxatShcbRrQwyj.png" srcset="/img/loading.gif" lazyload alt="image-20201220223807400"></p>
+              <h1 id="Java类加载机制"><a href="#Java类加载机制" class="headerlink" title="Java类加载机制"></a>Java类加载机制</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Java 程序是由 class 文件组成的一个完整的应用程序，再运行程序时，并不会一次性加载所有的 class 文件进入内存，而是通过 java 的类加载机制进行动态加载，从而转换为 <code>java.lang.Class</code> 的一个实例</p>
+<p>Java 代码需要先编译为 Class 字节码，然后被虚拟机解释执行，把字节码从 Class 文件（或者其他外部来源）加载到内存，并形成可能被 JVM 直接使用得结构数据，这一过程就是类加载</p>
+<p>加载类的过程可以分为：加载、链接（验证 准备 解析）、初始化</p>
+<p>加载===&gt;验证====&gt;准备====&gt;解析====&gt;初始化</p>
+<p>Java 类初始化的时候会调用 <code>java.langClassLoder</code> 加载类字节码，<code>ClassLoader</code> 会调用 JVM 的native方法来定义一个 <code>java.lang.Class</code></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211007203744816.png" srcset="/img/loading.gif" lazyload alt="image-20211007203744816"></p>
+<h2 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h2><p>这里父类加载器不是通过继承关系来实现的，而是采用组合实现的</p>
+<p>站在JVM虚拟机的角度讲只存在两种类加载器：</p>
+<ul>
+<li>启动类加载器：使用C++实现</li>
+<li>其他类加载器：使用 java 语言实现</li>
+</ul>
+<p>开发人员角度存在三种类加载器：</p>
+<ul>
+<li>根类加载器</li>
+<li>扩展类加载器</li>
+<li>系统类加载器</li>
+</ul>
+<h3 id="根类加载器（Bootstrap）"><a href="#根类加载器（Bootstrap）" class="headerlink" title="根类加载器（Bootstrap）"></a>根类加载器（Bootstrap）</h3><p>根类加载器是最低层得类加载器，是虚拟机得一部分，它是由C++语言实现得，并且没有父类加载器，也没有继承<code>java.lang.ClassLoader</code>类。它主要负责加载由系统属性 <code>sun.boot.class.path</code> 指定得路径下得核心类库。根类加载器只加载<code>java，javax，sun</code>开头的类。</p>
+<h3 id="扩展类加载器（Extension）"><a href="#扩展类加载器（Extension）" class="headerlink" title="扩展类加载器（Extension）"></a>扩展类加载器（Extension）</h3><p><code>ExtClassLoader</code>父加载器是根类加载器</p>
+<h3 id="系统类加载器（System）"><a href="#系统类加载器（System）" class="headerlink" title="系统类加载器（System）"></a>系统类加载器（System）</h3><p><code>AppClassLoader</code> 应用类加载器，默认的类加载器，父类是扩展类加载器。</p>
 <blockquote>
-<p>尝试弱口令登录与SQL注入</p>
+<p>java虚拟机对class文件采用的是按需加载的方式，当需要使用该类的时候才会把class文件加载到内存生成class对象。</p>
+<p>加载某个类的class文件时，java虚拟机采用的是双亲委派模式，即把加载类的请求交给父加载器处理，是一种任务委派模式。</p>
 </blockquote>
-<p>抓包</p>
-<p><img src="https://i.loli.net/2020/12/20/Kwq5lz42gfh9oCA.png" srcset="/img/loading.gif" lazyload alt="image-20201220224157732"></p>
-<p>修改时间，然后发现新线索</p>
-<p><img src="https://i.loli.net/2020/12/20/OWMv6lu5HycxE7g.png" srcset="/img/loading.gif" lazyload alt="image-20201220224129130"></p>
-<p>使用**<em>Client-ip: 127.0.0.1**</em> ,又出现新的线索</p>
-<p><img src="https://i.loli.net/2020/12/20/8W1zlVCqOQEtvN6.png" srcset="/img/loading.gif" lazyload alt="image-20201220224438421"></p>
-<p>使用*** Referer: gem-love.com *** 又有新提示</p>
-<p><img src="https://i.loli.net/2020/12/20/ZbgB52qGpS6n8Xl.png" srcset="/img/loading.gif" lazyload alt="image-20201220224558708"></p>
-<p>这里有个坑，需要使用Commodo 64的全称，Commodore 64；</p>
-<p><strong>* User-Agent： Commodore 64*</strong> </p>
-<p><img src="https://i.loli.net/2020/12/20/rVhP4yswMF38g1k.png" srcset="/img/loading.gif" lazyload alt="image-20201220225317596"></p>
-<p>指定邮箱*** From: <a href="mailto:&#x72;&#111;&#x6f;&#116;&#x40;&#103;&#101;&#109;&#x2d;&#108;&#x6f;&#118;&#101;&#x2e;&#99;&#111;&#x6d;">&#x72;&#111;&#x6f;&#116;&#x40;&#103;&#101;&#109;&#x2d;&#108;&#x6f;&#118;&#101;&#x2e;&#99;&#111;&#x6d;</a>***</p>
-<p><img src="https://i.loli.net/2020/12/20/eWg5bEnzAyQfTkY.png" srcset="/img/loading.gif" lazyload alt="image-20201220225553050"></p>
-<p>指定服务器**<em>Via: y1ng.vip**</em></p>
-<p><img src="https://i.loli.net/2020/12/20/AxtY9Kzbp2UhNiZ.png" srcset="/img/loading.gif" lazyload alt="image-20201220225711978"></p>
-<p>base64解码即可</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这个题目本身不难，主要考的就是**<em>请求首部字段**</em>的熟练使用</p>
-<table>
-<thead>
-<tr>
-<th>Header</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Accept</td>
-<td>指定客户端能够接收的内容类型</td>
-</tr>
-<tr>
-<td>Via</td>
-<td>通知中间网关或代理服务器地址，通信协议</td>
-</tr>
-<tr>
-<td>Referer</td>
-<td>先前的网址，当前请求的网页紧随其后，即来路</td>
-</tr>
-<tr>
-<td>Range</td>
-<td>只请求实体的一部分，指定范围</td>
-</tr>
-<tr>
-<td>From</td>
-<td>发出请求的用户的Email</td>
-</tr>
-<tr>
-<td>Cookie</td>
-<td>存储cookie信息</td>
-</tr>
-<tr>
-<td>User-Agent</td>
-<td>包含发出请求的用户信息</td>
-</tr>
-<tr>
-<td>TE</td>
-<td>客户端接受的传输编码，通知服务器接受尾加头信息</td>
-</tr>
-<tr>
-<td>Host</td>
-<td>指定请求的服务器的域名和端口号</td>
-</tr>
-</tbody></table>
+<h3 id="JVM类加载机制"><a href="#JVM类加载机制" class="headerlink" title="JVM类加载机制"></a>JVM类加载机制</h3><ul>
+<li>全盘负责：当一个类加载器负责加载某个 Class 时，该 Class 所依赖的和引用的其他 Class 也将由该类加载器负责载入，除非显示的使用另外一个类加载器来载入</li>
+<li>父类委托：让父类加载器试图加载该类，只有父类无法完成时才尝试使用自己路径中的加载器</li>
+<li>缓存机制：将所有的加载过的 Class 都缓存，程序使用某个 Class 时，类加载器先从缓存区寻找该类的 Class，只有缓存区不存在时系统才会读取该类的二进制数据，并将其转换成 Class 对象，存入缓存区。</li>
+</ul>
+<h2 id="双亲委派机制"><a href="#双亲委派机制" class="headerlink" title="双亲委派机制"></a>双亲委派机制</h2><p>加载器比较懒，喜欢把东西交给父类加载，父类加载不了时就会向下委派</p>
+<p>意义：</p>
+<ul>
+<li>系统类防止内存出现多份同样的字节码</li>
+<li>保证 java 程序安全稳定运行</li>
+</ul>
+<h2 id="类的加载"><a href="#类的加载" class="headerlink" title="类的加载"></a>类的加载</h2><ol>
+<li>命令行启动时由 JVM 初始化加载</li>
+<li>通过 Class.forName() 方法动态加载</li>
+<li>通过 ClassLoader.LoadClass() 方法动态加载</li>
+</ol>
+<blockquote>
+<p>区别就是对于初始化块的处理</p>
+</blockquote>
+<p><img src="D:\markdown\image-20211008011053894.png" srcset="/img/loading.gif" lazyload alt="image-20211008011053894"></p>
+<h2 id="ClassLoader类"><a href="#ClassLoader类" class="headerlink" title="ClassLoader类"></a>ClassLoader类</h2><blockquote>
+<p>除了根类加载器的所有的类加载器都必须继承<code>java.lang.ClassLoader</code>它是一个抽象类</p>
+</blockquote>
+<p>某些时候我们获取一个类的类加载器时可能会返回一个 null 值，因为 <code>Bootstrap Loader</code>(引导类加载器)是用C语言实现的，找不到一个确定的返回父类Loader的方式，于是就返回NULL</p>
+<p><code>getParent(String name)</code>方法 （返回该类加载器的父类加载器）</p>
+<p><code>loadClass(String name)</code>方法（加载指定的 java 类）</p>
+<p><code>findClass(String name)</code>方法（查找指定的类）</p>
+<p><code>findLoadedClass(String name)</code>方法（查找 JVM 已经加载过的类）</p>
+<p><code>defineClass(String name)</code>方法（ 定义一个java类 ）</p>
+<p><code>resolveClass(String name)</code>方法 （链接指定的 java 类）</p>
+<p><img src="D:\markdown\image-20211007235659052.png" srcset="/img/loading.gif" lazyload alt="image-20211007235659052"></p>
+<h2 id="URLClassLoader"><a href="#URLClassLoader" class="headerlink" title="URLClassLoader"></a>URLClassLoader</h2><blockquote>
+<p>能够从本地或者网络上指定位置加载类</p>
+</blockquote>
+<p>默认父类加载器是系统类加载器，它拥有从远程服务器上加载类的能力，通过 <code>URLClassLoader</code> 可以实现对一些webshell 的远程加载，对某个漏洞的深入利用</p>
+<h2 id="自定义类加载器"><a href="#自定义类加载器" class="headerlink" title="自定义类加载器"></a>自定义类加载器</h2><p>通常情况下我们会使用系统类加载器，但是有时候会自定义类加载器，比如通过网络传输 java 类的字节码，为了保证安全需要对字节码进行加密处理，这时系统类加载器就无法完成工作。</p>
+<p>一般自定义类加载器的步骤</p>
+<ol>
+<li>继承<code>CLassLoader</code></li>
+<li>重写<code>findClass</code>方法</li>
+</ol>
+<p>需要注意的点：</p>
+<ul>
+<li>最好不要重写 loadClass 方法，这样容易破坏双亲关系</li>
+</ul>
+<p>学习文章</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/wangzhiwubigdata/God-Of-BigData/blob/master/JVM/jvm%E7%B3%BB%E5%88%97(%E4%B8%80)java%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6.md">https://github.com/wangzhiwubigdata/God-Of-BigData/blob/master/JVM/jvm%E7%B3%BB%E5%88%97(%E4%B8%80)java%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6.md</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhishihezi.net/endpoint/richtext/4aaa4fe6bc2249252df9ae2b1891b451?event=436b34f44b9f95fd3aa8667f1ad451b173526ab5441d9f64bd62d183bed109b0ea1aaaa23c5207a446fa6de9f588db3958e8cd5c825d7d5216199d64338d9d00f31548dfe08150ea441b2e8b5b1ff2815007ee7d0070dfde1640b5779eca8d36254c858bd38596ae8769abdaece4c94fb734ea004bf99cfcb44391ec0504f7eddb77ba32acfab113b91e8352187479ffee0ff0fa8ff354b0bc46c4e3e1dc8a97c6b6c515798128245dacf21ddc8d4f5787b19982c9ef340be67e92845cfd034625f6ce4eba9736952a8a40ff54bb957b6e383b20e9b4df48c43718ec6e3ad027c87fd16f9a06d4d6a92ccd81cab45b5fce25b117baa7eae9c2a905abc262fb03">https://zhishihezi.net/endpoint/richtext/4aaa4fe6bc2249252df9ae2b1891b451?event=436b34f44b9f95fd3aa8667f1ad451b173526ab5441d9f64bd62d183bed109b0ea1aaaa23c5207a446fa6de9f588db3958e8cd5c825d7d5216199d64338d9d00f31548dfe08150ea441b2e8b5b1ff2815007ee7d0070dfde1640b5779eca8d36254c858bd38596ae8769abdaece4c94fb734ea004bf99cfcb44391ec0504f7eddb77ba32acfab113b91e8352187479ffee0ff0fa8ff354b0bc46c4e3e1dc8a97c6b6c515798128245dacf21ddc8d4f5787b19982c9ef340be67e92845cfd034625f6ce4eba9736952a8a40ff54bb957b6e383b20e9b4df48c43718ec6e3ad027c87fd16f9a06d4d6a92ccd81cab45b5fce25b117baa7eae9c2a905abc262fb03</a></p>
 
             </div>
             <hr>
             <div>
               <div class="post-metas mb-3">
                 
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Web/">Web</a>
+                    
+                  </div>
+                
                 
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
+                      <a class="hover-with-bg" href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">代码审计</a>
+                    
                       <a class="hover-with-bg" href="/tags/Web/">Web</a>
                     
-                      <a class="hover-with-bg" href="/tags/WriteUp/">WriteUp</a>
+                      <a class="hover-with-bg" href="/tags/Java/">Java</a>
                     
                   </div>
                 
@@ -345,18 +357,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/01/18/%E4%BA%8C%E5%88%86%E6%B3%95%E7%9B%B2%E6%B3%A8/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">二分法盲注</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/01/17/XXE%E6%BC%8F%E6%B4%9E/">
-                        <span class="hidden-mobile">XXE漏洞</span>
+                      <a href="/2021/09/27/C%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80/">
+                        <span class="hidden-mobile">C学习基础</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
