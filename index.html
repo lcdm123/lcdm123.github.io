@@ -322,7 +322,17 @@ Java 代码需要先编译为 Class 字节码，然后被虚拟机解释执行�
           
             
           
-          Here's something encrypted, password is required to continue reading.
+          存储类别、链接和内存管理被存储的每个值都占有一定的物理内存，C 语言把这样的一块内存称为对象。
+对象可以存储一个或者多个值，一个对象可能并未存储实际的值，但是它存储实际的值时一定具有相应的大小
+存储类别作用域C的作用域：
+
+块作用域：&#123; &#125;
+函数作用域：仅用于函数的 goto 标签
+函数原型作用域：函数的形参
+文件作用域：声明在最开始的变量
+
+链接C 变量有 3 种链接属性：
+
         </a>
       </p>
 
@@ -365,7 +375,10 @@ Java 代码需要先编译为 Class 字节码，然后被虚拟机解释执行�
           
             
           
-          Here's something encrypted, password is required to continue reading.
+          文件操作从文件读取信息或者将信息写入文件，这种程序与文件的交互形式就是文件重定向
+与文件通信文件：通常是已经存储在磁盘或固态硬盘上的一段已命名的存储区。
+C 把文件看成一系列连续的字节，每个字节可以被单独读取，C提供两种文件模式：文本模式和二进制模式
+文本模式 二进制模式文件的内容都以二进制形式（0或1）储存。但是，如果文件最初使用二进制编码的字符（例如， ASCII或Unicode）表示文本（就
         </a>
       </p>
 
@@ -408,7 +421,31 @@ Java 代码需要先编译为 Class 字节码，然后被虚拟机解释执行�
           
             
           
-          Here's something encrypted, password is required to continue reading.
+          Vulnhubhttps://www.vulnhub.com/
+一、HarryPotter: Aragog
+kali：192.168.1.15
+Win10：192.168.1.7
+靶机：192.168.1.101
+2个flag
+
+
+使用nmap发现主机位置
+
+
+
+扫描主机开放的端口
+
+
+
+开放了80端口，尝试直接访问获取一些信息，但是只有一张图片
+
+
+
+尝试扫描目录，获取网站信息
+
+
+
+访问这个网
         </a>
       </p>
 
@@ -453,7 +490,20 @@ Java 代码需要先编译为 Class 字节码，然后被虚拟机解释执行�
           
             
           
-          Here's something encrypted, password is required to continue reading.
+          upload-labs
+Pass-04上传 .htaccess 
+1AddType application/x-httpd-php .jpg
+
+Pass-05文件会自动重命名所以不能上传 .htaccess 文件
+
+可以大小写绕过上传但是系统好像不能解析，访问到的结果是错误的
+Pass-06
+与之前相比去掉了除去空格的函数
+末尾加空格即可绕过上传 
+
+Pass-07
+
+.htaccess 文件不能
         </a>
       </p>
 
@@ -485,49 +535,6 @@ Java 代码需要先编译为 Class 字节码，然后被虚拟机解释执行�
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/09/03/SRC%E6%BC%8F%E6%B4%9E/" target="_self">
-          某学院的统一认证登录网站渗透
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/09/03/SRC%E6%BC%8F%E6%B4%9E/" target="_self">
-          
-          
-            
-          
-          Here's something encrypted, password is required to continue reading.
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-03 14:14" pubdate>
-              2021-09-03
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/SRC/">SRC</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
         <a href="/2021/09/02/Freebuf%E9%9D%B6%E5%9C%BA/" target="_self">
           Freebuf域渗透靶场
         </a>
@@ -539,7 +546,22 @@ Java 代码需要先编译为 Class 字节码，然后被虚拟机解释执行�
           
             
           
-          Here's something encrypted, password is required to continue reading.
+          Freebuf 域渗透靶场搭建https://www.freebuf.com/articles/web/265049.html
+
+搭建靶场就是一般步骤
+需要注意的步骤
+
+修改父域的DNS设置
+
+
+财务域是一个单独的域环境，财务核心系统属于财务域
+
+web服务器直接拿的红日改的，真方便
+
+
+经过后期的攻击，发现子域和父域之间存在一些问题，未找到原因！安装配置时只需要添加好网卡，自己增加用户即可
+
+虚
         </a>
       </p>
 
@@ -582,7 +604,13 @@ Java 代码需要先编译为 Class 字节码，然后被虚拟机解释执行�
           
             
           
-          Here's something encrypted, password is required to continue reading.
+          BlueCMS
+BlueCMS__v1.6_sp1
+
+前言这个CMS是一个很老的版本，这里利用它来学习熟悉一下代码审计。审计的过程中暂时没有利用Seay工具去分析代码，而是尝试直接分析原框架，毕竟这个CMS的源码比较简单。
+代码审计初步了解首先从根目录下的index.php文件入手，它是整个程序的入口，一开始它加载了两个php文件，之后再分析这两个文件作用
+
+然后就是页面的各个板块信息的查询与展示
         </a>
       </p>
 
@@ -648,6 +676,66 @@ Java 代码需要先编译为 Class 字节码，然后被虚拟机解释执行�
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
             <time datetime="2021-01-18 23:26" pubdate>
+              2021-01-18
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Web/">Web</a>
+            
+              <a href="/tags/WriteUp/">WriteUp</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/01/18/HTTP%E7%89%B9%E6%AE%8A%E8%AF%B7%E6%B1%82%E5%A4%B4/" target="_self">
+          HTTP特殊请求头
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/01/18/HTTP%E7%89%B9%E6%AE%8A%E8%AF%B7%E6%B1%82%E5%A4%B4/" target="_self">
+          
+          
+            
+          
+          
+最近做了一道CTF的题，里面应用了http的各种头，记录下来学习学习
+
+[BJDCTF 2nd]假猪套天下第一打开题目
+
+尝试弱口令登录与SQL注入
+
+抓包
+
+修改时间，然后发现新线索
+
+使用**Client-ip: 127.0.0.1** ,又出现新的线索
+
+使用*** Referer: gem-love.com *** 又有新提示
+
+这里有个坑，需要使用Commodo 64的全称，Commo
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-01-18 21:57" pubdate>
               2021-01-18
             </time>
           </div>

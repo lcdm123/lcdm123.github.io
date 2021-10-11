@@ -13,21 +13,28 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="Here&#39;s something encrypted, password is required to continue reading.">
+  <meta name="description" content="">
   <meta name="author" content="海马少年">
   <meta name="keywords" content="">
-  <meta name="description" content="Here&#39;s something encrypted, password is required to continue reading.">
+  <meta name="description" content="存储类别、链接和内存管理被存储的每个值都占有一定的物理内存，C 语言把这样的一块内存称为对象。 对象可以存储一个或者多个值，一个对象可能并未存储实际的值，但是它存储实际的值时一定具有相应的大小 存储类别作用域C的作用域：  块作用域：&amp;#123; &amp;#125; 函数作用域：仅用于函数的 goto 标签 函数原型作用域：函数的形参 文件作用域：声明在最开始的变量  链接C 变量有 3 种链接属性：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="存储类别 链接和内存管理">
 <meta property="og:url" content="http://example.com/2021/09/21/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/index.html">
 <meta property="og:site_name" content="Lcdm123">
-<meta property="og:description" content="Here&#39;s something encrypted, password is required to continue reading.">
+<meta property="og:description" content="存储类别、链接和内存管理被存储的每个值都占有一定的物理内存，C 语言把这样的一块内存称为对象。 对象可以存储一个或者多个值，一个对象可能并未存储实际的值，但是它存储实际的值时一定具有相应的大小 存储类别作用域C的作用域：  块作用域：&amp;#123; &amp;#125; 函数作用域：仅用于函数的 goto 标签 函数原型作用域：函数的形参 文件作用域：声明在最开始的变量  链接C 变量有 3 种链接属性：">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210921135941036.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210921141811428.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210921142443122.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210921143327517.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210921143941199.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210921150438063.png">
 <meta property="article:published_time" content="2021-09-21T12:37:58.000Z">
 <meta property="article:modified_time" content="2021-09-21T14:25:15.621Z">
 <meta property="article:author" content="海马少年">
 <meta property="article:tag" content="C">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210921135941036.png">
   
   <title>存储类别 链接和内存管理 - Lcdm123</title>
 
@@ -238,18 +245,75 @@
             <h1 style="display: none">存储类别 链接和内存管理</h1>
             
             <div class="markdown-body">
-              <div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="f8458d09f9f22619d3ce578de89ff229959cbbb2038fc87097da5ce7dc034f92">b87832dbfe75eca9592e6be88bae0195b86c822a8701b4e50abc01385b2c4cff1a70b86b5cf789d1a5551d30cf7d0c66c64dff204679392a458d58367de03f8ed02bee1f8bc87b165b7af7270b280ff9a73590db1853aa7348ac5c336ed7676b2da60207e733bbb1da403bae78749eac39d212b2c369291022f909080cf9bf21e690c7ca156a8d30f8fb7207ce1ecd9721c15c24ba589fa9f5cb2fe7c19d20b31068683d68230afb04422d375a6bfed7231a1e39e018ee6f5a3213f3efd03b772fa73d215c612d85695df8f2fcc9ca26436b6c1252336ec810ceadf326c0f2bb0685dfd26f80a6f9ce37e666545b7308257a8d4b3857f63ad94e0edf0c4555f70788e30a8fc55429aa79d20d3359aedf171890791f49ff0940b58a7afa4adfb009dcea8026e8b8b518c891f2860282d279d3a5dde8db766581204f2412e10beb4d2cf2171a1317097eb1bbb6c50a98a0c1ff50dbce1976a2c4f673176d26df2171f6809b294ca23c20c679d556d125c5b555fc2f5c8856d1b470fefc7bfb52659b022296c9eb83ff4b85b212a0befbd8a6e1bf7f3790a5d8e1dec96564917066e3477ce2a9a77ea0b8503f05fe5b09e6ecef308e4f6fb149222d8cca9deb5879c3633cfac83e13fb6f65ded6f82dd4bf3602ee825783f4925d7dc42eab9013b42a8282b98258771a91ed77fbc4268fa479641fe76f2766ac9736e5e65e71c169674e5127891b22794d298bcae99bd1c500ca5ffd80e888bacad71e998e916a6f208572dae92c5a6b201d69d22ea3802eaf7fef81ce74fade660f2584d4c3f039ac2456f250ed8c201f3faaeb2be8a500cd41d0d6185ebfe94ee57977232bf69b8373f79bd700a92690747ac9a3d8b1d5e65e3e7ce2762109abc75878d01eaf02a1549c112a24625e933544bd514456b9ee196e239d31d878d8fb9c4bfdbbff39159833abe936c2484163039d4c13cff524a5eba5f24e93a25b797e044bc7667bd6c9d78dc7d537ed2b604a331f095f7d9134c4c19980c4606a485535bcc708743b0018661afc70f41d30e1b649ab723cc83580bca78729ec5d9791c02dba2a705d4bf10741addfb81f64bbabe88e7d1c68eec2a096b4c67fdd7558f778a94d0c7f4a9660b87d36d63a6d53fe313ffe705091deec24f2523ebb060629b9948759bd37dafd3ed68708e15f3859236450d2c428327465ad467aa7f547a3dd6e81dfb7624f63e1fc59abfe238ec8672217f6f05d4c4e8121e1d8efa5ea72db9aa0c0543123d17cbb3515a7a915eb2dc6d575079560a17d9e26574b3bd5e92c413ccf34fcf74a846bc0a60adcd1d65bb61ecbaf4415d2ef0507d50ee5796c64c8cbeb2bfbf058a1c488155b2f7d1a34953f268e96bf20edf17234c82e0ddc4e6cf318d23b7fdfe0e040a62140c2aab79ad8ce3e503b0b4bcde306883fbf46cfba7cb460d8c229d18673b2545f486b41004c1e13d879df0660c78ccb5384f00ccb61a9f222e9158dff58ac7da2b59b377cf50ec0b6aec0b4abd9734e865ff4982f16a1ee8ddfbe0269f988a5a4d3f208035ee92ccd7e5d25d0bc7f07ae604bb91c045bd1ebec790ab5f0e0f3139340e502425712d0bf0d6fff34c73b8c088f25336c1315a3d9e8db978eb38f9af0f1a014c9a3b788c4394628258e90273491f61398888c278c6453807bce783e6f9569f239389c758518d0f11fa269128dbc6430e52525b30d2d6b25abb9fdb4fa6752428ce0bc6e7d6290771f43e777b5445c21ff84ecbd251a599ae533c7d0f06e655d513197362ce58705b04051308fdfc661f1a88dd1072b80a55a064e805ec1acdd928612c2c252a82199dd489f28031d328b4eb984c5a9b0dc56a7e6d2c3ebc78220e00fc95bcf13eae539f5b9bcda5a5cd6945aaed234d5ae02131b703f6fb451359ca2d85ec4fdaa5db957adc63aef4a246d33415ba7821e307a1c6de528dfb4bb5c09e12bcd75bf0356966ee2b1e2c350976c39dc6cb51a5d02d70e03266282ab838eda0b55aad3c8b954e58e6f1502b8c467bbe4d6179071df24fcb4af12e2df4ba0df1af49b3594c1cc5cf1b7271c5f074afc4674543e979f94eecdf97e2af3e726b12a005d3cda356ae97362f95838cbfa79ddd6f987b7eb7f3672356958be7a3899c1c709e8482fa150cde86978e8d2e8248ab1340f35f3d4cbb2b1648cc9c4c92b39692a5c3ebb6940d2716731a68047a5e8b121329151bb18e51bd2de78f184b763d37dcd73cacf4bc6f39f9a5509a6efe9c04b64c69a5ed55c930651e6e148dfd3e6cec89d124c1f4d48f781b4483c4c10de1622cbfb994a655f5f0c80eef180ec296ed72784b86e7c83b7ec8bb2466c01502c0fde2763eb1eaa3e538e219248fa6dd4e794bb67c104c46bfd50682c82af795b67d1ecfacc20097b52b01f570d6f48152d13f4bc58cde33ee19e879b2cdad144801c2b4c9d7de572be76d67b57e89157cdcf4a7fb803c111a5e78cede62087047d59a83c6a1717b731c3f5da736156bc5fc53ff7666e6cbd70a91974be4be529a15a96d8fd87b755d88f3bfaf05c804588770a4a4a2fdd33730b46c12074f591b4f2796307f3ed06cb229da68ee6a4bcdf7130cd8070b96e009643bef459eab9cfdf1fbfe71dbe6936134e4964a138924fd0208195b8b65a1d8fa050d7a327e1b62c74262f9379d0ff3ac23c6573d408c271e57afaa9a95e9d5cd39a54a989fadae3f33f675052f9bef82a175a69603ba37ed1e5b7662c0f60f1f3aef40b3afb3bcc376796863d45bf2d8f22c516c2b47fee55a30477cfad1f8a739ac966b83762d2c49854153262b7db7f1900e803e3cbfc18cf9da2d66275ce73d9b22a72af5a8bccf521234cfeb339d994ebd91271160a9f748a56b5c5b964e145a986e8e4b7800f7eb6eb96c2eae0644e3285271759ad04d0617ed99de1f462010b8a47572a98441a183f2ca3b23ffa3bbf585a698c10100f32620ec4b54e41a4d983bc086ae74b89040b85577b3fd099cbde173fe120fca72aba89babfa69e6ad1a8af0f5e7aa1f5ef67e197fecb21075ca043d19efde6e2bb4137048bf3c09b3e1ea613b9229ae4bde5511f64018f2681b4fabb6ddd79fda48e4d3faf35845e4619bdeaa7cafe82c3f683776f159c7170ed26f6a1b6213468bf0bb05c9de161eca113de805f5bedd55c9381fb9bc66fd674d511505ed25afded100b5d6597c30949f6a7ff1671c0ac7ef41904de691b952249a25d8ad529ec7204a5548955d531aa32a9fc1f77a8a0caeae839ef5d81a057a24221478b97f48b99ab2172e9c450c79850205c601cc6fca6796d047f11fb1aa1591e54a30db612e53c1b3027c341cb46a629152412814c3dfa18df5208924d739733fc2dfdcd6fcc06f7f44571ddd635423ac03064074694dc24afdf94139fa58136d2c6c438aa8959f07a4987d8d337832bce2576e8b60724fa642537d19c15e061025e22ec989b7adc38350635689d6b8f87a2bb89ba4dcd424cd8162911c85ca7c200b4da1bb5fec09bcf44b77634e9ea18bf20fff3ab5b11134020cff3857f6fca000537bc52db1ab3a9422a96393fd73dd182118f445a3dfbc83a0c9f53b0005b8e718074b0150b5bab0fb6c5209a2ffed7f9877c82c368212c1ec08dafd28be3ffb0339b6d9c8d1319b59a20f5ab3e38ea7ba0b83a87d26204ab3a7784c739a52f982bb59ef15ead3f8240e08436aab152d53a570ac486e699dc6e7cc7b9a295406ee39ab8179eb99e16a4c7e5891450512896e9a3e709b6879ba1eb00cfde2e30d557bbec7824263b79aaa34ea459730e427d89c8de77b5f00e357449d2287ffe6bfc7a7893098a99fbeda5cbcd12a0bf68da0f962b29c1b5218bf710f8e866995990687f30b7b484dbe9fd39bbf4f297c2ec8ca0a8084fc41d92c07dea58a02ad61e1eb9bcc81665acf41f2041b793191989e7d38606c8546d51ac60c7373325cb845a34e3893b3c1ddc326147e02ae76aacadba9c11c292c12813dc4449ac58df1bf22d3196fa20787234f9007d9fd6531daee784b8f479ac4560dbb13c4f16e101da4c84d0cc8358bf5f2c9aaf03dbdb590d47e927e0d5cd2a4cfab6826d5b547283d5981efdd2355dcfea9331e4e2982904cfc339931bf8b47ad6d4b4499a53cead59c832a272bf68b1fc0e1e457aa57b90e245fe23e777798f94d168a22253c75a4b697aadd2e157bdffbae2788e8dda3a73a8eaf1128c039f6d26085cabaae940bfcab3fa97000d3b55fe306aff61465b35db1b0a64ed5b7ad6d11111a90b4ae80d3d33bfc8da9ef2bf723d559809f81684a1db1934249740b144e6be403b306c5e55aedb516e262c73d77383b86453473498c40688643582fc74ede04f63bb5b6b120bc25a756a0dd6b3b31dbd9e9bf1f128b9364d5588a91df7be3fd892b53fd075be69760538c17f7d071dc012d2ad2828000afe471318f02c16404bebac8a4afe255a5a1b76b5c99091f4cd0c88494f2c209708ca180515d0900e004082a1c97489983cdf02f81fb11f65755e36656efa664a85218f2cfd7882e8614c957f81a4a0b12f6a688c29cd06dc391cc6b58c67bf8787f8691b309d2c45e1cc2965e5f10773e690da882e3225f050025b6c7e40cf5e448b62fb3212c19140f7b6f29f29d81a2e2ee97dc14db368ae3578cc35fa66e8c436aa0710fb9a1dbe8e10aae020b32d5d10b526385463a1a122cda5e43d14ac61313abd03399ceb2d710ecdd07f8f3c03b73ec2e5fcf0ad349f1aaf9cc66bf44ce30598d8cce9759015a5f984e1db0bbf9cd0f0c3d5701dc15bd9ddc502fdaaf5ba844ff68f27e4e704c463abe95a111db266fadd63e5975f001e86b5b458b66b954ce9e78ceb0ea8c285aaa8a87b6b9e7f294f61dd33b3114cc372658e4d2972d9bf4eef6323178e49b948902e8638aa9726c0133de92817e75f8fa6c3b807cdda12ae13b303f596468f77d8bd1f32e67edb9f63281aaf1c998210be8ed8e00f0b7347785f25f058e562b77f13c48e800979206caf68b7ba04c8d5527745c9d5c81592c69d408fbb17522f1af7b6a3ad6cd7588050ee127800575a9f40358b66462ec188a8237186ed3e6bf4d5f9faa6fd99503d6480afaca8514f1943667f2f20e75bd57e6d82a1ae42e36a3cd746c3ae798942380d7bc9afecc6158139e2c926b89e50d6294faa3aa7b834822965a13664b499ea380d85b11a28d6c0652d8ecb01372982efb2a4ead06f4a78b2105939fef0d345994f779db5a55203eb987e65daa1367feadb634c68f736c434883c8d23fdd979f74805a1c90bdf1e235eeb14d1ba70e16652b19343d00c52519aa70f906a3fff28144f02286efbd6bcdff7877496005045b950b3d6ef4e16bdaeb0923db1416ec125b1ecaf73c97e0b858d9dd1f3d85a7cb2c3d8bc57f55bec5623f4ff3206021aac4ee7f0af6da336aee97def15de53ef0eb0a222e57b8307d44e27d97c6f9aa6966cf7c5d282ccef744bc9b5945f1d000fac51b3a58c354c5b80a5fcaafc551995dec6cf9ff91199bad9c6021b62c14ccc0d5a51aa16ad5a16676b4d74d777e425675a4fc570ed8cba4ef6c6be39c0d8b8ba7b1b0be07b9a5bfe8980079b67ab90b9b14722a2552ed00c52a1fc11aa210b35c9ea7a696dec3175835421c410e055938d5b88d4cf97e8953f0956eeb4d7a42b33c995eec8ccfa8812b845cfea92d6b0f0dc83f107c9c1c63a6d8d751872ea3ac2d9feb64cc7279ecd5f0e9dfc2cdd1498db2ba3f4be5d56470005cffa362e94d499eff508b73533af11a29ed52daecaf545af9c46ec3daa97a78e0aee8bf3fedd0d5716fa7f21d6fd070a691ca4264d9b998c750abc184e80a0876f6bcd2d5aac2f6d32e19151bc46403849ad68c21049ed34684353caefd5bff71aadfe89205880ef3fc32004be71d1a8664eb00725df715de1719094d8c4d558756f8149ae5c00565ead4234cac1ca3b57e125e29af022d21e6e4b288be5c2c50acb9816921b46bd36d80ee419711b781c59dfeb27facb17dc94c60ed4e4b4201e9f93d13eae822428050e674f428924b502b3e72140f0a262c8ebef756871422178fda1ab5ea1512293d6854a1dbb5b9b4e941dc73c89c77c359de87788c14e05bb33c5b56c109836dfeee25db018fea42fe671e612f353d7fffa8daf00a0042978843e3e1e191cac23add135cbd458be692f3adac8f2913bc0ce1ddf852e91fbd24149391ad02937f663d1a905b78d2042f5570448721ddad9f715be23a64c78d80afb9ec7bbaa119ef885aba497a4d2d866e8a9b218d2eaa405f2be713ba5fd2423a9e9e5a465e7b428a423800a66deb87e0120c924666c22e3c4b35a9ddbb08adee5e9ec9380ebbabec0c79d557838646d300f722c6ee30ac5dec3c61bb0c8cd3779139bf119425807273f35178d405c72a05ab705cd8899be1f489628766875361fa331ebc5dcb4046b73c9b276561452e43b87df7984fe84058f74e62357241ca46f23288d3ca684cba9f2574b1aa96c245ad73abccad4cda992f3f776ff60772d7835e8f7dbb585ef75b17f67447f199f9f003c07090a6b40cfe37a3fb95f91f4ce37102b69299a52a2a27b6f87b73f15fdb7801fe29d4b794f01346238c56d2623a2c816b892bef7b7bed5a1f452870704f81068670f290fbab646f6748dbba82de91361e947469fa8cda70a4920af4fc5e8508019779b9192c978c36272210f489a710a62d6b5eadce86bb842f64ade064b344c3ce350f81cb80390190b14f5eb83191941bd6fc883286da44cde780e95910635ba97b812e5f75efdb416fa2fc038c8c7a48f2b214434d3f5d145fdceabe5680097bf6af408a7b489f175c0c665ade0b226dc0d390b9dca197917d3f59b43e73244b24a1836b8b19eb5668dad6ea399886bc455ee9dc6436f6b17002579d00bf2027f1fdbdd02b4472b07df4b12d149221813a8a237dc1e5efa5ab05eee0ea6919f82978b7cd84063f075b2f6b8ff881bfef61537ae6d3e28391d09a732f5aabe98eb5dfab032a58009949a4e8ed53fa35127b40dccb7e1b5a259f8e0a5f6e6856705443797741f9f48a6ea078b3b47354951f71df72b3f615ea6dc13f272ff220c35921d0b58721a750e8f4a65ebd399d6c6cc3d131e2426d7a66843deddaec92c57e9011fd2e5a03e09210e60975f782861008fbe46a014dd5ee6a7c6613ff324e5ce723959223ce3222e7de7ef068c9fb6efedfbc15e0d13658b04718cf98fcfafcb5643f0fc4fbb6be0b88149951560dafc4e028fb4b44817589b6adb4fdc9e2a23ac74359cffa30a9089dbac823fb3d4038213e9bbb45bc6275d17d289c87019c17b4f132de2861356db1523d6feec2df35cf50ff180ccebf747677162e32d3ddcf2785af38a5a042fdd6accd98514b9630973dfb00047b9da87d4f5f5cdc0b7c03a208b30dc8e37fa50e4ef40b45f5c34333a4e43aae22bbec387b87f5c5e77780a3a106f2bb98bd5f70718feaa9959f492821d99ea474c04c5200527031ed36f6f29db7f7ad95ff289441cff15275c8ff15c438ba2315f899fc24c9905447f3fb47d59665b1ece435e7e7739e5a785b100c8ddf2821cfb2f51e9f11970d798d8b4985e2da70a3ac436b0739da6572aef9dcc6a7ffda7ff44f07bbacc42cea66554047b879412b9df93be6825125bc528fffaac474c74754568cf21044bd733567083ef58fa586550779cef376143431c7e359429a101e9e5a5715318ed4d37b959743813aa25d8fceabf7c0db771e8abe657dbbc7fb3ce95b7d52f3d5cfd9e21aca08546fae36d2d6db0296edaad91910e8ee3781882e5435a25d83de6596eed482272b2817a4e90110d734472b73c1121d47d5cdbc2a4cf4b3ad44a23140f7e1d871f47f1ad2c383c6b4dc092ba6e8903b4b3aefb79d47a83b9729c4426643d9eef73cb7865733a90683b50c34f1cd2345d805b5c5d50269a15a57184c10bd2c0f1dda9ed60a76e87bb9b446ff7c2568eaf58ac94897b91ab5d465c474bc439782633b28703c4d36720c2c7e3a54a8bf05828b93dfe157ac7a3621301c25ad126313020094e8ef033c01a22646559e1ac9354b38f20d151e37c3d516956120ede284a88d0f2fd8f2428849e1c88c6c9607be89f8dda46c1af1b448abccf9df65a877e568ccf755ecd360fdb0559746e44873031d07c0d0e509e50c5fe7268da93f6cb9c70d7d62c8b609e8537fd47d507f5d753b50e6ebb6f3f02ca13baafa9b93daf9843057f89901f563ea2195bee4dc426a4aebda88bd92f7d6c938d9f8b873e6a53ded1fe81b5595561a21f9e401d0e0392295b49110fd1811153947122600b1a5545e25cd02cc2cd0e26bdcf9b4e6aaf142ea5b2ffd6a396532600f7c670b9938353834bc0e955cdf03f673189456c5d689b2d10ac3022be8cd0fdfbd941999d84e887ba82ad09b55c4839749848bcf1d8ffbc954a2c148f5e1a286cc6aef390af74fbb953fe61b173ce8ec2f79c300ee954fc361fa3ad75fe209da6f6e3dcffcdcce13843df909e171b8d68d33456a16d362accd4883d01918e421887e76f10b1a06b83845a397f7530baca7334438a75c6b1948ec27ee731639da9f705d773aba32df14ddce47463235434b67f487da865f8d01926468171a50626fa660250f51e354e6046ea24f3d225f25cc27ea25d20183f51fec6a69461105798f1617291f7c1df0d7e318f1f998f3d21f8dd31cd35f0d6e721f3da3ac4e2ae2d9a3388c4f95619f2b215a6ce24f8a246720779b2d87cdcd0e5807e935bd03e733cb1d4d8f7f8d56a035e5d1890226e6f79af39c718e8f12645241b7d647e70d8d94683a1fe64f2c496b510708d57cfdc04b2d7042cb3e7854133c999c5f19748c39c1f0b5b76d01118bd78976b8e15f41e11330287b761d6614191d1726694c7b133c8e8f29ddcb2ae32652f6ed31f1d24d5f6f0c333e5de7077330c2ca84e88c11c96fef441db705d8558d75af0eee15866a399c179aa23cb7de3946740d56c4a42f17c97ed0c30bfda495a3110389250aa0ccd21e96e241989ae87b1852270c4f3d8697084c49a0ef46586358a5210f038637cb4c6783738c2aaa5b289ee62eb6f224774467d2266e97c34e0a5e47e861044b4e12004bbba80ef0511c37919d38e7d686b1b3118e9d48e33e1b5df3a507654265f84483136c7350034982c0ffd7e25b63475ebad4ac5e9ccc4d4a502fab9ae4f3f19899923a82753f588b1b15be9a8cbba05d1d120feefc07e513230c96106fcdcb2aa24d5d17de4af95cb1118e42952c31f8ee440dec9313c741fbf0cfcd43d1e3c50a75be9c34bcf269b2e7de8435f72196b79ab8241325b2dae588113ace7ba34dc7b373aed8048ac6cdcf3f88e68612aad2196d68c229f24fe2bc1d5423abd06d34bdf732180497731d937c1af446e3094d54cfd7097c6cb7e90be9d1cae037b0dfffbe2bdba6b7d39fb1269b925fa1cb5c7a7da4b3e2061b275e148a54affba543ed7e72cea0cbae484d0592c9458a0405c5edfd858813e2c7b13b045df41ef30dfb4bb632a675838674a61aaa0dc338f9f460ca2cc32b850190b3bd84030b4ff56dd9cdd9c0147d3a02608aefbc1dfa26d7102b5e75f57c7104220e950fd110f51a4329e2dbcd511c987518d1b7e3e8a2532b7109d986fba3144fa11b89ce41edb16e1b308cb195c5fb038005f1755d6191cbbf3f5a19e69e4c70f743a6d79490cc6e744b5bd1b917c972bc1f0ade9965a5372e72aee85d06559c15652b45b50da50de79e2160ac62d57eb046192c3c49ce1377a33f5bb7a7aaf8f0c53b8e11de5e2dad74d1f09fce8d6d7abccdbf582782da27d4d58a84895c669b3071ae48b3755c8de903ed3dafa97db9ddff5967502c333b9f83203130a83e12b4792741d0c1bbcbbad7c8b56dd2f6e43cbc6a0ccc71d1739db92101df11cca2e977fea6d1126559bd7770a34c0f5b55383af2dee143e6cea1fe94aad4e7ae23b532a53957d331cce8453d7781ba3615f0a0b07dea8547fd8c4fa28e71f75fee55fb27608cb875efd3f193b1db8586e54e5ab90f6bed32129b2912278e1dbb4cb4c96f24774db1a75dd2f0978f6d1fd9c9a797c80b3147dd74278b7d2fa3b736a35d6d6a56cbce16a572afb8c2d412ff1302ac5a5f633f3b4b9505ef3271d9c37f75f193ba782b2799364885675eacc4a28ea7cea0d84060108b413dca08aba31596356ab2fc2f171e9bbaaeac44c308fc8a236062e730adefd0e93f1514dbb21bd545d86afb2532f83a89a5922eeef655fed1c6275056762d80aa7444ec66dbef226494783dae895bd648e09d08eb03b2615ece7ac02fb14f81532b8cc809a6c9de01d9afe886cdc4ad16af215c4ece39eb56e3db256e50cf34823f5d952fab240954a0fcb31ccd70af815c3e9ec34fdb1fa8af4b253285bc0383a9120a79cbeda5260475e427b722d09f59fe0320c8df9b066d1157d92119254f272d970912b4332821beee148b06b0ccb351b2262ae951aaf153b0bd0b996e346d35f3b160ef012e0d77379f3d1398e7f4b42141a07e1b0a94bb15f4b705e99d5343481db71f63cd3516e679ec39501d9a30859c821dc63d8f14467994a36c65908b4c7e2</script>
-  <div class="hbe hbe-content">
-    <div class="hbe hbe-input hbe-input-default">
-      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
-      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
-        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
-      </label>
-    </div>
-  </div>
-</div>
-<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
+              <h1 id="存储类别、链接和内存管理"><a href="#存储类别、链接和内存管理" class="headerlink" title="存储类别、链接和内存管理"></a>存储类别、链接和内存管理</h1><p>被存储的每个值都占有一定的物理内存，C 语言把这样的一块内存称为对象。</p>
+<p>对象可以存储一个或者多个值，一个对象可能并未存储实际的值，但是它存储实际的值时一定具有相应的大小</p>
+<h2 id="存储类别"><a href="#存储类别" class="headerlink" title="存储类别"></a>存储类别</h2><h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><p>C的作用域：</p>
+<ul>
+<li>块作用域：<code>&#123; &#125;</code></li>
+<li>函数作用域：仅用于函数的 <code>goto</code> 标签</li>
+<li>函数原型作用域：函数的形参</li>
+<li>文件作用域：声明在最开始的变量</li>
+</ul>
+<h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><p>C 变量有 3 种链接属性：</p>
+<ul>
+<li>外部链接</li>
+<li>内部链接</li>
+<li>无链接</li>
+</ul>
+<p>具有<strong>块作用域、函数作用域或函数原型作用域</strong>的变量都是无链接变量，这意味着这些变量属于定义它们的块、函数或原型私有。</p>
+<p>具有<strong>文件作用域的变量可以是外部链接或内部链接</strong>。<strong>外部链接</strong>变量可以在<strong>多文件程序中</strong>使用，<strong>内部链接</strong>变量只能在一个<strong>翻译单元</strong>中使用。</p>
+<blockquote>
+<p>编译器源代码文件和所有的头文件都看成是一个包含信息的单独文件。这个文件被称为翻译单元 </p>
+</blockquote>
+<p>内部链接的文件作用域称为文件作用域</p>
+<p>外部链接的文件作用域称为全局作用域或者程序作用域</p>
+<blockquote>
+<p>如何知道文件作用域变量是内部链接还是外部链接？可以查看外部定义 中是否使用了存储类别说明符static</p>
+<p><code>int giants = 5;  </code>         // 文件作用域，外部链接 </p>
+<p><code>static int dodgers = 3;</code>   // 文件作用域，内部链接</p>
+<p>对于文件作用域变量，关键字 static表明 了其链接属性，而非存储期</p>
+</blockquote>
+<h3 id="存储期"><a href="#存储期" class="headerlink" title="存储期"></a>存储期</h3><p>存储期描述了通过这些标识符访问的对象的生存期</p>
+<p>C对象有4种存储期：</p>
+<ul>
+<li>静态存储期：程序执行期间一直存在</li>
+<li>线程存储期：用于并发程序设计，程序执行可被分为多个线程，具有线程 存储期的对象，从被声明时到线程结束一直存在</li>
+<li>自动存储期：块作用域的变量通常具有自动存储期，当程序进入定义这些变量的块 时，为这些变量分配内存；当退出这个块时，释放刚才为变量分配的内存</li>
+<li>动态分配存储期</li>
+</ul>
+<h3 id="存储类别-1"><a href="#存储类别-1" class="headerlink" title="存储类别"></a>存储类别</h3><p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210921135941036.png" srcset="/img/loading.gif" lazyload alt="image-20210921135941036"></p>
+<p><strong>自动变量</strong></p>
+<p>默认情 况下，声明在块或函数头中的任何变量都属于自动存储类别，变量具有自动存储期意味着，程序在进入该变量声明所在的块时变量存在，程序在退出该块时变量消失</p>
+<blockquote>
+<p>块作用域和无链接意味着只有在变量定义所在的块中才能通过变量名访问该变量</p>
+</blockquote>
+<p>如果内层块中声明的变量与外层块中的变量同名会怎样？内层块会隐藏 外层块的定义。但是离开内层块后，外层块变量的作用域又回到了原来的作 用域</p>
+<p><strong>寄存器变量</strong></p>
+<p>寄存器变量存储在寄存器而不是在内存中，所以无法获取到寄存器变量的地址，与普通变量相比访问和处理的速度较快，大多数方面寄存器变量和自动变量都一样，使用<code>register</code> 来声明寄存器变量</p>
+<blockquote>
+<p>可声明为register的数据类型有限</p>
+</blockquote>
+<h3 id="块作用域的静态变量"><a href="#块作用域的静态变量" class="headerlink" title="块作用域的静态变量"></a>块作用域的静态变量</h3><p>静态的意思是该变量在内存中的地址不变。具有文件作用域的变量自动具有静态存储期。“局部静态变量”是描述具有块作用域的静态变量的另一个术语</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210921141811428.png" srcset="/img/loading.gif" lazyload alt="image-20210921141811428"></p>
+<h3 id="外部链接的静态变量"><a href="#外部链接的静态变量" class="headerlink" title="外部链接的静态变量"></a>外部链接的静态变量</h3><p>外部链接的静态变量具有文件作用域、外部链接和静态存储期</p>
+<p>变量的定义性声明（defining declaration）放 在在所有函数的外面便创建了外部变量，为了指出该函数使用了外部 变量，可以在函数中用关键字extern再次声明</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">char</span> str1;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210921142443122.png" srcset="/img/loading.gif" lazyload alt="image-20210921142443122"></p>
+<h3 id="内部链接的静态变量"><a href="#内部链接的静态变量" class="headerlink" title="内部链接的静态变量"></a>内部链接的静态变量</h3><p>静态存储期、文件作用域和内部链接</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">static <span class="hljs-built_in">int</span> svil = <span class="hljs-number">1</span>; <span class="hljs-comment">// 静态变量，内部链接</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210921143327517.png" srcset="/img/loading.gif" lazyload alt="image-20210921143327517"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210921143941199.png" srcset="/img/loading.gif" lazyload alt="image-20210921143941199"></p>
+<h3 id="内存分配"><a href="#内存分配" class="headerlink" title="内存分配"></a>内存分配</h3><p><code>malloc()</code>：该函数只有一个参数，那就是需要申请的内存字节数，它会找一个合适的内存空闲块，申请一块匿名地址，返回内存地址的首字节地址。可以将返回值赋值给指针，然后利用指针访问这块地址。</p>
+<p><code>free()</code>：释放之前申请的地址，<strong>申请后一定要记得释放</strong></p>
+<blockquote>
+<p><code>void* p</code> 指向 void 的指针，表示通用指针</p>
+</blockquote>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210921150438063.png" srcset="/img/loading.gif" lazyload alt="image-20210921150438063"></p>
+<p><code>calloc()</code>：接受两个无符号整数作为参数，第一个是存储单元类型的数量，第二个每个是存储单元的大小（字节）</p>
+<p><code>calloc()</code>函数还有一个特性：它把块中的所有位都设置为0，<code>calloc()</code>也可以利用<code>free()</code>来释放</p>
+
             </div>
             <hr>
             <div>
