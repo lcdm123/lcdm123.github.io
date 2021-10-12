@@ -38,9 +38,9 @@
     <category term="Web" scheme="http://example.com/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Web/"/>
     
     
-    <category term="代码审计" scheme="http://example.com/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"/>
-    
     <category term="Web" scheme="http://example.com/tags/Web/"/>
+    
+    <category term="代码审计" scheme="http://example.com/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"/>
     
     <category term="Java" scheme="http://example.com/tags/Java/"/>
     
@@ -68,9 +68,39 @@
     <category term="Web" scheme="http://example.com/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Web/"/>
     
     
+    <category term="Web" scheme="http://example.com/tags/Web/"/>
+    
     <category term="代码审计" scheme="http://example.com/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"/>
     
+    <category term="Java" scheme="http://example.com/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java审计入门</title>
+    <link href="http://example.com/2021/10/10/Java%E5%AE%A1%E8%AE%A1%E5%85%A5%E9%97%A8/"/>
+    <id>http://example.com/2021/10/10/Java%E5%AE%A1%E8%AE%A1%E5%85%A5%E9%97%A8/</id>
+    <published>2021-10-10T08:04:04.000Z</published>
+    <updated>2021-10-12T08:05:06.556Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Java-代码审计入门"><a href="#Java-代码审计入门" class="headerlink" title="Java 代码审计入门"></a>Java 代码审计入门</h1><h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><h3 id="远程调试"><a href="#远程调试" class="headerlink" title="远程调试"></a>远程调试</h3><h4 id="对Jar-远程调试"><a href="#对Jar-远程调试" class="headerlink" title="对Jar 远程调试"></a>对Jar 远程调试</h4><p>新建一个 Java 项目文件，新建一个 lib 包，将 jar 项目文件放入 lib 中，然后点击 “add as Library……”</p><p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211006120523043.png" alt="image-20211006120523043"></p><p>然后创建远程调试 <code>Add Configuration……</code> </p><p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211006120752382.png" alt="image-20211006120752382"></p><p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211006120832600.png" alt="image-20211006120832600"></p><p>调试成功</p><p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211006121110049.png" alt="image-20211006121110049"></p><blockquote><p>其他类似于 Weblogic  Tomcat 的调试，操作步骤大致一样，额外的点在以后调试的时候再写吧</p></blockquote><h3 id="项目构建工具"><a href="#项目构建工具" class="headerlink" title="项目构建工具"></a>项目构建工具</h3><h4 id="Maven-基础知识及掌握"><a href="#Maven-基础知识及掌握" class="headerlink" title="Maven 基础知识及掌握"></a>Maven 基础知识及掌握</h4><p>Maven 项目中最主要的就是 pom.xml 文件，pom.xml 文件描述了项目的 Maven 坐标、依赖关系、开发者需要准寻的规则、缺陷管理系统、组织以及 license，还有其他所有的项目相关因素，依靠它我们可以审查当前 java 应用程序是否使用了存在安全隐患的组件，以及快速搭建特定的漏洞环境。</p><p>例如快速搭建版本小于1.24的 fastjson 环境</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">modelVersion</span>&gt;</span>4.0.0<span class="hljs-tag">&lt;/<span class="hljs-name">modelVersion</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.example<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>maventest<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.0-SNAPSHOT<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>fastjson<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.2.24<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">project</span>&gt;</span><br></code></pre></td></tr></table></figure><p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211006163733487.png" alt="image-20211006163733487"></p><p>之后组件就被下载至本地并且加入项目依赖中，可以再项目代码中使用组件</p><p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211006164430001.png" alt="image-20211006164430001"></p><h4 id="Swagger"><a href="#Swagger" class="headerlink" title="Swagger"></a>Swagger</h4><p>Swagger 是一个开源软件框架，可以帮助开发人员设计、构建、记录和使用 Restful Web 应用，它将代码和文档融为一体。</p><h2 id="代码审计辅助工具"><a href="#代码审计辅助工具" class="headerlink" title="代码审计辅助工具"></a>代码审计辅助工具</h2><h3 id="编辑器"><a href="#编辑器" class="headerlink" title="编辑器"></a>编辑器</h3><p>Sublime</p><p>IDEA</p><p>Eclipse</p><h3 id="测试工具"><a href="#测试工具" class="headerlink" title="测试工具"></a>测试工具</h3><p>Burp Suite</p><p>SwitchyOmega</p><p>Max HackBar</p><p>Postman</p><p>PostWomen</p><p>Tamper Data</p><p>Ysoserial</p><blockquote><p>Ysoserial 是一款开源的 java 反序列化测试工具，内部集成了多种利用链，可以快速生成用于攻击的代码</p></blockquote><p>Marshalsec</p><blockquote><p>Marshalsec 是一款开源的 java 反序列化测试工具，不仅可以生成各类反序列化利用链，还可以快速启动而已的 RMI 服务</p></blockquote><p>MySQL 日志查询工具</p><p>MySQL Monitor</p><p>Beyond Compare</p><blockquote><p>文件比较工具，比较范围包括目录、文档内容</p></blockquote><h3 id="反编译工具"><a href="#反编译工具" class="headerlink" title="反编译工具"></a>反编译工具</h3><p>JD-GUI</p><p>FernFlower</p><blockquote><p>FernFlower 反编译工具的功能比 JD-GUI 更强大，反编译失败的时候会生成空的 java 文件</p></blockquote><p>CFR</p><p>Intellij IDEA</p><blockquote><p>IDEA 反编译工具能够自动捷豹已添加的依赖的 jar 包，并对其内容进行反编译</p></blockquote><h3 id="Java-代码静态扫描工具"><a href="#Java-代码静态扫描工具" class="headerlink" title="Java 代码静态扫描工具"></a>Java 代码静态扫描工具</h3><p>Fortify SCA</p><p>VCG</p><p>FindBugs 与 FindSecBugs 插件</p><blockquote><p>在 IDEA 和 Eclipse 中都可以安装</p></blockquote><p>SpotBugs</p><blockquote><p>SpotBugs 和 FindBugs 用法基本一样，可以独立使用也可以作为插件，需要运行在 JDK 1.8 以上的版本</p></blockquote><h3 id="公开漏洞平台"><a href="#公开漏洞平台" class="headerlink" title="公开漏洞平台"></a>公开漏洞平台</h3><p>CVE</p><p>NVD</p><p>CNVD</p><p>CNNVD</p><h2 id="Java-EE-基础知识"><a href="#Java-EE-基础知识" class="headerlink" title="Java EE 基础知识"></a>Java EE 基础知识</h2><h4 id="Java-EE-的核心技术"><a href="#Java-EE-的核心技术" class="headerlink" title="Java EE 的核心技术"></a>Java EE 的核心技术</h4><p>Java 数据库连接（JDBC）：在 Java 语言中用来规范客户程序如何访问数据库的应用程序接口，提供了诸如查询和更新数据库中数据的方法</p><p>Java 命名和目录接口（JNDI）：Java的一个目录服务应用程序界面（API），它提供了一个目录系统，并将服务名称与对象关联起来，从而使开发人员在开发过程中可以用名称来访问对象</p><p>企业级 JavaBean（EJB）：用来构筑企业级应用的、在服务器端可被管理的组件</p><p>远程方法调用（RMI）：Java 的一组用户开发分布式应用程序的 API </p><p>Servlet（Server Applet）：是使用 java 编写的服务器端程序。狭义的是指java 语言实现的一个接口，广义的是真任何实现该 Servlet 接口的类。其主要作用在于交互式地浏览和修改数据，生成动态 Web 内容</p><p>JSP：动态网页技术标准。JSP 部署于网络服务器上，可以响应客户端发送地请求，并根据请求内容动态生成 HTML XML 或者其他格式文档地 Web 网页，然后返回给请求者</p><p>可扩展标记语言（XML）：用于传输和存储数据地语言</p><p>Java 消息服务（JMC）：一个Java 平台中关于面向消息中间件（MOM）的API，用于在连个应用程序之间或者分布式系统之间发送消息，进行异步通信</p><h4 id="Java-EE-分层模型"><a href="#Java-EE-分层模型" class="headerlink" title="Java EE 分层模型"></a>Java EE 分层模型</h4><p>Java EE 应用的分层模型主要分为以下 5 层</p><ul><li>Domain Object（领域对象）层：本层由一系列 POJO（Plain Old Java Object，普通的，传统的java对象）组成，这些对象是该系统的 Domain Object，通常包含各自所需实现的业务逻辑方法</li><li>DAO（Data Access Object 数据访问对象）层：本层由一系列 DAO 组件组成，这些DAO 实现了对数据的创建、查询、更新和删除等操作</li><li>Service（业务逻辑）层：本层由一系列的业务逻辑对象组成，这些业务逻辑对象实现了系统所需要的业务逻辑方法</li><li>Controller（控制器）层：本层由一系列的控制器组成，这些控制器用于拦截用户的请求，并调用业务逻辑组件的业务逻辑方法去处理用户请求，然后根据处理结果向不同的 view 组件转发</li><li>View（表现）层：本层由一系列的页面及视图组件组成，负责收集用户请求，并显示处理后的结果</li></ul><h4 id="MVC模式与MVC框架"><a href="#MVC模式与MVC框架" class="headerlink" title="MVC模式与MVC框架"></a>MVC模式与MVC框架</h4><p>MVC 的目的就是将 M 和 V 实现代码分离，利用 C 确保 M 和 C 的同步</p><p>Model：携带数据的对象活 Java POJO 即使模型内数据改变也具有逻辑来更新控制器</p><p>Controller：表示逻辑控制，控制器对模型和视图都有作用，控制数据流入模型对象，并在数据更改时更新视图，是视图和模型的中间层</p><p>View：模型包含的数据的可视化层</p><p>MVC的工作流程：Controller 层接收用户的请求，并决定应该调用哪个 Model 来进行处理；然后，由 Model 使用逻辑处理用户的请求并返回数据，最后 View 经数据呈现个用户。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;Java-代码审计入门&quot;&gt;&lt;a href=&quot;#Java-代码审计入门&quot; class=&quot;headerlink&quot; title=&quot;Java 代码审计入门&quot;&gt;&lt;/a&gt;Java 代码审计入门&lt;/h1&gt;&lt;h2 id=&quot;环境搭建&quot;&gt;&lt;a href=&quot;#环境搭建&quot; class=&quot;</summary>
+      
+    
+    
+    
+    <category term="编程语言" scheme="http://example.com/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/"/>
+    
+    <category term="Web" scheme="http://example.com/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Web/"/>
+    
+    
     <category term="Web" scheme="http://example.com/tags/Web/"/>
+    
+    <category term="代码审计" scheme="http://example.com/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"/>
     
     <category term="Java" scheme="http://example.com/tags/Java/"/>
     
@@ -164,9 +194,9 @@
     
     
     
-    <category term="靶场" scheme="http://example.com/tags/%E9%9D%B6%E5%9C%BA/"/>
-    
     <category term="Linux" scheme="http://example.com/tags/Linux/"/>
+    
+    <category term="靶场" scheme="http://example.com/tags/%E9%9D%B6%E5%9C%BA/"/>
     
   </entry>
   
@@ -270,7 +300,7 @@
     <published>2021-01-18T13:57:40.000Z</published>
     <updated>2021-01-18T13:59:45.974Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>最近做了一道CTF的题，里面应用了http的各种头，记录下来学习学习</p></blockquote><h1 id="BJDCTF-2nd-假猪套天下第一"><a href="#BJDCTF-2nd-假猪套天下第一" class="headerlink" title="[BJDCTF 2nd]假猪套天下第一"></a>[BJDCTF 2nd]假猪套天下第一</h1><h3 id="打开题目"><a href="#打开题目" class="headerlink" title="打开题目"></a>打开题目</h3><p><img src="https://i.loli.net/2020/12/20/NqxatShcbRrQwyj.png" alt="image-20201220223807400"></p><blockquote><p>尝试弱口令登录与SQL注入</p></blockquote><p>抓包</p><p><img src="https://i.loli.net/2020/12/20/Kwq5lz42gfh9oCA.png" alt="image-20201220224157732"></p><p>修改时间，然后发现新线索</p><p><img src="https://i.loli.net/2020/12/20/OWMv6lu5HycxE7g.png" alt="image-20201220224129130"></p><p>使用**<em>Client-ip: 127.0.0.1**</em> ,又出现新的线索</p><p><img src="https://i.loli.net/2020/12/20/8W1zlVCqOQEtvN6.png" alt="image-20201220224438421"></p><p>使用*** Referer: gem-love.com *** 又有新提示</p><p><img src="https://i.loli.net/2020/12/20/ZbgB52qGpS6n8Xl.png" alt="image-20201220224558708"></p><p>这里有个坑，需要使用Commodo 64的全称，Commodore 64；</p><p><strong>* User-Agent： Commodore 64*</strong> </p><p><img src="https://i.loli.net/2020/12/20/rVhP4yswMF38g1k.png" alt="image-20201220225317596"></p><p>指定邮箱*** From: <a href="mailto:&#x72;&#x6f;&#x6f;&#x74;&#x40;&#x67;&#x65;&#109;&#x2d;&#x6c;&#x6f;&#118;&#x65;&#x2e;&#99;&#x6f;&#x6d;">&#x72;&#x6f;&#x6f;&#x74;&#x40;&#x67;&#x65;&#109;&#x2d;&#x6c;&#x6f;&#118;&#x65;&#x2e;&#99;&#x6f;&#x6d;</a>***</p><p><img src="https://i.loli.net/2020/12/20/eWg5bEnzAyQfTkY.png" alt="image-20201220225553050"></p><p>指定服务器**<em>Via: y1ng.vip**</em></p><p><img src="https://i.loli.net/2020/12/20/AxtY9Kzbp2UhNiZ.png" alt="image-20201220225711978"></p><p>base64解码即可</p><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这个题目本身不难，主要考的就是**<em>请求首部字段**</em>的熟练使用</p><table><thead><tr><th>Header</th><th>作用</th></tr></thead><tbody><tr><td>Accept</td><td>指定客户端能够接收的内容类型</td></tr><tr><td>Via</td><td>通知中间网关或代理服务器地址，通信协议</td></tr><tr><td>Referer</td><td>先前的网址，当前请求的网页紧随其后，即来路</td></tr><tr><td>Range</td><td>只请求实体的一部分，指定范围</td></tr><tr><td>From</td><td>发出请求的用户的Email</td></tr><tr><td>Cookie</td><td>存储cookie信息</td></tr><tr><td>User-Agent</td><td>包含发出请求的用户信息</td></tr><tr><td>TE</td><td>客户端接受的传输编码，通知服务器接受尾加头信息</td></tr><tr><td>Host</td><td>指定请求的服务器的域名和端口号</td></tr></tbody></table>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>最近做了一道CTF的题，里面应用了http的各种头，记录下来学习学习</p></blockquote><h1 id="BJDCTF-2nd-假猪套天下第一"><a href="#BJDCTF-2nd-假猪套天下第一" class="headerlink" title="[BJDCTF 2nd]假猪套天下第一"></a>[BJDCTF 2nd]假猪套天下第一</h1><h3 id="打开题目"><a href="#打开题目" class="headerlink" title="打开题目"></a>打开题目</h3><p><img src="https://i.loli.net/2020/12/20/NqxatShcbRrQwyj.png" alt="image-20201220223807400"></p><blockquote><p>尝试弱口令登录与SQL注入</p></blockquote><p>抓包</p><p><img src="https://i.loli.net/2020/12/20/Kwq5lz42gfh9oCA.png" alt="image-20201220224157732"></p><p>修改时间，然后发现新线索</p><p><img src="https://i.loli.net/2020/12/20/OWMv6lu5HycxE7g.png" alt="image-20201220224129130"></p><p>使用**<em>Client-ip: 127.0.0.1**</em> ,又出现新的线索</p><p><img src="https://i.loli.net/2020/12/20/8W1zlVCqOQEtvN6.png" alt="image-20201220224438421"></p><p>使用*** Referer: gem-love.com *** 又有新提示</p><p><img src="https://i.loli.net/2020/12/20/ZbgB52qGpS6n8Xl.png" alt="image-20201220224558708"></p><p>这里有个坑，需要使用Commodo 64的全称，Commodore 64；</p><p><strong>* User-Agent： Commodore 64*</strong> </p><p><img src="https://i.loli.net/2020/12/20/rVhP4yswMF38g1k.png" alt="image-20201220225317596"></p><p>指定邮箱*** From: <a href="mailto:&#x72;&#111;&#111;&#x74;&#x40;&#x67;&#x65;&#x6d;&#x2d;&#x6c;&#x6f;&#118;&#x65;&#46;&#x63;&#x6f;&#x6d;">&#x72;&#111;&#111;&#x74;&#x40;&#x67;&#x65;&#x6d;&#x2d;&#x6c;&#x6f;&#118;&#x65;&#46;&#x63;&#x6f;&#x6d;</a>***</p><p><img src="https://i.loli.net/2020/12/20/eWg5bEnzAyQfTkY.png" alt="image-20201220225553050"></p><p>指定服务器**<em>Via: y1ng.vip**</em></p><p><img src="https://i.loli.net/2020/12/20/AxtY9Kzbp2UhNiZ.png" alt="image-20201220225711978"></p><p>base64解码即可</p><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这个题目本身不难，主要考的就是**<em>请求首部字段**</em>的熟练使用</p><table><thead><tr><th>Header</th><th>作用</th></tr></thead><tbody><tr><td>Accept</td><td>指定客户端能够接收的内容类型</td></tr><tr><td>Via</td><td>通知中间网关或代理服务器地址，通信协议</td></tr><tr><td>Referer</td><td>先前的网址，当前请求的网页紧随其后，即来路</td></tr><tr><td>Range</td><td>只请求实体的一部分，指定范围</td></tr><tr><td>From</td><td>发出请求的用户的Email</td></tr><tr><td>Cookie</td><td>存储cookie信息</td></tr><tr><td>User-Agent</td><td>包含发出请求的用户信息</td></tr><tr><td>TE</td><td>客户端接受的传输编码，通知服务器接受尾加头信息</td></tr><tr><td>Host</td><td>指定请求的服务器的域名和端口号</td></tr></tbody></table>]]></content>
     
     
       
@@ -470,25 +500,6 @@
 &lt;blockquote&gt;
 &lt;p&gt;搭建的是vulhub的ssti靶场&lt;/p&gt;
 &lt;/blockquote&gt;</summary>
-    
-    
-    
-    
-    <category term="Web" scheme="http://example.com/tags/Web/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>源码泄露</title>
-    <link href="http://example.com/2020/10/31/%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/"/>
-    <id>http://example.com/2020/10/31/%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/</id>
-    <published>2020-10-31T14:01:05.000Z</published>
-    <updated>2020-12-22T11:42:08.572Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="hg-源码泄露"><a href="#hg-源码泄露" class="headerlink" title=".hg 源码泄露"></a>.hg 源码泄露</h3><p>漏洞成因：hg init的时候会生成.hg</p><a id="more"></a><h3 id="git-源码泄露"><a href="#git-源码泄露" class="headerlink" title=".git 源码泄露"></a>.git 源码泄露</h3><p>漏洞成因：在运行git init 初始化代码库的时候，会生成一个.git隐藏文件</p><h3 id="DS-Store文件泄露"><a href="#DS-Store文件泄露" class="headerlink" title=".DS_Store文件泄露"></a>.DS_Store文件泄露</h3><p>泄露成因：在发布代码时未删除文件夹中隐藏.DS_Store，被发现后，获取了敏感的文件名等信息</p><p>路径检查工具：dsstoreexp</p><p><code>python ds_store_exp.py http://www.am0s.com/.DS_Store</code></p><h3 id="网站备份压缩文件"><a href="#网站备份压缩文件" class="headerlink" title="网站备份压缩文件"></a>网站备份压缩文件</h3><p>备份文件的后缀：.rar .zip .7z .tar.gz .bak  .swp .txt .html</p><h3 id="SVN导致文件泄露"><a href="#SVN导致文件泄露" class="headerlink" title="SVN导致文件泄露"></a>SVN导致文件泄露</h3><p>Subversion，简称SVN，是一个开放源代码的版本控制系统，相对于的RCS、CVS，采用了分支管理系统，它的设计目标就是取代CVS。互联网上越来越多的控制服务从CVS转移到Subversion。Subversion使用服务端—客户端的结构，当然服务端与客户端可以都运行在同一台服务器上。在服务端是存放着所有受控制数据的Subversion仓库，另一端是Subversion的客户端程序，管理着受控数据的一部分在本地的映射（称为“工作副本”）。在这两端之间，是通过各种仓库存取层（Repository Access，简称RA）的多条通道进行访问的。这些通道中，可以通过不同的网络协议，例如HTTP、SSH等，或本地文件的方式来对仓库进行操作。</p><h3 id="WEB-INF-web-xml泄露"><a href="#WEB-INF-web-xml泄露" class="headerlink" title="WEB-INF/web.xml泄露"></a>WEB-INF/web.xml泄露</h3><p>WEB-INF是Java的WEB应用的安全目录。如果想在页面中直接访问其中的文件，必须通过web.xml文件对要访问的文件进行相应映射才能访问。</p><table><thead><tr><th>目录</th><th>内容</th></tr></thead><tbody><tr><td>/WEB-INF/web.xml</td><td>web应用配置文件，描述了servlet和其他的应用组件配置及命名规则</td></tr><tr><td>/WEB-INF/classes/</td><td>站点所有用的 class 文件，包括 servlet class 和非servlet class</td></tr><tr><td>/WEB-INF/lib/</td><td>存放web应用需要的各种JAR文件，放置仅在这个应用中要求使用的jar文件</td></tr><tr><td>/WEB-INF/src/</td><td>源码目录，按照包名结构放置各个java文件</td></tr><tr><td>/WEB-INF/database.properties</td><td>数据库配置文件</td></tr></tbody></table><h3 id="CVS泄露"><a href="#CVS泄露" class="headerlink" title="CVS泄露"></a>CVS泄露</h3>]]></content>
-    
-    
-    <summary type="html">&lt;h3 id=&quot;hg-源码泄露&quot;&gt;&lt;a href=&quot;#hg-源码泄露&quot; class=&quot;headerlink&quot; title=&quot;.hg 源码泄露&quot;&gt;&lt;/a&gt;.hg 源码泄露&lt;/h3&gt;&lt;p&gt;漏洞成因：hg init的时候会生成.hg&lt;/p&gt;</summary>
     
     
     

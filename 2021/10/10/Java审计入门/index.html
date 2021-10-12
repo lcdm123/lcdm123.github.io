@@ -1,0 +1,548 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/bg/6.png">
+  <link rel="icon" href="/img/bg/6.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="海马少年">
+  <meta name="keywords" content="">
+  <meta name="description" content="Java 代码审计入门环境搭建远程调试对Jar 远程调试新建一个 Java 项目文件，新建一个 lib 包，将 jar 项目文件放入 lib 中，然后点击 “add as Library……”  然后创建远程调试 Add Configuration……    调试成功   其他类似于 Weblogic  Tomcat 的调试，操作步骤大致一样，额外的点在以后调试的时候再写吧  项目构建工具Mave">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java审计入门">
+<meta property="og:url" content="http://example.com/2021/10/10/Java%E5%AE%A1%E8%AE%A1%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="Lcdm123">
+<meta property="og:description" content="Java 代码审计入门环境搭建远程调试对Jar 远程调试新建一个 Java 项目文件，新建一个 lib 包，将 jar 项目文件放入 lib 中，然后点击 “add as Library……”  然后创建远程调试 Add Configuration……    调试成功   其他类似于 Weblogic  Tomcat 的调试，操作步骤大致一样，额外的点在以后调试的时候再写吧  项目构建工具Mave">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211006120523043.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211006120752382.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211006120832600.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211006121110049.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211006163733487.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211006164430001.png">
+<meta property="article:published_time" content="2021-10-10T08:04:04.000Z">
+<meta property="article:modified_time" content="2021-10-12T08:05:06.556Z">
+<meta property="article:author" content="海马少年">
+<meta property="article:tag" content="Web">
+<meta property="article:tag" content="代码审计">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211006120523043.png">
+  
+  <title>Java审计入门 - Lcdm123</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"*","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="Lcdm123" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>海马少年</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg/6.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Java审计入门">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-10-10 16:04" pubdate>
+        2021年10月10日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.8k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      9 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Java审计入门</h1>
+            
+            <div class="markdown-body">
+              <h1 id="Java-代码审计入门"><a href="#Java-代码审计入门" class="headerlink" title="Java 代码审计入门"></a>Java 代码审计入门</h1><h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><h3 id="远程调试"><a href="#远程调试" class="headerlink" title="远程调试"></a>远程调试</h3><h4 id="对Jar-远程调试"><a href="#对Jar-远程调试" class="headerlink" title="对Jar 远程调试"></a>对Jar 远程调试</h4><p>新建一个 Java 项目文件，新建一个 lib 包，将 jar 项目文件放入 lib 中，然后点击 “add as Library……”</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211006120523043.png" srcset="/img/loading.gif" lazyload alt="image-20211006120523043"></p>
+<p>然后创建远程调试 <code>Add Configuration……</code> </p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211006120752382.png" srcset="/img/loading.gif" lazyload alt="image-20211006120752382"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211006120832600.png" srcset="/img/loading.gif" lazyload alt="image-20211006120832600"></p>
+<p>调试成功</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211006121110049.png" srcset="/img/loading.gif" lazyload alt="image-20211006121110049"></p>
+<blockquote>
+<p>其他类似于 Weblogic  Tomcat 的调试，操作步骤大致一样，额外的点在以后调试的时候再写吧</p>
+</blockquote>
+<h3 id="项目构建工具"><a href="#项目构建工具" class="headerlink" title="项目构建工具"></a>项目构建工具</h3><h4 id="Maven-基础知识及掌握"><a href="#Maven-基础知识及掌握" class="headerlink" title="Maven 基础知识及掌握"></a>Maven 基础知识及掌握</h4><p>Maven 项目中最主要的就是 pom.xml 文件，pom.xml 文件描述了项目的 Maven 坐标、依赖关系、开发者需要准寻的规则、缺陷管理系统、组织以及 license，还有其他所有的项目相关因素，依靠它我们可以审查当前 java 应用程序是否使用了存在安全隐患的组件，以及快速搭建特定的漏洞环境。</p>
+<p>例如快速搭建版本小于1.24的 fastjson 环境</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">modelVersion</span>&gt;</span>4.0.0<span class="hljs-tag">&lt;/<span class="hljs-name">modelVersion</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.example<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>maventest<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.0-SNAPSHOT<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>fastjson<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.2.24<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">project</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211006163733487.png" srcset="/img/loading.gif" lazyload alt="image-20211006163733487"></p>
+<p>之后组件就被下载至本地并且加入项目依赖中，可以再项目代码中使用组件</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211006164430001.png" srcset="/img/loading.gif" lazyload alt="image-20211006164430001"></p>
+<h4 id="Swagger"><a href="#Swagger" class="headerlink" title="Swagger"></a>Swagger</h4><p>Swagger 是一个开源软件框架，可以帮助开发人员设计、构建、记录和使用 Restful Web 应用，它将代码和文档融为一体。</p>
+<h2 id="代码审计辅助工具"><a href="#代码审计辅助工具" class="headerlink" title="代码审计辅助工具"></a>代码审计辅助工具</h2><h3 id="编辑器"><a href="#编辑器" class="headerlink" title="编辑器"></a>编辑器</h3><p>Sublime</p>
+<p>IDEA</p>
+<p>Eclipse</p>
+<h3 id="测试工具"><a href="#测试工具" class="headerlink" title="测试工具"></a>测试工具</h3><p>Burp Suite</p>
+<p>SwitchyOmega</p>
+<p>Max HackBar</p>
+<p>Postman</p>
+<p>PostWomen</p>
+<p>Tamper Data</p>
+<p>Ysoserial</p>
+<blockquote>
+<p>Ysoserial 是一款开源的 java 反序列化测试工具，内部集成了多种利用链，可以快速生成用于攻击的代码</p>
+</blockquote>
+<p>Marshalsec</p>
+<blockquote>
+<p>Marshalsec 是一款开源的 java 反序列化测试工具，不仅可以生成各类反序列化利用链，还可以快速启动而已的 RMI 服务</p>
+</blockquote>
+<p>MySQL 日志查询工具</p>
+<p>MySQL Monitor</p>
+<p>Beyond Compare</p>
+<blockquote>
+<p>文件比较工具，比较范围包括目录、文档内容</p>
+</blockquote>
+<h3 id="反编译工具"><a href="#反编译工具" class="headerlink" title="反编译工具"></a>反编译工具</h3><p>JD-GUI</p>
+<p>FernFlower</p>
+<blockquote>
+<p>FernFlower 反编译工具的功能比 JD-GUI 更强大，反编译失败的时候会生成空的 java 文件</p>
+</blockquote>
+<p>CFR</p>
+<p>Intellij IDEA</p>
+<blockquote>
+<p>IDEA 反编译工具能够自动捷豹已添加的依赖的 jar 包，并对其内容进行反编译</p>
+</blockquote>
+<h3 id="Java-代码静态扫描工具"><a href="#Java-代码静态扫描工具" class="headerlink" title="Java 代码静态扫描工具"></a>Java 代码静态扫描工具</h3><p>Fortify SCA</p>
+<p>VCG</p>
+<p>FindBugs 与 FindSecBugs 插件</p>
+<blockquote>
+<p>在 IDEA 和 Eclipse 中都可以安装</p>
+</blockquote>
+<p>SpotBugs</p>
+<blockquote>
+<p>SpotBugs 和 FindBugs 用法基本一样，可以独立使用也可以作为插件，需要运行在 JDK 1.8 以上的版本</p>
+</blockquote>
+<h3 id="公开漏洞平台"><a href="#公开漏洞平台" class="headerlink" title="公开漏洞平台"></a>公开漏洞平台</h3><p>CVE</p>
+<p>NVD</p>
+<p>CNVD</p>
+<p>CNNVD</p>
+<h2 id="Java-EE-基础知识"><a href="#Java-EE-基础知识" class="headerlink" title="Java EE 基础知识"></a>Java EE 基础知识</h2><h4 id="Java-EE-的核心技术"><a href="#Java-EE-的核心技术" class="headerlink" title="Java EE 的核心技术"></a>Java EE 的核心技术</h4><p>Java 数据库连接（JDBC）：在 Java 语言中用来规范客户程序如何访问数据库的应用程序接口，提供了诸如查询和更新数据库中数据的方法</p>
+<p>Java 命名和目录接口（JNDI）：Java的一个目录服务应用程序界面（API），它提供了一个目录系统，并将服务名称与对象关联起来，从而使开发人员在开发过程中可以用名称来访问对象</p>
+<p>企业级 JavaBean（EJB）：用来构筑企业级应用的、在服务器端可被管理的组件</p>
+<p>远程方法调用（RMI）：Java 的一组用户开发分布式应用程序的 API </p>
+<p>Servlet（Server Applet）：是使用 java 编写的服务器端程序。狭义的是指java 语言实现的一个接口，广义的是真任何实现该 Servlet 接口的类。其主要作用在于交互式地浏览和修改数据，生成动态 Web 内容</p>
+<p>JSP：动态网页技术标准。JSP 部署于网络服务器上，可以响应客户端发送地请求，并根据请求内容动态生成 HTML XML 或者其他格式文档地 Web 网页，然后返回给请求者</p>
+<p>可扩展标记语言（XML）：用于传输和存储数据地语言</p>
+<p>Java 消息服务（JMC）：一个Java 平台中关于面向消息中间件（MOM）的API，用于在连个应用程序之间或者分布式系统之间发送消息，进行异步通信</p>
+<h4 id="Java-EE-分层模型"><a href="#Java-EE-分层模型" class="headerlink" title="Java EE 分层模型"></a>Java EE 分层模型</h4><p>Java EE 应用的分层模型主要分为以下 5 层</p>
+<ul>
+<li>Domain Object（领域对象）层：本层由一系列 POJO（Plain Old Java Object，普通的，传统的java对象）组成，这些对象是该系统的 Domain Object，通常包含各自所需实现的业务逻辑方法</li>
+<li>DAO（Data Access Object 数据访问对象）层：本层由一系列 DAO 组件组成，这些DAO 实现了对数据的创建、查询、更新和删除等操作</li>
+<li>Service（业务逻辑）层：本层由一系列的业务逻辑对象组成，这些业务逻辑对象实现了系统所需要的业务逻辑方法</li>
+<li>Controller（控制器）层：本层由一系列的控制器组成，这些控制器用于拦截用户的请求，并调用业务逻辑组件的业务逻辑方法去处理用户请求，然后根据处理结果向不同的 view 组件转发</li>
+<li>View（表现）层：本层由一系列的页面及视图组件组成，负责收集用户请求，并显示处理后的结果</li>
+</ul>
+<h4 id="MVC模式与MVC框架"><a href="#MVC模式与MVC框架" class="headerlink" title="MVC模式与MVC框架"></a>MVC模式与MVC框架</h4><p>MVC 的目的就是将 M 和 V 实现代码分离，利用 C 确保 M 和 C 的同步</p>
+<p>Model：携带数据的对象活 Java POJO 即使模型内数据改变也具有逻辑来更新控制器</p>
+<p>Controller：表示逻辑控制，控制器对模型和视图都有作用，控制数据流入模型对象，并在数据更改时更新视图，是视图和模型的中间层</p>
+<p>View：模型包含的数据的可视化层</p>
+<p>MVC的工作流程：Controller 层接收用户的请求，并决定应该调用哪个 Model 来进行处理；然后，由 Model 使用逻辑处理用户的请求并返回数据，最后 View 经数据呈现个用户。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Web/">Web</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Web/">Web</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">代码审计</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Java/">Java</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/10/11/Java%E7%B1%BB%E5%8A%A0%E8%BD%BD/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Java类加载</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/09/27/C%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80/">
+                        <span class="hidden-mobile">C学习基础</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
