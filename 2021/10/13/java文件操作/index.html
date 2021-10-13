@@ -1,0 +1,544 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/bg/6.png">
+  <link rel="icon" href="/img/bg/6.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="海马少年">
+  <meta name="keywords" content="">
+  <meta name="description" content="Java 文件系统前言Java 是一个跨平台的语言，不同的操作系统具有完全不一样的文件系统和特性。JDK会根据不同的操作系统编译成不同的版本。Java 对文件的任何操作都是通过 JNI 调用 C 语言函数实现的。Java 为了能够实现跨操作系统对文件就行操作抽象了一个 FileSystem 的对象，不同的操作系统只需要实现抽象出来的文件操作方法就可以实现跨屏平台的文件操作。 FileSystem在">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java文件操作">
+<meta property="og:url" content="http://example.com/2021/10/13/java%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/index.html">
+<meta property="og:site_name" content="Lcdm123">
+<meta property="og:description" content="Java 文件系统前言Java 是一个跨平台的语言，不同的操作系统具有完全不一样的文件系统和特性。JDK会根据不同的操作系统编译成不同的版本。Java 对文件的任何操作都是通过 JNI 调用 C 语言函数实现的。Java 为了能够实现跨操作系统对文件就行操作抽象了一个 FileSystem 的对象，不同的操作系统只需要实现抽象出来的文件操作方法就可以实现跨屏平台的文件操作。 FileSystem在">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211012205656607.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211012211740019.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211013141241721.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211013141458973.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211013153458771.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211012234012387.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211012235627129.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211013132110815.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211013133158759.png">
+<meta property="article:published_time" content="2021-10-13T11:06:37.000Z">
+<meta property="article:modified_time" content="2021-10-13T11:07:13.007Z">
+<meta property="article:author" content="海马少年">
+<meta property="article:tag" content="Web">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211012205656607.png">
+  
+  <title>java文件操作 - Lcdm123</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"*","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="Lcdm123" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>海马少年</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg/6.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="java文件操作">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-10-13 19:06" pubdate>
+        2021年10月13日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.5k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      11 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">java文件操作</h1>
+            
+            <div class="markdown-body">
+              <h1 id="Java-文件系统"><a href="#Java-文件系统" class="headerlink" title="Java 文件系统"></a>Java 文件系统</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Java 是一个跨平台的语言，不同的操作系统具有完全不一样的文件系统和特性。JDK会根据不同的操作系统编译成不同的版本。Java 对文件的任何操作都是通过 JNI 调用 C 语言函数实现的。Java 为了能够实现跨操作系统对文件就行操作抽象了一个 <code>FileSystem</code> 的对象，不同的操作系统只需要实现抽象出来的文件操作方法就可以实现跨屏平台的文件操作。</p>
+<h2 id="FileSystem"><a href="#FileSystem" class="headerlink" title="FileSystem"></a>FileSystem</h2><p>在 Java SE中内置了两类文件系统：<code>java.io</code> 和 <code>java.nio</code>， <code>java.nio</code>的实现是<code>sun.nio</code></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211012205656607.png" srcset="/img/loading.gif" lazyload alt="image-20211012205656607"></p>
+<p>Java 抽象出了一个 <code>java.io.FileSystem</code> 不同的操作系统有不一样的文件系统，<code>java.io.UnixFileSystem</code> <code>java.io.WinFileSystem</code></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211012211740019.png" srcset="/img/loading.gif" lazyload alt="image-20211012211740019"></p>
+<p><code>java.io.FileSystem</code> 是一个抽象类，它抽象了对文件的操作，不同操作系统版本的 JDK 会实现其抽象的方法从而就实现了跨平台的文件访问操作</p>
+<p>Java 对文件的操作最终都会调用动态链接库中 C 实现的 Java Native 方法</p>
+<p><strong>注意</strong></p>
+<ol>
+<li>并不是所有的文件操作都在 <code>java.io.FileSystem</code> 中定义，文件的读取最终调用的是<code>java.io.FileInputStream#read0、readBytes</code>、<code>java.io.RandomAccessFile#read0、readBytes</code>，而写文件调用的是<code>java.io.FileOutputStream#writeBytes</code>、<code>java.io.RandomAccessFile#write0</code></li>
+<li>Java 有两类文件系统 API，基于阻塞模式的 IO 的文件系统，另一个是 JDK7 + 基于NIO.2 的文件系统</li>
+</ol>
+<h2 id="流"><a href="#流" class="headerlink" title="流"></a>流</h2><p>流是一个抽象的概念，是对输入输出设备的抽象，Java 程序中，对于数据的 输入/ 输出 操作都是以流的方式进行。设备包括文件，网络，内存。流具有方向性，至于是输入流还是输出流则是一个相对的概念。当程序需要从某个数据源读取数据的时候，就会开启一个输入流，数据源可以是文件、内存或网络。需要写入数据到某个数据源目的地的时候，也会开启一个输出流，这个数据源目的地可以是文件、内存或网络。</p>
+<p>流的分类:</p>
+<ol>
+<li>处理的数据单位不同可分为：字符流、字节流</li>
+<li>数据流方向不同可分为：输入流、输出流</li>
+<li>功能不同可分为：节点流、处理流</li>
+</ol>
+<p>节点流：节点流从一个特定的数据源读写数据。即节点流是直接操作文件，网络等的流，例如<code>FileInputStream</code>和<code>FileOutputStream</code> 他们直接从文件中读取或网文件中写入字节流。</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211013141241721.png" srcset="/img/loading.gif" lazyload alt="image-20211013141241721"></p>
+<p>处理流：”连接“在已存在的流（节点流或处理流）之上通过对数据的处理为程序提供更为强大的读写功能。过滤流是使用一个已经存在的输入流或输出流连接创建的，过滤流就是对节点流进行一系列的包装。例如<code>BufferedInputStream</code>和<code>BufferedOutputStream</code>，使用已经存在的节点流来构造，提供带缓冲的读写，提高了读写的效率，以及<code>DataInputStream</code>和<code>DataOutputStream</code>，使用已经存在的节点流来构造，提供了读写Java中的基本数据类型的功能。他们都属于过滤流。</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211013141458973.png" srcset="/img/loading.gif" lazyload alt="image-20211013141458973"></p>
+<p><strong>流结构</strong></p>
+<p>Java 所有的流类位于<code>java.io</code>包中，都分别继承以下四个抽象流类型</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>字节流</th>
+<th>字符流</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>输入流</td>
+<td><code>InputStream</code></td>
+<td><code>Reader</code></td>
+</tr>
+<tr>
+<td>输出流</td>
+<td><code>OutputStream</code></td>
+<td><code>Writer</code></td>
+</tr>
+</tbody></table>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211013153458771.png" srcset="/img/loading.gif" lazyload alt="image-20211013153458771"></p>
+<p><strong>常见流</strong></p>
+<ul>
+<li>缓冲流：缓冲流要“套接”在相应的节点流之上，对读写的数据提供了缓冲的功能，提高了读写效率，同事增加了一些新的方法</li>
+<li>转换流：用于字节数据到字符数据之间的转换</li>
+<li>数据流：提供了读写Java中的基本数据类型的功能</li>
+<li>对象流：用于直接将对象写入写出</li>
+</ul>
+<h2 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h2><blockquote>
+<p>最开始有点理解错误了，直接导入 <code>java.io.FileSystem</code> 包发现不对，后面查了一下发现 <code>java.io.FileSystem</code> 是抽象类不能直接调用而应该调用 <code>java.io.File</code> 类 ，这个类是通过它实现的</p>
+</blockquote>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211012234012387.png" srcset="/img/loading.gif" lazyload alt="image-20211012234012387"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211012235627129.png" srcset="/img/loading.gif" lazyload alt="image-20211012235627129"></p>
+<h3 id="字符流方法"><a href="#字符流方法" class="headerlink" title="字符流方法"></a><strong>字符流方法</strong></h3><p>文件读取操作</p>
+<ol>
+<li>先获得文件句柄</li>
+<li>获得文件句柄当作是输入一个字节码流，需要对这个输入流进行读取</li>
+<li>读取到输入流后，需要读取生成字节流</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 使用 BufferedReader 的 readLine() 方法</span><br><span class="hljs-keyword">package</span> com;<br><br><span class="hljs-keyword">import</span> java.io.BufferedReader;<br><span class="hljs-keyword">import</span> java.io.File;<br><span class="hljs-keyword">import</span> java.io.FileReader;<br><span class="hljs-keyword">import</span> java.io.IOException;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FileTest</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException </span>&#123;<br>        File file = <span class="hljs-keyword">new</span> File(<span class="hljs-string">&quot;E:/test.txt&quot;</span>);<br>        BufferedReader read = <span class="hljs-keyword">new</span> BufferedReader(<span class="hljs-keyword">new</span> FileReader(<span class="hljs-string">&quot;E:/test.txt&quot;</span>));<br>        String str;<br>        <span class="hljs-keyword">while</span>((str = read.readLine()) != <span class="hljs-keyword">null</span>) &#123;<br>            System.out.println(str);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>FileReader </code>类是从 <code>InputStreamReader</code> 类继承而来。该类按字符读取流中数据</p>
+<p>在给定从中读取数据的<code>File</code>的情况下创建一个 <code>FileReader</code></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211013132110815.png" srcset="/img/loading.gif" lazyload alt="image-20211013132110815"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211013133158759.png" srcset="/img/loading.gif" lazyload alt="image-20211013133158759"></p>
+<p>文件写入</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// BufferedWriter</span><br><span class="hljs-keyword">package</span> com;<br><br><span class="hljs-keyword">import</span> java.io.*;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FileTest</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException </span>&#123;<br>        File file = <span class="hljs-keyword">new</span> File(<span class="hljs-string">&quot;E:/test.txt&quot;</span>);<br>        BufferedWriter out = <span class="hljs-keyword">new</span> BufferedWriter(<span class="hljs-keyword">new</span> FileWriter(file));<br>        String str = <span class="hljs-string">&quot;文件写入！！！&quot;</span>;<br>        out.write(str);<br>        out.close();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>BufferedWriter</code>属于字符流体系中的一员，与 <code>FileWriter</code> 不同的是 <code>BufferedWriter</code> 自带缓冲区</p>
+</blockquote>
+<p>读取和写入的操作类似</p>
+<h3 id="字节流方法"><a href="#字节流方法" class="headerlink" title="字节流方法"></a><strong>字节流方法</strong></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 读取文件</span><br><span class="hljs-keyword">package</span> com;<br><br><span class="hljs-keyword">import</span> java.io.*;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FileTest</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException </span>&#123;<br>        File file = <span class="hljs-keyword">new</span> File(<span class="hljs-string">&quot;E:/test.txt&quot;</span>);<br>        FileInputStream fileInputStream = <span class="hljs-keyword">new</span> FileInputStream(file);<br>        <span class="hljs-keyword">byte</span>[] bytes = <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[<span class="hljs-number">1024</span>];<br>        <span class="hljs-keyword">int</span> length = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">while</span> ((length = fileInputStream.read(bytes)) != -<span class="hljs-number">1</span>)&#123;<br>            System.out.println(<span class="hljs-keyword">new</span> String(bytes,<span class="hljs-number">0</span>,length));<br>        &#125;<br>    &#125;<br>&#125;<br><span class="hljs-comment">// read 是读取 bytes 长读的字节数</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 写入文件</span><br><span class="hljs-keyword">package</span> com;<br><br><span class="hljs-keyword">import</span> java.io.*;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FileTest</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException </span>&#123;<br>        File file = <span class="hljs-keyword">new</span> File(<span class="hljs-string">&quot;E:/test.txt&quot;</span>);<br>        FileOutputStream test = <span class="hljs-keyword">new</span> FileOutputStream(file);<br>        String str = <span class="hljs-string">&quot;hello lcdm123!!!&quot;</span>;<br>        <span class="hljs-comment">// 将字符串转换为二进制文件</span><br>        <span class="hljs-keyword">byte</span>[] b = str.getBytes();<br>        <span class="hljs-comment">// 写入</span><br>        test.write(b);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>对于文件的操作 Java 还有很多方法，需要后面遇到再做处理</p>
+<blockquote>
+<p>对于各类的操作直接看 java 文档就可以了</p>
+</blockquote>
+<p>参考文章</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u013087513/article/details/51999533">https://blog.csdn.net/u013087513/article/details/51999533</a></p>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000038575475">https://segmentfault.com/a/1190000038575475</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/shitouer/archive/2012/12/19/2823641.html">https://www.cnblogs.com/shitouer/archive/2012/12/19/2823641.html</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Web/">Web</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Web/">Web</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Java/">Java</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/10/13/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA%E4%B8%80/">
+                        <span class="hidden-mobile">红日靶场一</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
