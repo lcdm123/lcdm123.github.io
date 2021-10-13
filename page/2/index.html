@@ -191,6 +191,169 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2021/09/04/upload-labs/" target="_self">
+          文件上传靶场
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/09/04/upload-labs/" target="_self">
+          
+          
+            
+          
+          upload-labs
+Pass-04上传 .htaccess 
+1AddType application/x-httpd-php .jpg
+
+Pass-05文件会自动重命名所以不能上传 .htaccess 文件
+
+可以大小写绕过上传但是系统好像不能解析，访问到的结果是错误的
+Pass-06
+与之前相比去掉了除去空格的函数
+末尾加空格即可绕过上传 
+
+Pass-07
+
+.htaccess 文件不能
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-09-04 12:12" pubdate>
+              2021-09-04
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E9%9D%B6%E5%9C%BA/">靶场</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/09/02/Freebuf%E9%9D%B6%E5%9C%BA/" target="_self">
+          Freebuf域渗透靶场
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/09/02/Freebuf%E9%9D%B6%E5%9C%BA/" target="_self">
+          
+          
+            
+          
+          Freebuf 域渗透靶场搭建https://www.freebuf.com/articles/web/265049.html
+
+搭建靶场就是一般步骤
+需要注意的步骤
+
+修改父域的DNS设置
+
+
+财务域是一个单独的域环境，财务核心系统属于财务域
+
+web服务器直接拿的红日改的，真方便
+
+
+经过后期的攻击，发现子域和父域之间存在一些问题，未找到原因！安装配置时只需要添加好网卡，自己增加用户即可
+
+虚
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-09-02 12:13" pubdate>
+              2021-09-02
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">内网渗透</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/09/01/BlueCMS/" target="_self">
+          BlueCMS
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/09/01/BlueCMS/" target="_self">
+          
+          
+            
+          
+          BlueCMS
+BlueCMS__v1.6_sp1
+
+前言这个CMS是一个很老的版本，这里利用它来学习熟悉一下代码审计。审计的过程中暂时没有利用Seay工具去分析代码，而是尝试直接分析原框架，毕竟这个CMS的源码比较简单。
+代码审计初步了解首先从根目录下的index.php文件入手，它是整个程序的入口，一开始它加载了两个php文件，之后再分析这两个文件作用
+
+然后就是页面的各个板块信息的查询与展示
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-09-01 10:10" pubdate>
+              2021-09-01
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">代码审计</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2021/01/18/%E4%BA%8C%E5%88%86%E6%B3%95%E7%9B%B2%E6%B3%A8/" target="_self">
           二分法盲注
         </a>
@@ -564,148 +727,11 @@
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/12/21/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96POP%E9%93%BE%E6%9E%84%E9%80%A0/" target="_self">
-          PHP反序列化POP链构造
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/12/21/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96POP%E9%93%BE%E6%9E%84%E9%80%A0/" target="_self">
-          
-          
-            
-          
-          构造PHP反序列化pop链
-以前理解的序列化攻击更多是在魔术方法中出现的一些利用漏洞，因为自动调用从而触发的漏洞。**但是如果关键代码不在魔术方法中**，而在一个类的普通方法中，这时候需要找相同的函数名将类的属性与敏感函数的属性联系起来
-
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-12-21 23:20" pubdate>
-              2020-12-21
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Web/">Web</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/11/30/Unctf-WEB/" target="_self">
-          Unctf-WEB
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/11/30/Unctf-WEB/" target="_self">
-          
-          
-            
-          
-          WEB[TOC]
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-11-30 22:03" pubdate>
-              2020-11-30
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Web/">Web</a>
-            
-              <a href="/tags/WriteUp/">WriteUp</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/11/12/SSTI-Study/" target="_self">
-          SSTI-Study
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/11/12/SSTI-Study/" target="_self">
-          
-          
-            
-          
-          注入大致流程12341. 检测漏洞，寻找注入点2.查询基本类3.查找子类4.找到子类中可以读取文件或命令执行的模块
-
-
-搭建的是vulhub的ssti靶场
-
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-11-12 19:56" pubdate>
-              2020-11-12
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Web/">Web</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#board">3</a><a class="extend next" rel="next" href="/page/3/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#board">3</a><a class="page-number" href="/page/4/#board">4</a><a class="extend next" rel="next" href="/page/3/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 

