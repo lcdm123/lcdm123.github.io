@@ -16,30 +16,25 @@
   <meta name="description" content="">
   <meta name="author" content="海马少年">
   <meta name="keywords" content="">
-  <meta name="description" content="最近做了一道CTF的题，里面应用了http的各种头，记录下来学习学习  [BJDCTF 2nd]假猪套天下第一打开题目  尝试弱口令登录与SQL注入  抓包  修改时间，然后发现新线索  使用**Client-ip: 127.0.0.1** ,又出现新的线索  使用*** Referer: gem-love.com *** 又有新提示  这里有个坑，需要使用Commodo 64的全称，Commo">
+  <meta name="description" content="Java 命令执行准备1234567891011121314&#x2F;&#x2F;字符串转字节数组import java.io.IOException;import java.util.Arrays;public class TestRun &amp;#123;    public static void main(String[] args) throws IOException &amp;#123;&#x2F;*        Stri">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HTTP特殊请求头">
-<meta property="og:url" content="http://example.com/2021/01/18/HTTP%E7%89%B9%E6%AE%8A%E8%AF%B7%E6%B1%82%E5%A4%B4/index.html">
+<meta property="og:title" content="java命令执行">
+<meta property="og:url" content="http://example.com/2021/10/15/java%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/index.html">
 <meta property="og:site_name" content="Lcdm123">
-<meta property="og:description" content="最近做了一道CTF的题，里面应用了http的各种头，记录下来学习学习  [BJDCTF 2nd]假猪套天下第一打开题目  尝试弱口令登录与SQL注入  抓包  修改时间，然后发现新线索  使用**Client-ip: 127.0.0.1** ,又出现新的线索  使用*** Referer: gem-love.com *** 又有新提示  这里有个坑，需要使用Commodo 64的全称，Commo">
+<meta property="og:description" content="Java 命令执行准备1234567891011121314&#x2F;&#x2F;字符串转字节数组import java.io.IOException;import java.util.Arrays;public class TestRun &amp;#123;    public static void main(String[] args) throws IOException &amp;#123;&#x2F;*        Stri">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://i.loli.net/2020/12/20/NqxatShcbRrQwyj.png">
-<meta property="og:image" content="https://i.loli.net/2020/12/20/Kwq5lz42gfh9oCA.png">
-<meta property="og:image" content="https://i.loli.net/2020/12/20/OWMv6lu5HycxE7g.png">
-<meta property="og:image" content="https://i.loli.net/2020/12/20/8W1zlVCqOQEtvN6.png">
-<meta property="og:image" content="https://i.loli.net/2020/12/20/ZbgB52qGpS6n8Xl.png">
-<meta property="og:image" content="https://i.loli.net/2020/12/20/rVhP4yswMF38g1k.png">
-<meta property="og:image" content="https://i.loli.net/2020/12/20/eWg5bEnzAyQfTkY.png">
-<meta property="og:image" content="https://i.loli.net/2020/12/20/AxtY9Kzbp2UhNiZ.png">
-<meta property="article:published_time" content="2021-01-18T13:57:40.000Z">
-<meta property="article:modified_time" content="2021-01-18T13:59:45.974Z">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211015140423647.png">
+<meta property="og:image" content="d:/markdown/image-20211015140627401.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211015143252943.png">
+<meta property="article:published_time" content="2021-10-15T14:53:54.000Z">
+<meta property="article:modified_time" content="2021-10-15T14:55:46.551Z">
 <meta property="article:author" content="海马少年">
 <meta property="article:tag" content="Web">
-<meta property="article:tag" content="WriteUp">
+<meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://i.loli.net/2020/12/20/NqxatShcbRrQwyj.png">
+<meta name="twitter:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211015140423647.png">
   
-  <title>HTTP特殊请求头 - Lcdm123</title>
+  <title>java命令执行 - Lcdm123</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -186,7 +181,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="HTTP特殊请求头">
+            <span class="h2" id="subtitle" title="java命令执行">
               
             </span>
 
@@ -196,8 +191,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-01-18 21:57" pubdate>
-        2021年1月18日 晚上
+      <time datetime="2021-10-15 22:53" pubdate>
+        2021年10月15日 晚上
       </time>
     </span>
   
@@ -207,7 +202,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      581 字
+      1.5k 字
     </span>
   
 
@@ -216,7 +211,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      2 分钟
+      5 分钟
     </span>
   
 
@@ -245,82 +240,33 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">HTTP特殊请求头</h1>
+            <h1 style="display: none">java命令执行</h1>
             
             <div class="markdown-body">
-              <blockquote>
-<p>最近做了一道CTF的题，里面应用了http的各种头，记录下来学习学习</p>
-</blockquote>
-<h1 id="BJDCTF-2nd-假猪套天下第一"><a href="#BJDCTF-2nd-假猪套天下第一" class="headerlink" title="[BJDCTF 2nd]假猪套天下第一"></a>[BJDCTF 2nd]假猪套天下第一</h1><h3 id="打开题目"><a href="#打开题目" class="headerlink" title="打开题目"></a>打开题目</h3><p><img src="https://i.loli.net/2020/12/20/NqxatShcbRrQwyj.png" srcset="/img/loading.gif" lazyload alt="image-20201220223807400"></p>
-<blockquote>
-<p>尝试弱口令登录与SQL注入</p>
-</blockquote>
-<p>抓包</p>
-<p><img src="https://i.loli.net/2020/12/20/Kwq5lz42gfh9oCA.png" srcset="/img/loading.gif" lazyload alt="image-20201220224157732"></p>
-<p>修改时间，然后发现新线索</p>
-<p><img src="https://i.loli.net/2020/12/20/OWMv6lu5HycxE7g.png" srcset="/img/loading.gif" lazyload alt="image-20201220224129130"></p>
-<p>使用**<em>Client-ip: 127.0.0.1**</em> ,又出现新的线索</p>
-<p><img src="https://i.loli.net/2020/12/20/8W1zlVCqOQEtvN6.png" srcset="/img/loading.gif" lazyload alt="image-20201220224438421"></p>
-<p>使用*** Referer: gem-love.com *** 又有新提示</p>
-<p><img src="https://i.loli.net/2020/12/20/ZbgB52qGpS6n8Xl.png" srcset="/img/loading.gif" lazyload alt="image-20201220224558708"></p>
-<p>这里有个坑，需要使用Commodo 64的全称，Commodore 64；</p>
-<p><strong>* User-Agent： Commodore 64*</strong> </p>
-<p><img src="https://i.loli.net/2020/12/20/rVhP4yswMF38g1k.png" srcset="/img/loading.gif" lazyload alt="image-20201220225317596"></p>
-<p>指定邮箱*** From: <a href="mailto:&#114;&#111;&#x6f;&#116;&#64;&#103;&#x65;&#x6d;&#x2d;&#108;&#x6f;&#x76;&#101;&#x2e;&#99;&#111;&#109;">&#114;&#111;&#x6f;&#116;&#64;&#103;&#x65;&#x6d;&#x2d;&#108;&#x6f;&#x76;&#101;&#x2e;&#99;&#111;&#109;</a>***</p>
-<p><img src="https://i.loli.net/2020/12/20/eWg5bEnzAyQfTkY.png" srcset="/img/loading.gif" lazyload alt="image-20201220225553050"></p>
-<p>指定服务器**<em>Via: y1ng.vip**</em></p>
-<p><img src="https://i.loli.net/2020/12/20/AxtY9Kzbp2UhNiZ.png" srcset="/img/loading.gif" lazyload alt="image-20201220225711978"></p>
-<p>base64解码即可</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这个题目本身不难，主要考的就是**<em>请求首部字段**</em>的熟练使用</p>
-<table>
-<thead>
-<tr>
-<th>Header</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Accept</td>
-<td>指定客户端能够接收的内容类型</td>
-</tr>
-<tr>
-<td>Via</td>
-<td>通知中间网关或代理服务器地址，通信协议</td>
-</tr>
-<tr>
-<td>Referer</td>
-<td>先前的网址，当前请求的网页紧随其后，即来路</td>
-</tr>
-<tr>
-<td>Range</td>
-<td>只请求实体的一部分，指定范围</td>
-</tr>
-<tr>
-<td>From</td>
-<td>发出请求的用户的Email</td>
-</tr>
-<tr>
-<td>Cookie</td>
-<td>存储cookie信息</td>
-</tr>
-<tr>
-<td>User-Agent</td>
-<td>包含发出请求的用户信息</td>
-</tr>
-<tr>
-<td>TE</td>
-<td>客户端接受的传输编码，通知服务器接受尾加头信息</td>
-</tr>
-<tr>
-<td>Host</td>
-<td>指定请求的服务器的域名和端口号</td>
-</tr>
-</tbody></table>
+              <h1 id="Java-命令执行"><a href="#Java-命令执行" class="headerlink" title="Java 命令执行"></a>Java 命令执行</h1><h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//字符串转字节数组</span><br><span class="hljs-keyword">import</span> java.io.IOException;<br><span class="hljs-keyword">import</span> java.util.Arrays;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TestRun</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException </span>&#123;<br><span class="hljs-comment">/*</span><br><span class="hljs-comment">        String rt = new String(new byte[]&#123;106, 97, 118, 97, 46, 108, 97, 110, 103, 46, 82, 117, 110, 116, 105, 109, 101&#125;);</span><br><span class="hljs-comment">*/</span><br>        String rt = <span class="hljs-string">&quot;java.lang.UNIXProcess&quot;</span>;<br>        <span class="hljs-keyword">byte</span>[] bytes = rt.getBytes();<br>        System.out.println(Arrays.toString(bytes));<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211015140423647.png" srcset="/img/loading.gif" lazyload alt="image-20211015140423647"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 字节数组转字符串</span><br><span class="hljs-keyword">import</span> java.io.IOException;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TestRun</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException </span>&#123;<br>        String str = <span class="hljs-keyword">new</span> String(<span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[]&#123;<span class="hljs-number">106</span>, <span class="hljs-number">97</span>, <span class="hljs-number">118</span>, <span class="hljs-number">97</span>, <span class="hljs-number">46</span>, <span class="hljs-number">108</span>, <span class="hljs-number">97</span>, <span class="hljs-number">110</span>, <span class="hljs-number">103</span>, <span class="hljs-number">46</span>, <span class="hljs-number">85</span>, <span class="hljs-number">78</span>, <span class="hljs-number">73</span>, <span class="hljs-number">88</span>, <span class="hljs-number">80</span>, <span class="hljs-number">114</span>, <span class="hljs-number">111</span>, <span class="hljs-number">99</span>, <span class="hljs-number">101</span>, <span class="hljs-number">115</span>, <span class="hljs-number">115</span>&#125;);<br>        System.out.println(str);<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p><img src="D:\markdown\image-20211015140627401.png" srcset="/img/loading.gif" lazyload alt="image-20211015140627401"></p>
+<h2 id="Runtime-命令执行"><a href="#Runtime-命令执行" class="headerlink" title="Runtime 命令执行"></a>Runtime 命令执行</h2><p>避免程序出现 <code>Runtime</code> 关键字，可以使用字节数组来绕过</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com;<br><br><span class="hljs-keyword">import</span> java.io.IOException;<br><span class="hljs-keyword">import</span> java.lang.reflect.Constructor;<br><span class="hljs-keyword">import</span> java.lang.reflect.InvocationTargetException;<br><span class="hljs-keyword">import</span> java.lang.reflect.Method;<br><span class="hljs-keyword">import</span> java.util.Arrays;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TestRun</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException </span>&#123;<br>        String runtime  = <span class="hljs-keyword">new</span> String(<span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[]&#123;<span class="hljs-number">106</span>, <span class="hljs-number">97</span>, <span class="hljs-number">118</span>, <span class="hljs-number">97</span>, <span class="hljs-number">46</span>, <span class="hljs-number">108</span>, <span class="hljs-number">97</span>, <span class="hljs-number">110</span>, <span class="hljs-number">103</span>, <span class="hljs-number">46</span>, <span class="hljs-number">82</span>, <span class="hljs-number">117</span>, <span class="hljs-number">110</span>, <span class="hljs-number">116</span>, <span class="hljs-number">105</span>, <span class="hljs-number">109</span>, <span class="hljs-number">101</span>&#125;);<br>        Class rt = Class.forName(runtime);<br>        Constructor cons = rt.getDeclaredConstructor();<br>        cons.setAccessible(<span class="hljs-keyword">true</span>);<br>        Object run = cons.newInstance();<br>        Method exec = rt.getMethod(<span class="hljs-string">&quot;exec&quot;</span>, String.class);<br>        exec.invoke(run,<span class="hljs-string">&quot;calc&quot;</span>);<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="ProcessBuilder命令执行"><a href="#ProcessBuilder命令执行" class="headerlink" title="ProcessBuilder命令执行"></a><img src="https://gitee.com/lcdm123/image/raw/master/image-20211015143252943.png" srcset="/img/loading.gif" lazyload alt="image-20211015143252943">ProcessBuilder命令执行</h2><p>之前记录过……</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>对类熟练使用后，后面就能使用各种变形来绕过检查执行命令了</p>
+<p>简单记录一下，万一后面有用呢🤪</p>
 
             </div>
             <hr>
             <div>
               <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a>
+                    
+                  </div>
                 
                 
                   <div class="post-meta">
@@ -328,7 +274,7 @@
                     
                       <a class="hover-with-bg" href="/tags/Web/">Web</a>
                     
-                      <a class="hover-with-bg" href="/tags/WriteUp/">WriteUp</a>
+                      <a class="hover-with-bg" href="/tags/Java/">Java</a>
                     
                   </div>
                 
@@ -345,9 +291,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/01/18/%E4%BA%8C%E5%88%86%E6%B3%95%E7%9B%B2%E6%B3%A8/">
+                      <a href="/2021/10/15/JDBC%E5%9F%BA%E7%A1%80/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">二分法盲注</span>
+                        <span class="hidden-mobile">JDBC基础</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -355,8 +301,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/01/17/XXE%E6%BC%8F%E6%B4%9E/">
-                        <span class="hidden-mobile">XXE漏洞</span>
+                      <a href="/2021/10/15/java%E7%A9%BA%E5%AD%97%E8%8A%82%E6%BC%8F%E6%B4%9E/">
+                        <span class="hidden-mobile">java空字节漏洞</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

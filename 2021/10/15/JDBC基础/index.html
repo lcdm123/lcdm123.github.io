@@ -16,30 +16,21 @@
   <meta name="description" content="">
   <meta name="author" content="海马少年">
   <meta name="keywords" content="">
-  <meta name="description" content="最近做了一道CTF的题，里面应用了http的各种头，记录下来学习学习  [BJDCTF 2nd]假猪套天下第一打开题目  尝试弱口令登录与SQL注入  抓包  修改时间，然后发现新线索  使用**Client-ip: 127.0.0.1** ,又出现新的线索  使用*** Referer: gem-love.com *** 又有新提示  这里有个坑，需要使用Commodo 64的全称，Commo">
+  <meta name="description" content="JDBC 基础简介JDBC 是java 提供对数据库就行连接，操作得标准 API，Java 自身并不会去实现对数据库得连接查询更新等操作而是通过抽象出数据库操作的 API 接口（JDBC）。 使用Java通过java.sql.DriverManager来管理所有数据库的驱动注册，所以如果想要建立数据库连接需要先在java.sql.DriverManager中注册对应的驱动类，然后调用getConn">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HTTP特殊请求头">
-<meta property="og:url" content="http://example.com/2021/01/18/HTTP%E7%89%B9%E6%AE%8A%E8%AF%B7%E6%B1%82%E5%A4%B4/index.html">
+<meta property="og:title" content="JDBC基础">
+<meta property="og:url" content="http://example.com/2021/10/15/JDBC%E5%9F%BA%E7%A1%80/index.html">
 <meta property="og:site_name" content="Lcdm123">
-<meta property="og:description" content="最近做了一道CTF的题，里面应用了http的各种头，记录下来学习学习  [BJDCTF 2nd]假猪套天下第一打开题目  尝试弱口令登录与SQL注入  抓包  修改时间，然后发现新线索  使用**Client-ip: 127.0.0.1** ,又出现新的线索  使用*** Referer: gem-love.com *** 又有新提示  这里有个坑，需要使用Commodo 64的全称，Commo">
+<meta property="og:description" content="JDBC 基础简介JDBC 是java 提供对数据库就行连接，操作得标准 API，Java 自身并不会去实现对数据库得连接查询更新等操作而是通过抽象出数据库操作的 API 接口（JDBC）。 使用Java通过java.sql.DriverManager来管理所有数据库的驱动注册，所以如果想要建立数据库连接需要先在java.sql.DriverManager中注册对应的驱动类，然后调用getConn">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://i.loli.net/2020/12/20/NqxatShcbRrQwyj.png">
-<meta property="og:image" content="https://i.loli.net/2020/12/20/Kwq5lz42gfh9oCA.png">
-<meta property="og:image" content="https://i.loli.net/2020/12/20/OWMv6lu5HycxE7g.png">
-<meta property="og:image" content="https://i.loli.net/2020/12/20/8W1zlVCqOQEtvN6.png">
-<meta property="og:image" content="https://i.loli.net/2020/12/20/ZbgB52qGpS6n8Xl.png">
-<meta property="og:image" content="https://i.loli.net/2020/12/20/rVhP4yswMF38g1k.png">
-<meta property="og:image" content="https://i.loli.net/2020/12/20/eWg5bEnzAyQfTkY.png">
-<meta property="og:image" content="https://i.loli.net/2020/12/20/AxtY9Kzbp2UhNiZ.png">
-<meta property="article:published_time" content="2021-01-18T13:57:40.000Z">
-<meta property="article:modified_time" content="2021-01-18T13:59:45.974Z">
+<meta property="article:published_time" content="2021-10-15T14:54:04.000Z">
+<meta property="article:modified_time" content="2021-10-15T14:56:18.881Z">
 <meta property="article:author" content="海马少年">
 <meta property="article:tag" content="Web">
-<meta property="article:tag" content="WriteUp">
+<meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://i.loli.net/2020/12/20/NqxatShcbRrQwyj.png">
   
-  <title>HTTP特殊请求头 - Lcdm123</title>
+  <title>JDBC基础 - Lcdm123</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -186,7 +177,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="HTTP特殊请求头">
+            <span class="h2" id="subtitle" title="JDBC基础">
               
             </span>
 
@@ -196,8 +187,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-01-18 21:57" pubdate>
-        2021年1月18日 晚上
+      <time datetime="2021-10-15 22:54" pubdate>
+        2021年10月15日 晚上
       </time>
     </span>
   
@@ -207,7 +198,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      581 字
+      3.4k 字
     </span>
   
 
@@ -216,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      2 分钟
+      11 分钟
     </span>
   
 
@@ -245,82 +236,52 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">HTTP特殊请求头</h1>
+            <h1 style="display: none">JDBC基础</h1>
             
             <div class="markdown-body">
-              <blockquote>
-<p>最近做了一道CTF的题，里面应用了http的各种头，记录下来学习学习</p>
-</blockquote>
-<h1 id="BJDCTF-2nd-假猪套天下第一"><a href="#BJDCTF-2nd-假猪套天下第一" class="headerlink" title="[BJDCTF 2nd]假猪套天下第一"></a>[BJDCTF 2nd]假猪套天下第一</h1><h3 id="打开题目"><a href="#打开题目" class="headerlink" title="打开题目"></a>打开题目</h3><p><img src="https://i.loli.net/2020/12/20/NqxatShcbRrQwyj.png" srcset="/img/loading.gif" lazyload alt="image-20201220223807400"></p>
-<blockquote>
-<p>尝试弱口令登录与SQL注入</p>
-</blockquote>
-<p>抓包</p>
-<p><img src="https://i.loli.net/2020/12/20/Kwq5lz42gfh9oCA.png" srcset="/img/loading.gif" lazyload alt="image-20201220224157732"></p>
-<p>修改时间，然后发现新线索</p>
-<p><img src="https://i.loli.net/2020/12/20/OWMv6lu5HycxE7g.png" srcset="/img/loading.gif" lazyload alt="image-20201220224129130"></p>
-<p>使用**<em>Client-ip: 127.0.0.1**</em> ,又出现新的线索</p>
-<p><img src="https://i.loli.net/2020/12/20/8W1zlVCqOQEtvN6.png" srcset="/img/loading.gif" lazyload alt="image-20201220224438421"></p>
-<p>使用*** Referer: gem-love.com *** 又有新提示</p>
-<p><img src="https://i.loli.net/2020/12/20/ZbgB52qGpS6n8Xl.png" srcset="/img/loading.gif" lazyload alt="image-20201220224558708"></p>
-<p>这里有个坑，需要使用Commodo 64的全称，Commodore 64；</p>
-<p><strong>* User-Agent： Commodore 64*</strong> </p>
-<p><img src="https://i.loli.net/2020/12/20/rVhP4yswMF38g1k.png" srcset="/img/loading.gif" lazyload alt="image-20201220225317596"></p>
-<p>指定邮箱*** From: <a href="mailto:&#114;&#111;&#x6f;&#116;&#64;&#103;&#x65;&#x6d;&#x2d;&#108;&#x6f;&#x76;&#101;&#x2e;&#99;&#111;&#109;">&#114;&#111;&#x6f;&#116;&#64;&#103;&#x65;&#x6d;&#x2d;&#108;&#x6f;&#x76;&#101;&#x2e;&#99;&#111;&#109;</a>***</p>
-<p><img src="https://i.loli.net/2020/12/20/eWg5bEnzAyQfTkY.png" srcset="/img/loading.gif" lazyload alt="image-20201220225553050"></p>
-<p>指定服务器**<em>Via: y1ng.vip**</em></p>
-<p><img src="https://i.loli.net/2020/12/20/AxtY9Kzbp2UhNiZ.png" srcset="/img/loading.gif" lazyload alt="image-20201220225711978"></p>
-<p>base64解码即可</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这个题目本身不难，主要考的就是**<em>请求首部字段**</em>的熟练使用</p>
-<table>
-<thead>
-<tr>
-<th>Header</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Accept</td>
-<td>指定客户端能够接收的内容类型</td>
-</tr>
-<tr>
-<td>Via</td>
-<td>通知中间网关或代理服务器地址，通信协议</td>
-</tr>
-<tr>
-<td>Referer</td>
-<td>先前的网址，当前请求的网页紧随其后，即来路</td>
-</tr>
-<tr>
-<td>Range</td>
-<td>只请求实体的一部分，指定范围</td>
-</tr>
-<tr>
-<td>From</td>
-<td>发出请求的用户的Email</td>
-</tr>
-<tr>
-<td>Cookie</td>
-<td>存储cookie信息</td>
-</tr>
-<tr>
-<td>User-Agent</td>
-<td>包含发出请求的用户信息</td>
-</tr>
-<tr>
-<td>TE</td>
-<td>客户端接受的传输编码，通知服务器接受尾加头信息</td>
-</tr>
-<tr>
-<td>Host</td>
-<td>指定请求的服务器的域名和端口号</td>
-</tr>
-</tbody></table>
+              <h1 id="JDBC-基础"><a href="#JDBC-基础" class="headerlink" title="JDBC 基础"></a>JDBC 基础</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>JDBC 是java 提供对数据库就行连接，操作得标准 API，Java 自身并不会去实现对数据库得连接查询更新等操作而是通过抽象出数据库操作的 API 接口（JDBC）。</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>Java通过<code>java.sql.DriverManager</code>来管理所有数据库的驱动注册，所以如果想要建立数据库连接需要先在<code>java.sql.DriverManager</code>中注册对应的驱动类，然后调用<code>getConnection</code>方法才能连接上数据库。</p>
+<p>JDBC定义了一个叫<code>java.sql.Driver</code>的接口类负责实现对数据库的连接，所有的数据库驱动包都必须实现这个接口才能够完成数据库的连接操作。<code>java.sql.DriverManager.getConnection(xx)</code>其实就是间接的调用了<code>java.sql.Driver</code>类的<code>connect</code>方法实现数据库连接的。数据库连接成功后会返回一个叫做<code>java.sql.Connection</code>的数据库连接对象，一切对数据库的查询操作都将依赖于这个<code>Connection</code>对象。</p>
+<p>JDBC连接数据库的一般步骤:</p>
+<ol>
+<li>注册驱动 <code>Class.forName(&quot;数据库驱动的类名&quot;)</code></li>
+<li>获取连接 <code>DriverManager.getConnection()</code></li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java">String CLASS_NAME = <span class="hljs-string">&quot;com.mysql.jdbc.Driver&quot;</span>;<br>String URL = <span class="hljs-string">&quot;jdbc:mysql://localhost:3306/mysql&quot;</span><br>String USERNAME = <span class="hljs-string">&quot;root&quot;</span>;<br>String PASSWORD = <span class="hljs-string">&quot;root&quot;</span>;<br><br>Class.forName(CLASS_NAME);<span class="hljs-comment">// 注册JDBC驱动类</span><br>Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);<br></code></pre></td></tr></table></figure>
+
+<p><strong>数据库配置信息</strong></p>
+<p>传统的 Web 应用数据库配置信息一般都是存在 <code>WEB-INF</code> 目录下的 <code>*.properties</code> <code>*.yml</code> <code>*.xml</code>中的，如果是 <code>Spring Boot</code> 项目的话一般都存储在 <code>src/main/resources/</code> 目录下。常见的数据库配置信息的路径：<code>WEB-INF/applicationContext.xml</code> <code>WEB-INF/hibernate.cfg.xml</code> <code>WEB-INF/jdbc/jdbc.properties</code> </p>
+<p><strong>为什么开始的时候需要 <code>Class.forName()</code> ?</strong></p>
+<p>这一步利用了 java 反射 + 类加载机制往 <code>DriverManager</code> 中注册了驱动包，它实际上会触发类加载，<code>com.mysql.jdbc.Driver</code> 类将会被初始化，<code>static静态语句块</code> 中的代码会被执行。但是有些时候没有 <code>Class.forName()</code> 程序也可以正常运行，这是因为 Java SPI机制。因为<code>DriverManager</code>在初始化的时候会调用<code>java.util.ServiceLoader</code>类提供的SPI机制，Java会自动扫描jar包中的<code>META-INF/services</code>目录下的文件，并且还会自动的<code>Class.forName(文件中定义的类)</code>，这也就解释了为什么不需要<code>Class.forName</code>也能够成功连接数据库的原因了。</p>
+<p><strong>Java SPI</strong></p>
+<p>SPI(Service Provider Interface)，是JDK内置的一种服务提供发现机制。它就是一种动态替换发现机制。例如：有个接口想在运行时才发现具体的实现类，那么你只需要在程序运行前添加一个实现即可，并把新加的实现描述给JDK即可。此外，在程序的运行过程中，也可以随时对该描述进行修改，完成具体实现的替换。</p>
+<p>Java提供了很多服务提供者接口（Service Provider Interface，SPI），允许第三方为这些接口提供实现。常见的SPI有JDBC、JCE、JNDI、JAXP和JBI等。</p>
+<h2 id="数据库连接思考"><a href="#数据库连接思考" class="headerlink" title="数据库连接思考"></a>数据库连接思考</h2><ol>
+<li>SPI机制是否有安全性问题？</li>
+<li>Java反射有那些安全问题？</li>
+<li>Java类加载机制是什么？</li>
+<li>数据库连接时密码安全问题？</li>
+<li>使用JDBC如何写一个通用的数据库密码爆破模块？</li>
+</ol>
+<h2 id="DataSource"><a href="#DataSource" class="headerlink" title="DataSource"></a>DataSource</h2><p>在真实的 Java 项目中通常不会使用原生的 <code>JDBC</code> 的 <code>DiverManager</code> 去连接数据库，而是使用数据源(<code>javax.sql.DataSource</code>) 来代替 <code>DriverManager</code> 管理数据库的连接，一般情况下 WEB 服务在启动时就会预先定义好数据源，这样就不需要编写任何数据库相关的连接代码了，直接引用 <code>DataSource</code> 对象即可获取数据库的连接。常见的数据源有：<code>DBCP</code> <code>C3P0</code> <code>Druid</code> <code>Mybatis DataSource</code> 他们都实现于 <code>javax.sql.DataSourcec</code> 接口。</p>
+<p>在渗透测试中我们可以通过查找 Spring 数据库配置信息的找到数据库账户密码，但是很多时候我们可以找到非常多的配置项甚至是加密的配置信息。这样我们难以确定真实的数据库配置信息，所以我们可以在<code>webshell</code> 中使用注入数据源的方式来获取数据库连接对象，甚至是读取数据库密码。</p>
+<p>参考文章</p>
+<p><a target="_blank" rel="noopener" href="https://zhishihezi.net/endpoint/richtext/6d9a22ba0a35a008c8a26de9be0af285?event=436b34f44b9f95fd3aa8667f1ad451b173526ab5441d9f64bd62d183bed109b0ea1aaaa23c5207a446fa6de9f588db3958e8cd5c825d7d5216199d64338d9d003f2aa7f127f0eebacd7781dfcc96fffc113c2aa6524a270d806d0b5cb74fcd848dc0e71a1806ba8aa6795310d7f5156f8679b530f66f98d69bcca054b7161d0311712560fdab58f84fb9f475c33e2307e1d1bf7f16cb4b78ffb1de583bcb8bdc68ff1a4b3c274eeb49ebe71ce5cc010855f8493aa598d6535c728e2b2e0c78623ece5513ef7d2037e1aa34c9180a9217120669f13f79be67e876422272b76e9a39062c8f6f4f45182f7f0d2dfab296e83843031274d8b7d87c8e39e3921eb4b9#2">https://zhishihezi.net/endpoint/richtext/6d9a22ba0a35a008c8a26de9be0af285?event=436b34f44b9f95fd3aa8667f1ad451b173526ab5441d9f64bd62d183bed109b0ea1aaaa23c5207a446fa6de9f588db3958e8cd5c825d7d5216199d64338d9d003f2aa7f127f0eebacd7781dfcc96fffc113c2aa6524a270d806d0b5cb74fcd848dc0e71a1806ba8aa6795310d7f5156f8679b530f66f98d69bcca054b7161d0311712560fdab58f84fb9f475c33e2307e1d1bf7f16cb4b78ffb1de583bcb8bdc68ff1a4b3c274eeb49ebe71ce5cc010855f8493aa598d6535c728e2b2e0c78623ece5513ef7d2037e1aa34c9180a9217120669f13f79be67e876422272b76e9a39062c8f6f4f45182f7f0d2dfab296e83843031274d8b7d87c8e39e3921eb4b9#2</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/e4262536000d">https://www.jianshu.com/p/e4262536000d</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_27292113/article/details/100324127">https://blog.csdn.net/qq_27292113/article/details/100324127</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhishihezi.net/endpoint/richtext/7cf5943a331e912a8ced8264b65ba4a4?event=436b34f44b9f95fd3aa8667f1ad451b173526ab5441d9f64bd62d183bed109b0ea1aaaa23c5207a446fa6de9f588db3958e8cd5c825d7d5216199d64338d9d00fc7ce3fe3cc9fffd10a895293a0425000f798ef1f4285bc4615898486a533462dd5cc0aa1f49f370afa6cd415c847e879b80964a7cb47f9a65a3a3eec81b131c19d0650b1955cf6e77d0293a369bc09e0299b0f9c58f7226ee6c6df1f94abf9ad020bcff67e838b4fe63a4aaadcf14a330023e181ca50a45e91822ebb11299dff426c4e8dcaa968b62df740cfce6b4480a215dc739f8028c6c29d6d1079bf4dd3e70addaaf843b9fa061943758d25bb1a9ef2983de1ecbd6ca659e367482affd#1">https://zhishihezi.net/endpoint/richtext/7cf5943a331e912a8ced8264b65ba4a4?event=436b34f44b9f95fd3aa8667f1ad451b173526ab5441d9f64bd62d183bed109b0ea1aaaa23c5207a446fa6de9f588db3958e8cd5c825d7d5216199d64338d9d00fc7ce3fe3cc9fffd10a895293a0425000f798ef1f4285bc4615898486a533462dd5cc0aa1f49f370afa6cd415c847e879b80964a7cb47f9a65a3a3eec81b131c19d0650b1955cf6e77d0293a369bc09e0299b0f9c58f7226ee6c6df1f94abf9ad020bcff67e838b4fe63a4aaadcf14a330023e181ca50a45e91822ebb11299dff426c4e8dcaa968b62df740cfce6b4480a215dc739f8028c6c29d6d1079bf4dd3e70addaaf843b9fa061943758d25bb1a9ef2983de1ecbd6ca659e367482affd#1</a></p>
 
             </div>
             <hr>
             <div>
               <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a>
+                    
+                  </div>
                 
                 
                   <div class="post-meta">
@@ -328,7 +289,7 @@
                     
                       <a class="hover-with-bg" href="/tags/Web/">Web</a>
                     
-                      <a class="hover-with-bg" href="/tags/WriteUp/">WriteUp</a>
+                      <a class="hover-with-bg" href="/tags/Java/">Java</a>
                     
                   </div>
                 
@@ -345,18 +306,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/01/18/%E4%BA%8C%E5%88%86%E6%B3%95%E7%9B%B2%E6%B3%A8/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">二分法盲注</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/01/17/XXE%E6%BC%8F%E6%B4%9E/">
-                        <span class="hidden-mobile">XXE漏洞</span>
+                      <a href="/2021/10/15/java%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/">
+                        <span class="hidden-mobile">java命令执行</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
