@@ -148,8 +148,6 @@
       
       <category>编程语言</category>
       
-      <category>Web</category>
-      
     </categories>
     
     
@@ -177,8 +175,6 @@
       
       <category>编程语言</category>
       
-      <category>Web</category>
-      
     </categories>
     
     
@@ -205,8 +201,6 @@
     <categories>
       
       <category>内网</category>
-      
-      <category>Web</category>
       
     </categories>
     
@@ -287,8 +281,6 @@
       
       <category>编程语言</category>
       
-      <category>Web</category>
-      
     </categories>
     
     
@@ -318,8 +310,6 @@
       
       <category>编程语言</category>
       
-      <category>Web</category>
-      
     </categories>
     
     
@@ -348,8 +338,6 @@
     <categories>
       
       <category>编程语言</category>
-      
-      <category>Web</category>
       
     </categories>
     
@@ -498,6 +486,12 @@
     <content type="html"><![CDATA[<h1 id="BlueCMS"><a href="#BlueCMS" class="headerlink" title="BlueCMS"></a>BlueCMS</h1><blockquote><p>BlueCMS__v1.6_sp1</p></blockquote><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这个CMS是一个很老的版本，这里利用它来学习熟悉一下代码审计。审计的过程中暂时没有利用Seay工具去分析代码，而是尝试直接分析原框架，毕竟这个CMS的源码比较简单。</p><h2 id="代码审计"><a href="#代码审计" class="headerlink" title="代码审计"></a>代码审计</h2><h3 id="初步了解"><a href="#初步了解" class="headerlink" title="初步了解"></a>初步了解</h3><p>首先从根目录下的<code>index.php</code>文件入手，它是整个程序的入口，一开始它加载了两个php文件，之后再分析这两个文件作用</p><p><img src="https://gitee.com/lcdm123/image/raw/master/image/image-20210830092735808.png" alt="image-20210830092735808"></p><p>然后就是页面的各个板块信息的查询与展示，比如新闻分类列表的展示，最新分类信息等，最后利用<code>smarty</code>模板渲染展示页面</p><p><img src="https://gitee.com/lcdm123/image/raw/master/image/image-20210830092957266.png" alt="image-20210830092957266"></p><p><code>include/common.inc.php</code>，开始也是包含了一堆PHP文件，然后对单引号过滤，但是这个CMS使用的是GKB编码，可能会存在宽字节绕过并且这里并没有对<code>$_SERVER</code>进行过滤它也是外部可控的数据</p><p><img src="https://gitee.com/lcdm123/image/raw/master/image/image-20210830093831941.png" alt="image-20210830093831941"></p><p>后面就是连接数据库操作，然后就是一些其他工作了</p><p><img src="https://gitee.com/lcdm123/image/raw/master/image/image-20210830094358872.png" alt="image-20210830094358872"></p><p><img src="https://gitee.com/lcdm123/image/raw/master/image/image-20210830094832335.png" alt="image-20210830094832335"></p><p><code>include/common.fun.php</code> 这个文件定义了很多函数提供调用</p><p><img src="https://gitee.com/lcdm123/image/raw/master/image/image-20210830095002133.png" alt="image-20210830095002133"></p><p><img src="https://gitee.com/lcdm123/image/raw/master/image/image-20210830095038504.png" alt="image-20210830095038504"></p><p>还有一堆函数就不一一列出来了</p><p>后台功能查看</p><p><code>admin/index.php</code> 这个文件没有什么太多的东西，主要就是提醒用户删除安装文件，日志读取，获取配置信息等</p><p><img src="https://gitee.com/lcdm123/image/raw/master/image/image-20210830101752484.png" alt="image-20210830101752484"></p><p>主要的功能逻辑部分是在<code>admin/include/common.inc.php</code>文件中处理的，它有敏感字符过滤，登录验证等功能</p><p>这里用来判断用户是否登录</p><p><img src="https://gitee.com/lcdm123/image/raw/master/image/image-20210830102017217.png" alt="image-20210830102017217"></p><p><code>admin/login.php</code>用户登录界面</p><p><img src="https://gitee.com/lcdm123/image/raw/master/image/image-20210830102950559.png" alt="image-20210830102950559"></p><p><img src="https://gitee.com/lcdm123/image/raw/master/image/image-20210830102935926.png" alt="image-20210830102935926"></p><blockquote><p>感觉只要绕过了单引号，这个CMS就到处是SQL漏洞了</p></blockquote><p>其他的文件就是一些杂七杂八的漏洞了，可以先暂时放着</p><h3 id="SQL注入1"><a href="#SQL注入1" class="headerlink" title="SQL注入1"></a>SQL注入1</h3><p><code>ad_js.php</code> 这个文件中对于sql语句的过滤没有效果，因为是数字型注入</p><p><img src="https://gitee.com/lcdm123/image/raw/master/image/image-20210830091607034.png" alt="image-20210830091607034"></p><p><img src="https://gitee.com/lcdm123/image/raw/master/image/image-20210830104231347.png" alt="image-20210830104231347"></p><p><img src="D:\markdown\image-20210830104259328.png" alt="image-20210830104259328"></p><h3 id="SQL注入2"><a href="#SQL注入2" class="headerlink" title="SQL注入2"></a>SQL注入2</h3><p>留言板和评论处都存在这个注入漏洞</p><p><img src="https://gitee.com/lcdm123/image/raw/master/image/image-20210830110029339.png" alt="image-20210830110029339"></p><p><img src="https://gitee.com/lcdm123/image/raw/master/image/image-20210830110111423.png" alt="image-20210830110111423"></p><p>漏洞验证</p><p><img src="https://gitee.com/lcdm123/image/raw/master/image/image-20210830112351558.png" alt="image-20210830112351558"></p><p><img src="https://gitee.com/lcdm123/image/raw/master/image/image-20210830112401719.png" alt="image-20210830112401719"></p><h3 id="SQL注入3"><a href="#SQL注入3" class="headerlink" title="SQL注入3"></a>SQL注入3</h3><blockquote><p>宽字节注入</p></blockquote><p>正常输入错误的密码</p><p><img src="https://gitee.com/lcdm123/image/raw/master/image/image-20210830113226858.png" alt="image-20210830113226858"></p><p>成功利用宽字节注入漏洞进入系统</p><p><img src="https://gitee.com/lcdm123/image/raw/master/image/image-20210830113438244.png" alt="image-20210830113438244"></p><h3 id="任意文件读取"><a href="#任意文件读取" class="headerlink" title="任意文件读取"></a>任意文件读取</h3><blockquote><p>这个是在后台的漏洞，后台由于默认是管理员操作的所以权限都比较大，敏感操作很多，存在的漏洞就会很多</p></blockquote><p>后台模板管理这里可以读取和修改文件，所以我们可以尝试修改其他文件</p><p><img src="https://gitee.com/lcdm123/image/raw/master/image/image-20210830123320939.png" alt="image-20210830123320939"></p><p>具体完成操作的PHP文件<code>admin/tpl_manage.php</code></p><p><img src="https://gitee.com/lcdm123/image/raw/master/image/image-20210830130636799.png" alt="image-20210830130636799"></p><p><img src="https://gitee.com/lcdm123/image/raw/master/image/image-20210830130657999.png" alt="image-20210830130657999"></p><p><img src="https://gitee.com/lcdm123/image/raw/master/image/image-20210830125516798.png" alt="image-20210830125516798"></p><blockquote><p>使用目录穿越可以读取任意文件内容并且修改</p></blockquote><h3 id="任意文件删除"><a href="#任意文件删除" class="headerlink" title="任意文件删除"></a>任意文件删除</h3><p><del>找到操作日志管理，这里有个删除操作，我们尝试分析代码看看是否可以造成任意文件删除</del></p><p>在<code>user.php</code>中发现了一个文件删除的操作</p><p><img src="https://gitee.com/lcdm123/image/raw/master/image/image-20210830140714576.png" alt="image-20210830140714576"></p><p>这个很任意实现，直接按照逻辑去掉一些参数，之后就可以执行删除操作了</p><h3 id="文件包含"><a href="#文件包含" class="headerlink" title="文件包含"></a>文件包含</h3><p>在用户修改头像功能处上传任意携带后门的jpg文件，获取到路径<code>data/upload/face_pic/16303030511.jpg</code>然后利用文件包含漏洞执行命令</p><p><img src="https://gitee.com/lcdm123/image/raw/master/image/image-20210830140130531.png" alt="image-20210830140130531"></p><blockquote><p>%00截断：条件：magic_quotes_gpc = Off，PHP版本&lt;5.3.4</p><p>路径长度阶段：条件：windows 下目录路径最大长度为256字节，超出部分将丢弃；linux 下目录最大长度为4096字节，超出长度将丢弃；PHP版本&lt;5.2.8</p></blockquote><p>这里由于PHP版本不合适就先没有继续测试了</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这个CMS是一个非常简单的适合入门审计的，这里面的漏洞不难，主要是需要掌握审计代码的思路与方法。</p>]]></content>
     
     
+    <categories>
+      
+      <category>web</category>
+      
+    </categories>
+    
     
     <tags>
       
@@ -535,7 +529,7 @@
     <link href="/2021/01/18/HTTP%E7%89%B9%E6%AE%8A%E8%AF%B7%E6%B1%82%E5%A4%B4/"/>
     <url>/2021/01/18/HTTP%E7%89%B9%E6%AE%8A%E8%AF%B7%E6%B1%82%E5%A4%B4/</url>
     
-    <content type="html"><![CDATA[<blockquote><p>最近做了一道CTF的题，里面应用了http的各种头，记录下来学习学习</p></blockquote><h1 id="BJDCTF-2nd-假猪套天下第一"><a href="#BJDCTF-2nd-假猪套天下第一" class="headerlink" title="[BJDCTF 2nd]假猪套天下第一"></a>[BJDCTF 2nd]假猪套天下第一</h1><h3 id="打开题目"><a href="#打开题目" class="headerlink" title="打开题目"></a>打开题目</h3><p><img src="https://i.loli.net/2020/12/20/NqxatShcbRrQwyj.png" alt="image-20201220223807400"></p><blockquote><p>尝试弱口令登录与SQL注入</p></blockquote><p>抓包</p><p><img src="https://i.loli.net/2020/12/20/Kwq5lz42gfh9oCA.png" alt="image-20201220224157732"></p><p>修改时间，然后发现新线索</p><p><img src="https://i.loli.net/2020/12/20/OWMv6lu5HycxE7g.png" alt="image-20201220224129130"></p><p>使用**<em>Client-ip: 127.0.0.1**</em> ,又出现新的线索</p><p><img src="https://i.loli.net/2020/12/20/8W1zlVCqOQEtvN6.png" alt="image-20201220224438421"></p><p>使用*** Referer: gem-love.com *** 又有新提示</p><p><img src="https://i.loli.net/2020/12/20/ZbgB52qGpS6n8Xl.png" alt="image-20201220224558708"></p><p>这里有个坑，需要使用Commodo 64的全称，Commodore 64；</p><p><strong>* User-Agent： Commodore 64*</strong> </p><p><img src="https://i.loli.net/2020/12/20/rVhP4yswMF38g1k.png" alt="image-20201220225317596"></p><p>指定邮箱*** From: <a href="mailto:&#x72;&#111;&#x6f;&#116;&#x40;&#x67;&#x65;&#x6d;&#45;&#108;&#x6f;&#118;&#101;&#x2e;&#99;&#x6f;&#x6d;">&#x72;&#111;&#x6f;&#116;&#x40;&#x67;&#x65;&#x6d;&#45;&#108;&#x6f;&#118;&#101;&#x2e;&#99;&#x6f;&#x6d;</a>***</p><p><img src="https://i.loli.net/2020/12/20/eWg5bEnzAyQfTkY.png" alt="image-20201220225553050"></p><p>指定服务器**<em>Via: y1ng.vip**</em></p><p><img src="https://i.loli.net/2020/12/20/AxtY9Kzbp2UhNiZ.png" alt="image-20201220225711978"></p><p>base64解码即可</p><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这个题目本身不难，主要考的就是**<em>请求首部字段**</em>的熟练使用</p><table><thead><tr><th>Header</th><th>作用</th></tr></thead><tbody><tr><td>Accept</td><td>指定客户端能够接收的内容类型</td></tr><tr><td>Via</td><td>通知中间网关或代理服务器地址，通信协议</td></tr><tr><td>Referer</td><td>先前的网址，当前请求的网页紧随其后，即来路</td></tr><tr><td>Range</td><td>只请求实体的一部分，指定范围</td></tr><tr><td>From</td><td>发出请求的用户的Email</td></tr><tr><td>Cookie</td><td>存储cookie信息</td></tr><tr><td>User-Agent</td><td>包含发出请求的用户信息</td></tr><tr><td>TE</td><td>客户端接受的传输编码，通知服务器接受尾加头信息</td></tr><tr><td>Host</td><td>指定请求的服务器的域名和端口号</td></tr></tbody></table>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>最近做了一道CTF的题，里面应用了http的各种头，记录下来学习学习</p></blockquote><h1 id="BJDCTF-2nd-假猪套天下第一"><a href="#BJDCTF-2nd-假猪套天下第一" class="headerlink" title="[BJDCTF 2nd]假猪套天下第一"></a>[BJDCTF 2nd]假猪套天下第一</h1><h3 id="打开题目"><a href="#打开题目" class="headerlink" title="打开题目"></a>打开题目</h3><p><img src="https://i.loli.net/2020/12/20/NqxatShcbRrQwyj.png" alt="image-20201220223807400"></p><blockquote><p>尝试弱口令登录与SQL注入</p></blockquote><p>抓包</p><p><img src="https://i.loli.net/2020/12/20/Kwq5lz42gfh9oCA.png" alt="image-20201220224157732"></p><p>修改时间，然后发现新线索</p><p><img src="https://i.loli.net/2020/12/20/OWMv6lu5HycxE7g.png" alt="image-20201220224129130"></p><p>使用**<em>Client-ip: 127.0.0.1**</em> ,又出现新的线索</p><p><img src="https://i.loli.net/2020/12/20/8W1zlVCqOQEtvN6.png" alt="image-20201220224438421"></p><p>使用*** Referer: gem-love.com *** 又有新提示</p><p><img src="https://i.loli.net/2020/12/20/ZbgB52qGpS6n8Xl.png" alt="image-20201220224558708"></p><p>这里有个坑，需要使用Commodo 64的全称，Commodore 64；</p><p><strong>* User-Agent： Commodore 64*</strong> </p><p><img src="https://i.loli.net/2020/12/20/rVhP4yswMF38g1k.png" alt="image-20201220225317596"></p><p>指定邮箱*** From: <a href="mailto:&#x72;&#111;&#x6f;&#116;&#64;&#x67;&#x65;&#109;&#x2d;&#x6c;&#x6f;&#x76;&#101;&#x2e;&#x63;&#x6f;&#x6d;">&#x72;&#111;&#x6f;&#116;&#64;&#x67;&#x65;&#109;&#x2d;&#x6c;&#x6f;&#x76;&#101;&#x2e;&#x63;&#x6f;&#x6d;</a>***</p><p><img src="https://i.loli.net/2020/12/20/eWg5bEnzAyQfTkY.png" alt="image-20201220225553050"></p><p>指定服务器**<em>Via: y1ng.vip**</em></p><p><img src="https://i.loli.net/2020/12/20/AxtY9Kzbp2UhNiZ.png" alt="image-20201220225711978"></p><p>base64解码即可</p><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这个题目本身不难，主要考的就是**<em>请求首部字段**</em>的熟练使用</p><table><thead><tr><th>Header</th><th>作用</th></tr></thead><tbody><tr><td>Accept</td><td>指定客户端能够接收的内容类型</td></tr><tr><td>Via</td><td>通知中间网关或代理服务器地址，通信协议</td></tr><tr><td>Referer</td><td>先前的网址，当前请求的网页紧随其后，即来路</td></tr><tr><td>Range</td><td>只请求实体的一部分，指定范围</td></tr><tr><td>From</td><td>发出请求的用户的Email</td></tr><tr><td>Cookie</td><td>存储cookie信息</td></tr><tr><td>User-Agent</td><td>包含发出请求的用户信息</td></tr><tr><td>TE</td><td>客户端接受的传输编码，通知服务器接受尾加头信息</td></tr><tr><td>Host</td><td>指定请求的服务器的域名和端口号</td></tr></tbody></table>]]></content>
     
     
     
