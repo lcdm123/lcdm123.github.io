@@ -38,13 +38,14 @@
 <meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211105230953256.png">
 <meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211106002037911.png">
 <meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211107022124421.png">
+<meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211125162017969.png">
 <meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211107142042883.png">
 <meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211107150456447.png">
 <meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211107154521318.png">
 <meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211107155236632.png">
 <meta property="og:image" content="https://gitee.com/lcdm123/image/raw/master/image-20211107163204792.png">
 <meta property="article:published_time" content="2021-11-08T13:34:32.000Z">
-<meta property="article:modified_time" content="2021-11-16T10:08:08.071Z">
+<meta property="article:modified_time" content="2021-11-25T08:25:28.361Z">
 <meta property="article:author" content="海马少年">
 <meta property="article:tag" content="代码审计">
 <meta property="article:tag" content="Web">
@@ -220,7 +221,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      7.8k 字
+      9.2k 字
     </span>
   
 
@@ -229,7 +230,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      24 分钟
+      29 分钟
     </span>
   
 
@@ -316,6 +317,20 @@
 <p>具体的下面P神代码审计中都讲到了原因，所以就不重复记录浪费时间了</p>
 </blockquote>
 <p>但是在 ysoserial 中的链不是利用的 TransformedMap ，而是利用的 LazyMap，这是为什么呢？</p>
+<p>为什么要先 inermap.put(“value”,”lcdm123”) 呢?</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs java">AnnotationInvocationHandler(Class&lt;? extends Annotation&gt; var1, Map&lt;String, Object&gt; var2) &#123;<br>        <span class="hljs-keyword">this</span>.type = var1;<br>        <span class="hljs-keyword">this</span>.memberValues = var2;<br>    &#125;<br><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">readObject</span><span class="hljs-params">(ObjectInputStream var1)</span> <span class="hljs-keyword">throws</span> IOException, ClassNotFoundException </span>&#123;<br>        var1.defaultReadObject();<br>        AnnotationType var2 = <span class="hljs-keyword">null</span>;<br><br>        <span class="hljs-keyword">try</span> &#123;<br>            var2 = AnnotationType.getInstance(<span class="hljs-keyword">this</span>.type);<br>        &#125; <span class="hljs-keyword">catch</span> (IllegalArgumentException var9) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> InvalidObjectException(<span class="hljs-string">&quot;Non-annotation type in annotation serial stream&quot;</span>);<br>        &#125;<br><br>        Map var3 = var2.memberTypes();<br>        Iterator var4 = <span class="hljs-keyword">this</span>.memberValues.entrySet().iterator();<br><br>        <span class="hljs-keyword">while</span>(var4.hasNext()) &#123;<br>            Entry var5 = (Entry)var4.next();<br>            String var6 = (String)var5.getKey();<br>            Class var7 = (Class)var3.get(var6);<br>            <span class="hljs-keyword">if</span> (var7 != <span class="hljs-keyword">null</span>) &#123;<br>                Object var8 = var5.getValue();<br>                <span class="hljs-keyword">if</span> (!var7.isInstance(var8) &amp;&amp; !(var8 <span class="hljs-keyword">instanceof</span> ExceptionProxy)) &#123;<br>                    var5.setValue((<span class="hljs-keyword">new</span> AnnotationTypeMismatchExceptionProxy(var8.getClass() + <span class="hljs-string">&quot;[&quot;</span> + var8 + <span class="hljs-string">&quot;]&quot;</span>)).setMember((Method)var2.members().get(var6)));<br>                &#125;<br>            &#125;<br>        &#125;<br><br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<p>这里我们可以倒着看，要执行到最后的setValue()必须 var7!= null，var7 的来源就是var3.get(var6)，<code>var3 = var2.memberTypes()</code>， <code>var2 = AnnotationType.getInstance(this.type)</code>，</p>
+<p>var6 就是获取到 HashMap 的 key 值。</p>
+<p>追踪一下 var2,会获取我们注解的基本信息(Target)，this.type为之前我们传入的注解</p>
+<p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211125162017969.png" srcset="/img/loading.gif" lazyload alt="image-20211125162017969"></p>
+<p>var3会获取var2中的Membertypes中的数值，即<code>&#123;value=class [Ljava.lang.annotation.ElementType;&#125;</code></p>
+<ol>
+<li>传入的注解需要存在memberTypes(即要存在注解元素名)</li>
+</ol>
+<blockquote>
+<p>对于注解还需要单独去学习一下，这里还不是理解后的一点</p>
+</blockquote>
 <h2 id="LazyMap"><a href="#LazyMap" class="headerlink" title="LazyMap"></a>LazyMap</h2><p>LazyMap 和 TransformedMap 类似，都来自于 Common-Collections 库，并且继承了 AbstractMapDecorator。</p>
 <p>LazyMap 和 TransformedMap 的唯一差别就是，TransformedMap 是写入元素时执行 transform 而 LazyMap 是在使用 get 方法中执行 factory.transform。LazyMap 的作用就是懒加载，在 get 不到值的时候，它会调用 factory.transform 方法去获取一个值</p>
 <p><img src="https://gitee.com/lcdm123/image/raw/master/image-20211107142042883.png" srcset="/img/loading.gif" lazyload alt="image-20211107142042883"></p>
